@@ -1,4 +1,4 @@
-package com.example.stubnb
+package com.example.myapplication
 
 import org.junit.Test
 
