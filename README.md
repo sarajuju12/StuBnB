@@ -1,4 +1,4 @@
-Project description:
+Project description: https://git.uwaterloo.ca/j556xu/team-7/-/wikis/Project-Proposal 
 
 Essential product features:
 
