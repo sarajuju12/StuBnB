@@ -35,55 +35,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 
 
-data class BottomNavigationItem(
+class BottomNavigationItem(
     val title: String,
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector,
     val hasNews: Boolean,
-    val badgeCount: Int? = null
+    val badgeCount: Int? = null // can have no badge
 )
 
-
-@Composable
-fun BottomNavigationBar (items: List<BottomNavigationItem>,
-                         selectedIndex: Int,
-                         onItemSelected: (Int) -> Unit ) {
-
-    NavigationBar {
-        items.forEachIndexed { index, item ->
-            NavigationBarItem(
-                selected = (selectedIndex == index),  // true if index is selected
-                onClick = { onItemSelected(index) },
-                label = { Text(text = item.title) },
-                alwaysShowLabel = true,     // easier to access
-                icon = { NavigationBarItem(item, index == selectedIndex) }
-            )
-        }
-    }
-}
-
-@OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
-@Composable
-fun NavigationBarItem(item: BottomNavigationItem, isSelected: Boolean) {
-    BadgedBox(
-        badge = {
-            if (item.badgeCount != null) {
-                Badge { Text(text = item.badgeCount.toString()) }
-            } else if (item.hasNews) {
-                Badge()
-            }
-        }
-    ) {// content
-        Icon(
-            imageVector = if (isSelected) {
-                item.selectedIcon
-            } else {
-                item.unselectedIcon
-            },
-            contentDescription = item.title
-        )
-    }
-}
 
 // get the bottom 5 tabs as a list
 fun getBottomNavigationItems(): List<BottomNavigationItem> {
@@ -124,8 +83,11 @@ fun getBottomNavigationItems(): List<BottomNavigationItem> {
 // creates the bottom navigation bar
 @Composable
 fun DisplayBottomBar(){
+    // call to get the list of bottom navigation items
     val items = getBottomNavigationItems()
-    var selectedItemIndex by rememberSaveable { mutableStateOf(0) }
+    // *** selectedIndex hold the current selected index, changes when the status changes
+    // *** initially at state 0, the housing tab
+    var selectedIndex by rememberSaveable { mutableStateOf(0) }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -134,12 +96,45 @@ fun DisplayBottomBar(){
         @OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
         Scaffold(
             bottomBar = {
-                BottomNavigationBar( items = items, selectedIndex = selectedItemIndex,
-                                     onItemSelected = { index -> selectedItemIndex = index}
-                )
+                NavigationBar {
+                    items.forEachIndexed { index, item ->
+                        // isSelected indicate if this tab is selected at the moment
+                        var isSelected = selectedIndex == index
+
+                        NavigationBarItem(
+                            selected = isSelected,  // true if index is selected
+                            onClick = { selectedIndex = index },
+                            label = { Text(text = item.title) },
+                            alwaysShowLabel = true,     // easier to visualize
+
+                            icon = {
+                                //      display badge
+                                //      select the button
+                                BadgedBox(
+                                    badge = {
+                                        if (item.badgeCount != null) {
+                                            Badge { Text(text = item.badgeCount.toString()) }
+                                        } else if (item.hasNews) {
+                                            Badge()
+                                        }
+                                    }
+                                ) {// content
+                                    Icon(
+                                        imageVector = if (isSelected) {
+                                            item.selectedIcon
+                                        } else {
+                                            item.unselectedIcon
+                                        },
+                                        contentDescription = item.title
+                                    )
+                                }
+                            }
+                        )
+                    }
+                }
             }
         ) {
-            innerPadding -> MainContent(selectedItemIndex, innerPadding)
+            innerPadding -> MainContent(selectedIndex, innerPadding)
             // pass in the index to jump to different tabs
         }
     }
@@ -163,7 +158,12 @@ fun HousingScreen() {
 
 @Composable
 fun InventoryScreen() {
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = Color.Gray
+    ) {
 
+    }
 }
 
 @Composable
