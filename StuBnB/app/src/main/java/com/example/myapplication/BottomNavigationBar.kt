@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import InventoryList
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -33,6 +34,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import com.example.myapplication.data.InventoryRepository
 
 
 class BottomNavigationItem(
@@ -154,16 +156,15 @@ fun MainContent(selectedItemIndex: Int, innerPadding: PaddingValues) {
 
 @Composable
 fun HousingScreen() {
+    // to do
 
 }
 
 @Composable
 fun InventoryScreen() {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = Color.Gray
-    ) {
-
+    val tempInventoryRepository = InventoryRepository();
+    MyApplicationTheme {
+        InventoryList(tempInventoryRepository.getInventory())
     }
 }
 
