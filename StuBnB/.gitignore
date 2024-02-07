@@ -13,3 +13,6 @@
 .externalNativeBuild
 .cxx
 local.properties
+*.txt
+*.DS_Store
+stubnb_notes
