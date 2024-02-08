@@ -1,9 +1,11 @@
-package com.example.myapplication.app
+package com.example.myapplication.components
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
@@ -16,10 +18,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -56,7 +60,9 @@ fun TextField(labelValue: String, painterResource: Painter) {
         ),
         value = textValue.value,
         onValueChange = { textValue.value = it},
-        keyboardOptions = KeyboardOptions.Default,
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        singleLine = true,
+        maxLines = 1,
         modifier = Modifier.fillMaxWidth(),
         leadingIcon = {
             Icon(painter = painterResource, contentDescription = "", modifier = Modifier.size(20.dp))
@@ -69,6 +75,7 @@ fun TextField(labelValue: String, painterResource: Painter) {
 fun PasswordTextField(labelValue: String, painterResource: Painter) {
     val textValue = remember { mutableStateOf("") }
     val visible = remember { mutableStateOf(false) }
+    val focus = LocalFocusManager.current
     OutlinedTextField(
         label = {Text(text = labelValue)},
         colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -77,8 +84,13 @@ fun PasswordTextField(labelValue: String, painterResource: Painter) {
             cursorColor = Purple40
         ),
         value = textValue.value,
+        singleLine = true,
+        maxLines = 1,
+        keyboardActions = KeyboardActions {
+            focus.clearFocus()
+        },
         onValueChange = { textValue.value = it},
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
         modifier = Modifier.fillMaxWidth(),
         leadingIcon = {
             Icon(painter = painterResource, contentDescription = "", modifier = Modifier.size(20.dp))
@@ -126,9 +138,9 @@ fun ActionButton(value: String) {
 }
 
 @Composable
-fun LoginRedirect(onTextSelected: (String) -> Unit) {
-    val normalText = "Already have an account? Sign in "
-    val redirectText = "here"
+fun LoginRedirect(login: Boolean = true, onTextSelected: (String) -> Unit) {
+    val normalText = if (login) "Already have an account? " else "Don't have an account? "
+    val redirectText = if (login) "Sign in" else "Sign up"
     val annotatedString = buildAnnotatedString {
         append(normalText)
         withStyle(style = SpanStyle(color = Purple80)) {
@@ -138,8 +150,13 @@ fun LoginRedirect(onTextSelected: (String) -> Unit) {
     }
     ClickableText(
         text = annotatedString,
-        onClick = {
-
+        onClick = { offset ->
+            annotatedString.getStringAnnotations(offset, offset)
+                .firstOrNull()?.also { span ->
+                    if (span.item == redirectText) {
+                        onTextSelected(span.item)
+                    }
+                }
         },
         modifier = Modifier.fillMaxWidth().heightIn(50.dp),
         style = TextStyle(

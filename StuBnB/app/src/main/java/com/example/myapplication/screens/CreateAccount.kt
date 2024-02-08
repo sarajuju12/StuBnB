@@ -1,4 +1,4 @@
-package com.example.myapplication.screen
+package com.example.myapplication.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -10,7 +10,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.R
-import com.example.myapplication.app.*
+import com.example.myapplication.components.*
+import com.example.myapplication.routers.Navigator
+import com.example.myapplication.routers.Screen
 
 @Composable
 fun CreateAccount() {
@@ -26,7 +28,9 @@ fun CreateAccount() {
             Spacer(modifier = Modifier.height(50.dp))
             ActionButton(value = "CREATE ACCOUNT")
             Spacer(modifier = Modifier.height(20.dp))
-            LoginRedirect(onTextSelected = {})
+            LoginRedirect(login = true, onTextSelected = {
+                Navigator.navigate(Screen.Login)
+            })
         }
     }
 }
