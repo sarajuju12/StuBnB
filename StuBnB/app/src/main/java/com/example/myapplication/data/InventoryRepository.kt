@@ -7,22 +7,19 @@ class InventoryRepository : IInventoryRepository {
     val temporaryTestingInventoryList: MutableList<Inventory> = mutableListOf()
 
     init {
-        // Populating the temporaryTestingInventoryList
-        temporaryTestingInventoryList.add(
-            Inventory(
-                name = "Textbook",
-                description = "Description for Textbook",
-                imageLinks = mutableListOf("link1a", "link1b")
+        repeat(5) {
+            temporaryTestingInventoryList.add(
+                Inventory(
+                    name = "Item $it",
+                    description = "Description of Item $it",
+                    imageLinks = mutableListOf("link1", "link2", "link3"),
+                    price = 100 * it,
+                    subject = "Subject $it",
+                    category = "Category $it",
+                    condition = "Condition $it"
+                )
             )
-        )
-
-        temporaryTestingInventoryList.add(
-            Inventory(
-                name = "Table",
-                description = "Description for Table",
-                imageLinks = mutableListOf("link2a", "link2b", "link2c")
-            )
-        )
+        }
     }
 
     override fun getInventory() : MutableList<Inventory>{
