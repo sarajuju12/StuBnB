@@ -49,9 +49,3 @@ fun CreateAccount(createAccountViewModel: CreateAccountViewModel = viewModel()) 
         }
     }
 }
-
-@Preview
-@Composable
-fun PreviewSignUp() {
-    CreateAccount()
-}

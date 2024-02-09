@@ -54,9 +54,3 @@ fun Login(loginViewModel: LoginViewModel = viewModel()) {
         }
     }
 }
-
-@Preview
-@Composable
-fun PreviewLogin() {
-    Login()
-}
