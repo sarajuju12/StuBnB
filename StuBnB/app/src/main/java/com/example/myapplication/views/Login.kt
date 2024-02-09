@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.R
 import com.example.myapplication.components.*
+import com.example.myapplication.data.CreateAccountEvent
 import com.example.myapplication.data.LoginEvent
 import com.example.myapplication.data.LoginViewModel
 import com.example.myapplication.routers.Navigator
@@ -42,7 +43,10 @@ fun Login(loginViewModel: LoginViewModel = viewModel()) {
                     loginViewModel.onEvent(LoginEvent.PasswordChange(it))
                 })
             Spacer(modifier = Modifier.height(50.dp))
-            ActionButton(value = "SIGN IN")
+            ActionButton(value = "SIGN IN",
+                buttonClicked = {
+                    loginViewModel.onEvent(LoginEvent.ButtonClicked)
+                })
             Spacer(modifier = Modifier.height(20.dp))
             LoginRedirect(login = false, onTextSelected = {
                 Navigator.navigate(Screen.CreateAccount)

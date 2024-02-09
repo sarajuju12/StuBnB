@@ -125,9 +125,11 @@ fun PasswordTextField(labelValue: String, painterResource: Painter, onTextSelect
 }
 
 @Composable
-fun ActionButton(value: String) {
+fun ActionButton(value: String, buttonClicked : () -> Unit) {
     Button(
-        onClick = { /*TODO*/ },
+        onClick = {
+              buttonClicked.invoke()
+        },
         modifier = Modifier.fillMaxWidth().heightIn(50.dp),
         contentPadding = PaddingValues(),
         colors = ButtonDefaults.buttonColors(Color.Transparent)

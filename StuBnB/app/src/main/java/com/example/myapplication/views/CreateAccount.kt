@@ -38,7 +38,10 @@ fun CreateAccount(createAccountViewModel: CreateAccountViewModel = viewModel()) 
                     createAccountViewModel.onEvent(CreateAccountEvent.PasswordChange(it))
                 })
             Spacer(modifier = Modifier.height(50.dp))
-            ActionButton(value = "CREATE ACCOUNT")
+            ActionButton(value = "CREATE ACCOUNT",
+                buttonClicked = {
+                    createAccountViewModel.onEvent(CreateAccountEvent.ButtonClicked)
+                })
             Spacer(modifier = Modifier.height(20.dp))
             LoginRedirect(login = true, onTextSelected = {
                 Navigator.navigate(Screen.Login)

@@ -20,6 +20,13 @@ class LoginViewModel: ViewModel() {
                     password = event.password
                 )
             }
+            is LoginEvent.ButtonClicked -> {
+                login()
+            }
         }
+    }
+
+    private fun login() {
+        Log.d(ContentValues.TAG, loginState.value.toString())
     }
 }

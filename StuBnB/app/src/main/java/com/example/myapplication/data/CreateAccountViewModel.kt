@@ -25,6 +25,13 @@ class CreateAccountViewModel: ViewModel() {
                     password = event.password
                 )
             }
+            is CreateAccountEvent.ButtonClicked -> {
+                createAccount()
+            }
         }
+    }
+
+    private fun createAccount() {
+        Log.d(TAG, createAccountState.value.toString())
     }
 }
