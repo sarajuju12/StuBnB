@@ -16,16 +16,19 @@ class CreateAccountViewModel: ViewModel() {
                 createAccountState.value = createAccountState.value.copy(
                     name = event.name
                 )
+                validateData()
             }
             is CreateAccountEvent.EmailChange -> {
                 createAccountState.value = createAccountState.value.copy(
                     email = event.email
                 )
+                validateData()
             }
             is CreateAccountEvent.PasswordChange -> {
                 createAccountState.value = createAccountState.value.copy(
                     password = event.password
                 )
+                validateData()
             }
             is CreateAccountEvent.ButtonClicked -> {
                 validateData()

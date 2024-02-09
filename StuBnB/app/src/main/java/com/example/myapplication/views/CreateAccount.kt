@@ -47,7 +47,9 @@ fun CreateAccount(createAccountViewModel: CreateAccountViewModel = viewModel()) 
             ActionButton(value = "CREATE ACCOUNT",
                 buttonClicked = {
                     createAccountViewModel.onEvent(CreateAccountEvent.ButtonClicked)
-                })
+                },
+                isEnabled = if (createAccountViewModel.createAccountState.value.email.isNullOrEmpty() and createAccountViewModel.createAccountState.value.password.isNullOrEmpty()) false else createAccountViewModel.validationPassed.value
+            )
             Spacer(modifier = Modifier.height(20.dp))
             LoginRedirect(login = true, onTextSelected = {
                 Navigator.navigate(Screen.Login)

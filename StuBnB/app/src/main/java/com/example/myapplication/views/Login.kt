@@ -50,7 +50,9 @@ fun Login(loginViewModel: LoginViewModel = viewModel()) {
             ActionButton(value = "SIGN IN",
                 buttonClicked = {
                     loginViewModel.onEvent(LoginEvent.ButtonClicked)
-                })
+                },
+                isEnabled = if (loginViewModel.loginState.value.email.isNullOrEmpty() and loginViewModel.loginState.value.password.isNullOrEmpty()) false else loginViewModel.validationPassed.value
+            )
             Spacer(modifier = Modifier.height(20.dp))
             LoginRedirect(login = false, onTextSelected = {
                 Navigator.navigate(Screen.CreateAccount)

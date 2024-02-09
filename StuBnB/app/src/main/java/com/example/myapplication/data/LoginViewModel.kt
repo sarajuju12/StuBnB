@@ -16,11 +16,13 @@ class LoginViewModel: ViewModel() {
                 loginState.value = loginState.value.copy(
                     email = event.email
                 )
+                validateData()
             }
             is LoginEvent.PasswordChange -> {
                 loginState.value = loginState.value.copy(
                     password = event.password
                 )
+                validateData()
             }
             is LoginEvent.ButtonClicked -> {
                 validateData()

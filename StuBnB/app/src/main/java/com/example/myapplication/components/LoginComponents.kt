@@ -126,7 +126,7 @@ fun PasswordTextField(labelValue: String, painterResource: Painter, onTextSelect
 }
 
 @Composable
-fun ActionButton(value: String, buttonClicked : () -> Unit, isEnabled: Boolean = true) {
+fun ActionButton(value: String, buttonClicked : () -> Unit, isEnabled: Boolean = false) {
     Button(
         onClick = {
               buttonClicked.invoke()
