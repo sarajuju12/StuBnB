@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import HousingList
 import InventoryList
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -34,7 +35,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
-import com.example.myapplication.data.InventoryRepository
+import com.example.myapplication.data.*
+import com.example.myapplication.components.*
+import com.example.myapplication.models.*
 
 
 class BottomNavigationItem(
@@ -112,7 +115,7 @@ fun DisplayBottomBar(){
                             icon = {
                                 //      display badge
                                 //      select the button
-                                //      reference :
+                                //      reference : https://www.composables.com/material3/badgedbox
                                 BadgedBox(
                                     badge = {
                                         if (item.badgeCount != null) {
@@ -156,8 +159,10 @@ fun MainContent(selectedItemIndex: Int, innerPadding: PaddingValues) {
 
 @Composable
 fun HousingScreen() {
-    // to do
-
+    val tempHousingRepository = HousingRepository();
+    MyApplicationTheme {
+        HousingList(tempHousingRepository.getHousing())
+    }
 }
 
 @Composable

@@ -1,6 +1,6 @@
 package com.example.myapplication.data
 
-import com.example.myapplication.models.*
+import com.example.myapplication.models.Inventory
 
 class InventoryRepository : IInventoryRepository {
 
