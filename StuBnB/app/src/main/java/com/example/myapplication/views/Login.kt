@@ -37,11 +37,15 @@ fun Login(loginViewModel: LoginViewModel = viewModel()) {
             TextField(labelValue = "Email", painterResource = painterResource(id = R.drawable.email),
                 onTextSelected = {
                     loginViewModel.onEvent(LoginEvent.EmailChange(it))
-                })
+                },
+                errorStatus = loginViewModel.loginState.value.emailError
+            )
             PasswordTextField(labelValue = "Password", painterResource = painterResource(id = R.drawable.lock),
                 onTextSelected = {
                     loginViewModel.onEvent(LoginEvent.PasswordChange(it))
-                })
+                },
+                errorStatus = loginViewModel.loginState.value.passwordError
+            )
             Spacer(modifier = Modifier.height(50.dp))
             ActionButton(value = "SIGN IN",
                 buttonClicked = {

@@ -48,7 +48,7 @@ fun TitleText(value: String) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TextField(labelValue: String, painterResource: Painter, onTextSelected: (String) -> Unit) {
+fun TextField(labelValue: String, painterResource: Painter, onTextSelected: (String) -> Unit, errorStatus: Boolean = false) {
     val textValue = remember { mutableStateOf("") }
     OutlinedTextField(
         label = {Text(text = labelValue)},
@@ -68,13 +68,14 @@ fun TextField(labelValue: String, painterResource: Painter, onTextSelected: (Str
         modifier = Modifier.fillMaxWidth(),
         leadingIcon = {
             Icon(painter = painterResource, contentDescription = "", modifier = Modifier.size(20.dp))
-        }
+        },
+        isError = !errorStatus
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PasswordTextField(labelValue: String, painterResource: Painter, onTextSelected: (String) -> Unit) {
+fun PasswordTextField(labelValue: String, painterResource: Painter, onTextSelected: (String) -> Unit, errorStatus: Boolean = false) {
     val textValue = remember { mutableStateOf("") }
     val visible = remember { mutableStateOf(false) }
     val focus = LocalFocusManager.current
@@ -119,19 +120,21 @@ fun PasswordTextField(labelValue: String, painterResource: Painter, onTextSelect
             VisualTransformation.None
         } else {
             PasswordVisualTransformation()
-        }
+        },
+        isError = !errorStatus
     )
 }
 
 @Composable
-fun ActionButton(value: String, buttonClicked : () -> Unit) {
+fun ActionButton(value: String, buttonClicked : () -> Unit, isEnabled: Boolean = true) {
     Button(
         onClick = {
               buttonClicked.invoke()
         },
         modifier = Modifier.fillMaxWidth().heightIn(50.dp),
         contentPadding = PaddingValues(),
-        colors = ButtonDefaults.buttonColors(Color.Transparent)
+        colors = ButtonDefaults.buttonColors(Color.Transparent),
+        enabled = isEnabled
     ) {
         Box(modifier = Modifier.fillMaxWidth().heightIn(50.dp).background(
                 color = Purple40,

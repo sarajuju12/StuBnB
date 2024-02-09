@@ -28,15 +28,21 @@ fun CreateAccount(createAccountViewModel: CreateAccountViewModel = viewModel()) 
             TextField(labelValue = "Name", painterResource = painterResource(id = R.drawable.profile),
                 onTextSelected = {
                     createAccountViewModel.onEvent(CreateAccountEvent.NameChange(it))
-                })
+                },
+                errorStatus = createAccountViewModel.createAccountState.value.nameError
+            )
             TextField(labelValue = "Email", painterResource = painterResource(id = R.drawable.email),
                 onTextSelected = {
                     createAccountViewModel.onEvent(CreateAccountEvent.EmailChange(it))
-                })
+                },
+                errorStatus = createAccountViewModel.createAccountState.value.emailError
+            )
             PasswordTextField(labelValue = "Password", painterResource = painterResource(id = R.drawable.lock),
                 onTextSelected = {
                     createAccountViewModel.onEvent(CreateAccountEvent.PasswordChange(it))
-                })
+                },
+                errorStatus = createAccountViewModel.createAccountState.value.passwordError
+            )
             Spacer(modifier = Modifier.height(50.dp))
             ActionButton(value = "CREATE ACCOUNT",
                 buttonClicked = {

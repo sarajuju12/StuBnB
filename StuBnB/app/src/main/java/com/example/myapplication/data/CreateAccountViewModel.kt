@@ -4,9 +4,11 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.example.myapplication.data.validation.Validator
 
 class CreateAccountViewModel: ViewModel() {
-    private var createAccountState = mutableStateOf(CreateAccountState())
+    var createAccountState = mutableStateOf(CreateAccountState())
+    var validationPassed = mutableStateOf(true)
 
     fun onEvent(event: CreateAccountEvent) {
         when(event) {
@@ -26,6 +28,7 @@ class CreateAccountViewModel: ViewModel() {
                 )
             }
             is CreateAccountEvent.ButtonClicked -> {
+                validateData()
                 createAccount()
             }
         }
@@ -33,5 +36,30 @@ class CreateAccountViewModel: ViewModel() {
 
     private fun createAccount() {
         Log.d(TAG, createAccountState.value.toString())
+    }
+
+    private fun validateData() {
+        val nameResult = Validator.validateName(
+            name = createAccountState.value.name
+        )
+
+        val emailResult = Validator.validateEmail(
+            email = createAccountState.value.email
+        )
+
+        val passwordResult = Validator.validatePassword(
+            password = createAccountState.value.password
+        )
+
+        Log.d(TAG, nameResult.toString())
+        Log.d(TAG, emailResult.toString())
+        Log.d(TAG, passwordResult.toString())
+
+        createAccountState.value = createAccountState.value.copy(
+            nameError = nameResult.status,
+            emailError = emailResult.status,
+            passwordError = passwordResult.status
+        )
+        validationPassed.value = nameResult.status && emailResult.status && passwordResult.status
     }
 }
