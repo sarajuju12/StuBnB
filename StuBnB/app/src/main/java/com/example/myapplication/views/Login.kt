@@ -1,4 +1,4 @@
-package com.example.myapplication.screens
+package com.example.myapplication.views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -7,17 +7,20 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.R
 import com.example.myapplication.components.*
+import com.example.myapplication.data.LoginEvent
+import com.example.myapplication.data.LoginViewModel
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
 
 @Composable
-fun Login() {
+fun Login(loginViewModel: LoginViewModel = viewModel()) {
     Surface(
         color = Color.White,
         modifier = Modifier
@@ -30,8 +33,14 @@ fun Login() {
                 Image(painter = painterResource(id = R.drawable.logo), contentDescription = "logo", modifier = Modifier.size(200.dp))
             }
             TitleText(value = "StuBnB")
-            TextField(labelValue = "Email", painterResource = painterResource(id = R.drawable.email))
-            PasswordTextField(labelValue = "Password", painterResource = painterResource(id = R.drawable.lock))
+            TextField(labelValue = "Email", painterResource = painterResource(id = R.drawable.email),
+                onTextSelected = {
+                    loginViewModel.onEvent(LoginEvent.EmailChange(it))
+                })
+            PasswordTextField(labelValue = "Password", painterResource = painterResource(id = R.drawable.lock),
+                onTextSelected = {
+                    loginViewModel.onEvent(LoginEvent.PasswordChange(it))
+                })
             Spacer(modifier = Modifier.height(50.dp))
             ActionButton(value = "SIGN IN")
             Spacer(modifier = Modifier.height(20.dp))

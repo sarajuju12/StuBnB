@@ -49,7 +49,7 @@ fun TitleText(value: String) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TextField(labelValue: String, painterResource: Painter) {
+fun TextField(labelValue: String, painterResource: Painter, onTextSelected: (String) -> Unit) {
     val textValue = remember { mutableStateOf("") }
     OutlinedTextField(
         label = {Text(text = labelValue)},
@@ -59,7 +59,10 @@ fun TextField(labelValue: String, painterResource: Painter) {
             cursorColor = Purple40
         ),
         value = textValue.value,
-        onValueChange = { textValue.value = it},
+        onValueChange = {
+            textValue.value = it
+            onTextSelected(it)
+        },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
         singleLine = true,
         maxLines = 1,
@@ -72,7 +75,7 @@ fun TextField(labelValue: String, painterResource: Painter) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PasswordTextField(labelValue: String, painterResource: Painter) {
+fun PasswordTextField(labelValue: String, painterResource: Painter, onTextSelected: (String) -> Unit) {
     val textValue = remember { mutableStateOf("") }
     val visible = remember { mutableStateOf(false) }
     val focus = LocalFocusManager.current
@@ -89,7 +92,10 @@ fun PasswordTextField(labelValue: String, painterResource: Painter) {
         keyboardActions = KeyboardActions {
             focus.clearFocus()
         },
-        onValueChange = { textValue.value = it},
+        onValueChange = {
+            textValue.value = it
+            onTextSelected(it)
+        },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
         modifier = Modifier.fillMaxWidth(),
         leadingIcon = {
