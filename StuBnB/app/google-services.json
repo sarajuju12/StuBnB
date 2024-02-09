@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "284523462501",
+    "firebase_url": "https://stubnb-c6757-default-rtdb.firebaseio.com",
+    "project_id": "stubnb-c6757",
+    "storage_bucket": "stubnb-c6757.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:284523462501:android:deaf27ebfc83de4860ab8c",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARcF_gHZRjKA9N_VyefbKxnrqOz5QuDn4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

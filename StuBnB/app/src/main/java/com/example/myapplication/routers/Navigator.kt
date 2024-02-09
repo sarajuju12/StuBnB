@@ -9,7 +9,7 @@ sealed class Screen {
 }
 
 object Navigator {
-    var currentScreen: MutableState<Screen> = mutableStateOf(Screen.CreateAccount)
+    var currentScreen: MutableState<Screen> = mutableStateOf(Screen.Login)
 
     fun navigate(dest: Screen) {
         currentScreen.value = dest
