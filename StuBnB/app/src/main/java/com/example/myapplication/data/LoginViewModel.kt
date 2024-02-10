@@ -5,10 +5,14 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.data.validation.Validator
+import com.example.myapplication.routers.Navigator
+import com.example.myapplication.routers.Screen
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginViewModel: ViewModel() {
     var loginState = mutableStateOf(LoginState())
     var validationPassed = mutableStateOf(true)
+    var loginProgress = mutableStateOf(false)
 
     fun onEvent(event: LoginEvent) {
         when(event) {
@@ -26,13 +30,22 @@ class LoginViewModel: ViewModel() {
             }
             is LoginEvent.ButtonClicked -> {
                 validateData()
-                login()
+                login(email = loginState.value.email, password = loginState.value.password)
             }
         }
     }
 
-    private fun login() {
-        Log.d(ContentValues.TAG, loginState.value.toString())
+    private fun login(email: String, password: String) {
+        loginProgress.value = true
+        FirebaseAuth.getInstance()
+            .signInWithEmailAndPassword(loginState.value.email, loginState.value.password)
+            .addOnCompleteListener {
+                loginProgress.value = false
+                if (it.isSuccessful) Navigator.navigate(Screen.Home)
+            }
+            .addOnFailureListener {
+                loginProgress.value = false
+            }
     }
 
     private fun validateData() {

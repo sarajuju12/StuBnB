@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.example.myapplication.views.CreateAccount
+import com.example.myapplication.views.Home
 import com.example.myapplication.views.Login
 
 @Composable
@@ -22,6 +23,9 @@ fun Router() {
                 }
                 is Screen.Login -> {
                     Login()
+                }
+                is Screen.Home -> {
+                    Home()
                 }
             }
         }

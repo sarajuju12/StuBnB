@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 sealed class Screen {
     object CreateAccount: Screen()
     object Login: Screen()
+    object Home: Screen()
 }
 
 object Navigator {

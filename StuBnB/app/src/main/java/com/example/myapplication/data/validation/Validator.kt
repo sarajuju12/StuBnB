@@ -5,7 +5,7 @@ object Validator {
         return ValidationResult((!name.isNullOrEmpty()))
     }
     fun validateEmail(email: String): ValidationResult {
-        return ValidationResult((!email.isNullOrEmpty()))
+        return ValidationResult((!email.isNullOrEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()))
     }
     fun validatePassword(password: String): ValidationResult {
         return ValidationResult((!password.isNullOrEmpty() && password.length >= 6))
