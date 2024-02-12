@@ -15,6 +15,7 @@ class CreateAccountViewModel: ViewModel() {
     var createAccountState = mutableStateOf(CreateAccountState())
     var validationPassed = mutableStateOf(true)
     var createAccountProgress = mutableStateOf(false)
+    var showAlert = mutableStateOf(false)
 
     fun onEvent(event: CreateAccountEvent) {
         when(event) {
@@ -53,6 +54,7 @@ class CreateAccountViewModel: ViewModel() {
             }
             .addOnFailureListener {
                 createAccountProgress.value = false
+                showAlert.value = true
             }
     }
 

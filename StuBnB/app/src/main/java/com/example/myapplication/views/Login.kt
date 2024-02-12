@@ -73,7 +73,7 @@ fun Login(loginViewModel: LoginViewModel = viewModel()) {
             AlertDialogLogin(
                 onDismissRequest = { loginViewModel.showAlert.value = false },
                 dialogTitle = "Error",
-                dialogText = "The username or password you entered is incorrect."
+                dialogText = "The email or password you entered is incorrect."
             )
         }
     }

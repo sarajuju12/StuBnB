@@ -61,5 +61,12 @@ fun CreateAccount(createAccountViewModel: CreateAccountViewModel = viewModel()) 
         if (createAccountViewModel.createAccountProgress.value) {
             CircularProgressIndicator()
         }
+        if (createAccountViewModel.showAlert.value) {
+            AlertDialogLogin(
+                onDismissRequest = { createAccountViewModel.showAlert.value = false },
+                dialogTitle = "Error",
+                dialogText = "The email you entered is associated with an existing account."
+            )
+        }
     }
 }
