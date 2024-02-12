@@ -5,7 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -68,6 +68,13 @@ fun Login(loginViewModel: LoginViewModel = viewModel()) {
         }
         if (loginViewModel.loginProgress.value) {
             CircularProgressIndicator()
+        }
+        if (loginViewModel.showAlert.value) {
+            AlertDialogLogin(
+                onDismissRequest = { loginViewModel.showAlert.value = false },
+                dialogTitle = "Error",
+                dialogText = "The username or password you entered is incorrect."
+            )
         }
     }
 }

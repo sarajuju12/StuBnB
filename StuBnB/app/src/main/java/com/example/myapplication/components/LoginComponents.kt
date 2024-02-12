@@ -175,3 +175,33 @@ fun LoginRedirect(login: Boolean = true, onTextSelected: (String) -> Unit) {
         )
     )
 }
+
+@Composable
+fun AlertDialogLogin(
+    onDismissRequest: () -> Unit,
+    dialogTitle: String,
+    dialogText: String,
+) {
+    AlertDialog(
+        title = {
+            Text(text = dialogTitle)
+        },
+        text = {
+            Text(text = dialogText)
+        },
+        onDismissRequest = {
+            onDismissRequest()
+        },
+        confirmButton = {
+        },
+        dismissButton = {
+            TextButton(
+                onClick = {
+                    onDismissRequest()
+                }
+            ) {
+                Text("OK")
+            }
+        }
+    )
+}

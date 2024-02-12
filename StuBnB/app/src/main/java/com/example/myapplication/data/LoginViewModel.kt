@@ -13,6 +13,7 @@ class LoginViewModel: ViewModel() {
     var loginState = mutableStateOf(LoginState())
     var validationPassed = mutableStateOf(true)
     var loginProgress = mutableStateOf(false)
+    var showAlert = mutableStateOf(false)
 
     fun onEvent(event: LoginEvent) {
         when(event) {
@@ -30,12 +31,12 @@ class LoginViewModel: ViewModel() {
             }
             is LoginEvent.ButtonClicked -> {
                 validateData()
-                login(email = loginState.value.email, password = loginState.value.password)
+                login()
             }
         }
     }
 
-    private fun login(email: String, password: String) {
+    private fun login() {
         loginProgress.value = true
         FirebaseAuth.getInstance()
             .signInWithEmailAndPassword(loginState.value.email, loginState.value.password)
@@ -45,6 +46,7 @@ class LoginViewModel: ViewModel() {
             }
             .addOnFailureListener {
                 loginProgress.value = false
+                showAlert.value = true
             }
     }
 

@@ -4,6 +4,7 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.example.myapplication.components.AlertDialogLogin
 import com.example.myapplication.data.validation.Validator
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
@@ -48,7 +49,7 @@ class CreateAccountViewModel: ViewModel() {
             .createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {
                 createAccountProgress.value = false
-                if (it.isSuccessful) Navigator.navigate(Screen.Home)
+                if (it.isSuccessful) Navigator.navigate(Screen.Login)
             }
             .addOnFailureListener {
                 createAccountProgress.value = false
