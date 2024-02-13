@@ -2,17 +2,28 @@ package com.example.myapplication.data
 
 import com.example.myapplication.models.Housing
 import com.example.myapplication.data.IHousingRepository
+import com.example.myapplication.models.Date
 
 class HousingRepository : IHousingRepository {
 
     override val temporaryTestingHousingList: MutableList<Housing> = mutableListOf()
 
     init {
+
+        // dummy dates
+        val startDate = Date(2019, 1, 28)
+        val endDate = Date(2024, 2, 4)
+
         temporaryTestingHousingList.add(
             Housing(
                 name = "House",
                 description = "Description for House",
-                imageLinks = mutableListOf("link1a", "link1b") // links
+                imageLinks = mutableListOf("link1a", "link1b"), // links
+
+                seller = "cs346",
+                price = 14,
+                startDate = startDate,
+                endDate = endDate,
             )
         )
 
@@ -20,9 +31,15 @@ class HousingRepository : IHousingRepository {
             Housing(
                 name = "Table",
                 description = "Description for Table",
-                imageLinks = mutableListOf("link2a", "link2b", "link2c")
+                imageLinks = mutableListOf("link2a", "link2b", "link2c"),
+
+                seller = "cs346",
+                price = 14,
+                startDate = startDate,
+                endDate = endDate,
             )
         )
+
     }
 
     override fun getHousing() : MutableList<Housing>{
@@ -32,5 +49,4 @@ class HousingRepository : IHousingRepository {
     override fun getHousingOfUser(UserID : Integer): MutableList<Housing>{
         return temporaryTestingHousingList;
     }
-
 }
