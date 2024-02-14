@@ -125,7 +125,7 @@ fun DisplayBottomBar(){
                 }
             }
         ) {
-                innerPadding -> MainContent(selectedIndex, innerPadding)
+            innerPadding -> MainContent(selectedIndex, innerPadding)
             // pass in the index to jump to different tabs
         }
     }
