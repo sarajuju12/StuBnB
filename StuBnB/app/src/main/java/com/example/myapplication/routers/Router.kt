@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.Color
 import com.example.myapplication.views.CreateAccount
 import com.example.myapplication.views.Home
 import com.example.myapplication.views.Login
+import com.example.myapplication.views.UploadInventory
 
 @Composable
 fun Router() {
@@ -23,9 +24,13 @@ fun Router() {
                 }
                 is Screen.Login -> {
                     Login()
+                    //Home()
                 }
                 is Screen.Home -> {
                     Home()
+                }
+                is Screen.UploadInventory -> {
+                    UploadInventory()
                 }
             }
         }
