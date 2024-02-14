@@ -33,7 +33,7 @@ fun InventoryItem(inventory: Inventory) {
     ) {
         // Image
         Image(
-            painter = painterResource (id = R.drawable.anchor), // Placeholder image
+            painter = painterResource (id = R.drawable.picture), // Placeholder image
             contentDescription = "Inventory Picture",
             modifier = Modifier.size(64.dp),
             contentScale = ContentScale.Crop

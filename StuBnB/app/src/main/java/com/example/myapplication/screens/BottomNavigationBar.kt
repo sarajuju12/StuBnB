@@ -1,5 +1,6 @@
 package com.example.myapplication.screens
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -22,6 +23,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.myapplication.components.ActionButton
 import com.example.myapplication.data.*
 
 
@@ -169,7 +172,9 @@ fun InboxScreen() {
 }
 
 @Composable
-fun ProfileScreen() {
-
+fun ProfileScreen(homeViewModel: HomeViewModel = viewModel()) {
+    Column(modifier = Modifier.fillMaxSize()) {
+        ActionButton(value = "LOG OUT", buttonClicked = { homeViewModel.logout() }, isEnabled = true)
+    }
 }
 

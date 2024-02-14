@@ -49,7 +49,7 @@ fun HousingItem(housing: Housing, onClick: () -> Unit) {
     ) {
         // Image
         Image(
-            painter = painterResource (id = R.drawable.anchor), // Placeholder image
+            painter = painterResource (id = R.drawable.picture), // Placeholder image
             contentDescription = "Housing Picture",
             modifier = Modifier.size(64.dp),
             contentScale = ContentScale.Crop
