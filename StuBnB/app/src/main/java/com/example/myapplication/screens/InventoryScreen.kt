@@ -1,3 +1,5 @@
+package com.example.myapplication.screens
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -6,13 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.myapplication.data.InventoryRepository
-import com.example.myapplication.components.InventoryListComponent
 import com.example.myapplication.models.Inventory
-import com.example.myapplication.ui.theme.MyApplicationTheme
 import com.example.myapplication.R
 
 

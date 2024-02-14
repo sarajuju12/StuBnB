@@ -1,43 +1,31 @@
-package com.example.myapplication
+package com.example.myapplication.screens
 
-import InventoryList
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.myapplication.ui.theme.MyApplicationTheme
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
-import com.example.myapplication.data.InventoryRepository
+import com.example.myapplication.data.*
 
 
-class BottomNavigationItem(
+data class BottomNavigationItem(
     val title: String,
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector,
@@ -112,7 +100,7 @@ fun DisplayBottomBar(){
                             icon = {
                                 //      display badge
                                 //      select the button
-                                //      reference :
+                                //      reference : https://www.composables.com/material3/badgedbox
                                 BadgedBox(
                                     badge = {
                                         if (item.badgeCount != null) {
@@ -137,7 +125,7 @@ fun DisplayBottomBar(){
                 }
             }
         ) {
-                innerPadding -> MainContent(selectedIndex, innerPadding)
+            innerPadding -> MainContent(selectedIndex, innerPadding)
             // pass in the index to jump to different tabs
         }
     }
@@ -156,8 +144,10 @@ fun MainContent(selectedItemIndex: Int, innerPadding: PaddingValues) {
 
 @Composable
 fun HousingScreen() {
-    // to do
-
+    val tempHousingRepository = HousingRepository()
+    MyApplicationTheme {
+        HousingList(tempHousingRepository.getHousing())
+    }
 }
 
 @Composable
