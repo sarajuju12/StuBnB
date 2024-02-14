@@ -29,6 +29,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.components.ActionButton
 import com.example.myapplication.data.*
 import com.example.myapplication.models.Inventory
+import com.example.myapplication.views.UploadInventory
 
 
 data class BottomNavigationItem(
@@ -183,7 +184,11 @@ fun WishScreen() {
 
 @Composable
 fun InboxScreen() {
-
+    /*
+    MyApplicationTheme {
+        UploadInventory()
+    }
+    */
 }
 
 @Composable
@@ -191,5 +196,6 @@ fun ProfileScreen(homeViewModel: HomeViewModel = viewModel()) {
     Column(modifier = Modifier.fillMaxSize()) {
         ActionButton(value = "LOG OUT", buttonClicked = { homeViewModel.logout() }, isEnabled = true)
     }
+    DisplayProfileScreen()
 }
 

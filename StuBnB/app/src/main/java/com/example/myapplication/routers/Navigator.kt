@@ -7,6 +7,7 @@ sealed class Screen {
     object CreateAccount: Screen()
     object Login: Screen()
     object Home: Screen()
+    object UploadInventory: Screen()
 }
 
 object Navigator {
