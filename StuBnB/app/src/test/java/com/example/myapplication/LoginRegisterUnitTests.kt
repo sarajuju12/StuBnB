@@ -1,5 +1,7 @@
 package com.example.myapplication
 
+import com.example.myapplication.data.CreateAccountEvent
+import com.example.myapplication.data.CreateAccountViewModel
 import com.example.myapplication.data.LoginEvent
 import com.example.myapplication.data.LoginViewModel
 import junit.framework.TestCase.assertFalse
@@ -9,9 +11,10 @@ import org.junit.Test
 class LoginViewModelTest {
 
     private val loginViewModel = LoginViewModel()
+    private val createAccountViewModel = CreateAccountViewModel()
 
     @Test
-    fun validateData() {
+    fun loginValidateData() {
         // Test valid email and password
         loginViewModel.onEvent(LoginEvent.EmailChange("test@example.com"))
         loginViewModel.onEvent(LoginEvent.PasswordChange("123456"))
@@ -31,5 +34,23 @@ class LoginViewModelTest {
         loginViewModel.onEvent(LoginEvent.EmailChange("invalidemail"))
         loginViewModel.onEvent(LoginEvent.PasswordChange("123"))
         assertFalse(loginViewModel.validationPassed.value!!)
+    }
+
+    @Test
+    fun registerValidateData() {
+        // Test invalid email and valid password
+        createAccountViewModel.onEvent(CreateAccountEvent.EmailChange("invalidemail"))
+        createAccountViewModel.onEvent(CreateAccountEvent.PasswordChange("123456"))
+        assertFalse(createAccountViewModel.validationPassed.value!!)
+
+        // Test valid email and invalid password
+        createAccountViewModel.onEvent(CreateAccountEvent.EmailChange("test@example.com"))
+        createAccountViewModel.onEvent(CreateAccountEvent.PasswordChange("123"))
+        assertFalse(createAccountViewModel.validationPassed.value!!)
+
+        // Test invalid email and invalid password
+        createAccountViewModel.onEvent(CreateAccountEvent.EmailChange("invalidemail"))
+        createAccountViewModel.onEvent(CreateAccountEvent.PasswordChange("123"))
+        assertFalse(createAccountViewModel.validationPassed.value!!)
     }
 }
