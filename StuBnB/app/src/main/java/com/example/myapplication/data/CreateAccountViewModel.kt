@@ -1,15 +1,11 @@
 package com.example.myapplication.data
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.example.myapplication.components.AlertDialogLogin
 import com.example.myapplication.data.validation.Validator
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuth.AuthStateListener
 
 class CreateAccountViewModel: ViewModel() {
     var createAccountState = mutableStateOf(CreateAccountState())
@@ -70,10 +66,6 @@ class CreateAccountViewModel: ViewModel() {
         val passwordResult = Validator.validatePassword(
             password = createAccountState.value.password
         )
-
-        Log.d(TAG, nameResult.toString())
-        Log.d(TAG, emailResult.toString())
-        Log.d(TAG, passwordResult.toString())
 
         createAccountState.value = createAccountState.value.copy(
             nameError = nameResult.status,
