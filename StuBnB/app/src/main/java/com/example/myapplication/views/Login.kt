@@ -27,7 +27,10 @@ fun Login(loginViewModel: LoginViewModel = viewModel()) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Surface(
             color = Color.White,
-            modifier = Modifier.fillMaxSize().background(Color.White).padding(30.dp)
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White)
+                .padding(30.dp)
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
@@ -74,6 +77,17 @@ fun Login(loginViewModel: LoginViewModel = viewModel()) {
                 onDismissRequest = { loginViewModel.showAlert.value = false },
                 dialogTitle = "Error",
                 dialogText = "The email or password you entered is incorrect."
+            )
+        }
+        if (loginViewModel.twoFactorAuth.value) {
+            TwoFactorAuthentication(
+                onDismissRequest = { loginViewModel.twoFactorAuth.value = false },
+                onConfirmation = {
+                    loginViewModel.twoFactorAuth.value = false
+                    Navigator.navigate(Screen.Home)
+                },
+                dialogTitle = "Two-Factor Authentication",
+                dialogText = "Are you logging in to StuBnB?"
             )
         }
     }

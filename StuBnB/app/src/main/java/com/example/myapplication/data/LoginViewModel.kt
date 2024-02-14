@@ -14,6 +14,7 @@ class LoginViewModel: ViewModel() {
     var validationPassed = mutableStateOf(true)
     var loginProgress = mutableStateOf(false)
     var showAlert = mutableStateOf(false)
+    var twoFactorAuth = mutableStateOf(false)
 
     fun onEvent(event: LoginEvent) {
         when(event) {
@@ -42,7 +43,8 @@ class LoginViewModel: ViewModel() {
             .signInWithEmailAndPassword(loginState.value.email, loginState.value.password)
             .addOnCompleteListener {
                 loginProgress.value = false
-                if (it.isSuccessful) Navigator.navigate(Screen.Home)
+                if (it.isSuccessful) twoFactorAuth.value = true
+                    // Navigator.navigate(Screen.Home)
             }
             .addOnFailureListener {
                 loginProgress.value = false
