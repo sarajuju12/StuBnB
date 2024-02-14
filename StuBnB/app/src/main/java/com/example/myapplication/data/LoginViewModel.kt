@@ -1,12 +1,8 @@
 package com.example.myapplication.data
 
-import android.content.ContentValues
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.data.validation.Validator
-import com.example.myapplication.routers.Navigator
-import com.example.myapplication.routers.Screen
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginViewModel: ViewModel() {
@@ -37,7 +33,7 @@ class LoginViewModel: ViewModel() {
         }
     }
 
-    private fun login() {
+    fun login() {
         loginProgress.value = true
         FirebaseAuth.getInstance()
             .signInWithEmailAndPassword(loginState.value.email, loginState.value.password)
@@ -61,9 +57,6 @@ class LoginViewModel: ViewModel() {
         val passwordResult = Validator.validatePassword(
             password = loginState.value.password
         )
-
-        Log.d(ContentValues.TAG, emailResult.toString())
-        Log.d(ContentValues.TAG, passwordResult.toString())
 
         loginState.value = loginState.value.copy(
             emailError = emailResult.status,
