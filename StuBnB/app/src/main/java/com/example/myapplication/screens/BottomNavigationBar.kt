@@ -164,12 +164,12 @@ fun InventoryScreen() {
 
     // Fetch inventory data when the screen is first displayed or recomposed
     LaunchedEffect(key1 = true) {
-        tempInventoryRepository.getInventoryOfUser(object : InventoryCallback {
+        tempInventoryRepository.getInventory(object : InventoryCallback {
             override fun onInventoryLoaded(inventoryList: MutableList<Inventory>) {
                 // Update the state with the new inventory data
                 listOfInventory.value = inventoryList
             }
-        }, "user-1")
+        })
     }
 
     MyApplicationTheme {
