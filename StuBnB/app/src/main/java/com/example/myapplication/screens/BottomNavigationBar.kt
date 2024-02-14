@@ -18,14 +18,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.components.ActionButton
 import com.example.myapplication.data.*
+import com.example.myapplication.models.Inventory
 
 
 data class BottomNavigationItem(
@@ -155,9 +158,21 @@ fun HousingScreen() {
 
 @Composable
 fun InventoryScreen() {
-    val tempInventoryRepository = InventoryRepository();
+    val tempInventoryRepository = InventoryRepository()
+    val listOfInventory = remember { mutableStateOf<List<Inventory>>(emptyList()) }
+
+    // Fetch inventory data when the screen is first displayed or recomposed
+    LaunchedEffect(key1 = true) {
+        tempInventoryRepository.getInventoryOfUser(object : InventoryCallback {
+            override fun onInventoryLoaded(inventoryList: MutableList<Inventory>) {
+                // Update the state with the new inventory data
+                listOfInventory.value = inventoryList
+            }
+        }, "user-1")
+    }
+
     MyApplicationTheme {
-        InventoryList(tempInventoryRepository.getInventory())
+        InventoryList(listOfInventory.value)
     }
 }
 

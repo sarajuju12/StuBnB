@@ -16,5 +16,21 @@ class MainActivity : ComponentActivity() {
         setContent {
             Router()
         }
+
+        //        val temporaryInventory = Inventory(
+//            name = "item-2",
+//            userId = "user-2",
+//            description = "Description of Item 2",
+//            imageLinks = mutableListOf("link1", "link2", "link3"),
+//            price = 100 * 3,
+//            subject = "Subject 2",
+//            category = "Category 2",
+//            condition = "Condition 2"
+//        )
+//
+//        val invRepos = InventoryRepository();
+//
+//        invRepos.createInventory(temporaryInventory)
+//        invRepos.createInventory(temporaryInventory)
     }
 }
