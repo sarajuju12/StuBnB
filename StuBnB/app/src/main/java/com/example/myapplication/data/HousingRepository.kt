@@ -29,8 +29,8 @@ class HousingRepository : IHousingRepository {
 
         temporaryTestingHousingList.add(   // member function
             Housing(
-                name = "Table",
-                description = "Description for Table",
+                name = "House2",
+                description = "Description for House2",
                 imageLinks = mutableListOf("link2a", "link2b", "link2c"),
 
                 seller = "cs346",
