@@ -32,7 +32,7 @@ data class BottomNavigationItem(
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector,
     val hasNews: MutableState<Boolean>,
-    val badgeCount: MutableState<Int> // can have no badge
+    val badgeCount: MutableState<Int> 
 )
 
 
