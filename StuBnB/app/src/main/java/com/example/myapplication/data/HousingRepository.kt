@@ -14,31 +14,35 @@ class HousingRepository : IHousingRepository {
         val startDate = Date(2019, 1, 28)
         val endDate = Date(2024, 2, 4)
 
-        temporaryTestingHousingList.add(
-            Housing(
-                name = "House",
-                description = "Description for House",
-                imageLinks = mutableListOf("link1a", "link1b"), // links
+        // dummy data
+        for (i in 1..10){
+            temporaryTestingHousingList.add(
+                Housing(
+                    name = "House",
+                    description = "Description for House",
+                    imageLinks = mutableListOf("link1a", "link1b"), // links
 
-                seller = "cs346",
-                price = 14,
-                startDate = startDate,
-                endDate = endDate,
+                    seller = "cs346",
+                    price = 14,
+                    startDate = startDate,
+                    endDate = endDate,
+                )
             )
-        )
 
-        temporaryTestingHousingList.add(   // member function
-            Housing(
-                name = "House2",
-                description = "Description for House2",
-                imageLinks = mutableListOf("link2a", "link2b", "link2c"),
+            temporaryTestingHousingList.add(   // member function
+                Housing(
+                    name = "House2",
+                    description = "Description for House2",
+                    imageLinks = mutableListOf("link2a", "link2b", "link2c"),
 
-                seller = "cs346",
-                price = 14,
-                startDate = startDate,
-                endDate = endDate,
+                    seller = "cs346",
+                    price = 14,
+                    startDate = startDate,
+                    endDate = endDate,
+                )
             )
-        )
+        }
+
 
     }
 

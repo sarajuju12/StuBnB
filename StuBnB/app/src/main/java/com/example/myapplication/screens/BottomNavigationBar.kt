@@ -18,7 +18,6 @@ import com.example.myapplication.data.InventoryRepository
 import com.example.myapplication.models.Inventory
 import com.example.myapplication.ui.theme.MyApplicationTheme
 
-
 data class BottomNavigationItem(
     val title: String,
     val selectedIcon: ImageVector,
@@ -78,55 +77,45 @@ fun DisplayBottomBar(){
     // *** initially at state 0, the housing tab
     var selectedIndex by rememberSaveable { mutableStateOf(0) }
 
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
-    ) {
-        @OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
-        Scaffold(
-            bottomBar = {
-                NavigationBar {
-                    items.forEachIndexed { index, item ->
-                        // isSelected indicate if this tab is selected at the moment
-                        var isSelected = selectedIndex == index
+    @OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
+    Scaffold(
+        bottomBar = {
+            NavigationBar {
+                items.forEachIndexed { index, item ->   // loop over the navigation items
+                    var isSelected = selectedIndex == index
 
-                        NavigationBarItem(
-                            selected = isSelected,  // true if index is selected
-                            onClick = { selectedIndex = index },
-                            label = { Text(text = item.title) },
-                            alwaysShowLabel = true,     // easier to visualize
-
-                            icon = {
-                                //      display badge
-                                //      select the button
-                                //      reference : https://www.composables.com/material3/badgedbox
-                                BadgedBox(
-                                    badge = {
-                                        if (item.badgeCount.value != 0) {
-                                            Badge { Text(text = item.badgeCount.value.toString()) }
-                                        } else if (item.hasNews.value) {
-                                            Badge()
-                                        }
+                    NavigationBarItem(
+                        selected = isSelected,
+                        onClick = { selectedIndex = index },
+                        label = { Text(text = item.title) },
+                        alwaysShowLabel = true,     // easier to visualize
+                        icon = {
+                            //      reference : https://www.composables.com/material3/badgedbox
+                            BadgedBox(
+                                badge = {
+                                    if (item.badgeCount.value != 0) {
+                                        Badge { Text(text = item.badgeCount.value.toString()) }
+                                    } else if (item.hasNews.value) {
+                                        Badge()
                                     }
-                                ) {// content
-                                    Icon(
-                                        imageVector = if (isSelected) {
-                                            item.selectedIcon
-                                        } else {
-                                            item.unselectedIcon
-                                        },
-                                        contentDescription = item.title
-                                    )
                                 }
+                            ) {// content
+                                Icon(
+                                    imageVector = if (isSelected) {
+                                        item.selectedIcon
+                                    } else {
+                                        item.unselectedIcon
+                                    },
+                                    contentDescription = item.title
+                                )
                             }
-                        )
-                    }
+                        }
+                    )
                 }
             }
-        ) {
-            innerPadding -> MainContent(selectedIndex, innerPadding, items)
-            // pass in the index to jump to different tabs
         }
+    ) {
+        innerPadding -> MainContent(selectedIndex, innerPadding, items)
     }
 }
 
