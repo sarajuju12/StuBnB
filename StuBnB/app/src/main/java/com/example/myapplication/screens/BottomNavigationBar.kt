@@ -1,30 +1,22 @@
 package com.example.myapplication.screens
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.ui.Modifier
-import com.example.myapplication.ui.theme.MyApplicationTheme
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
-import androidx.compose.material3.Badge
-import androidx.compose.material3.BadgedBox
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.myapplication.components.ActionButton
-import com.example.myapplication.data.*
+import com.example.myapplication.data.HomeViewModel
+import com.example.myapplication.data.HousingRepository
+import com.example.myapplication.data.InventoryCallback
+import com.example.myapplication.data.InventoryRepository
 import com.example.myapplication.models.Inventory
-import com.example.myapplication.views.UploadInventory
+import com.example.myapplication.ui.theme.MyApplicationTheme
 
 
 data class BottomNavigationItem(
@@ -214,9 +206,6 @@ fun InboxScreen() {
 
 @Composable
 fun ProfileScreen(homeViewModel: HomeViewModel = viewModel()) {
-    Column(modifier = Modifier.fillMaxSize()) {
-        ActionButton(value = "LOG OUT", buttonClicked = { homeViewModel.logout() }, isEnabled = true)
-    }
-    DisplayProfileScreen()
+    DisplayProfileScreen(homeViewModel)
 }
 

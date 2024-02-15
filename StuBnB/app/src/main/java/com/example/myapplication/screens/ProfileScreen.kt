@@ -1,35 +1,21 @@
 package com.example.myapplication.screens
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.myapplication.components.ActionButton
+import com.example.myapplication.data.HomeViewModel
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
-import com.example.myapplication.ui.theme.MyApplicationTheme
-import com.example.myapplication.views.UploadInventory
 
 @Composable
-fun DisplayProfileScreen() {
+fun DisplayProfileScreen(homeViewModel: HomeViewModel = viewModel()) {
 
     var showDialog by remember { mutableStateOf(false)}
 
@@ -47,6 +33,9 @@ fun DisplayProfileScreen() {
             Button(onClick = { showDialog=true }) {
                 Text("Upload a listing")
 
+            }
+            Column(modifier = Modifier.fillMaxSize()) {
+                ActionButton(value = "LOG OUT", buttonClicked = { homeViewModel.logout() }, isEnabled = true)
             }
         }
     }
