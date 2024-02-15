@@ -9,6 +9,6 @@ Team members: Stanley Wang (s927wang@uwaterloo.ca), Benjamin Wen (b22wen@uwaterl
 
 **Project Development**
 
-Device: Pixel 6 Pro
+Supported device: Pixel 6 Pro
 
 Sprint 1 release notes: https://git.uwaterloo.ca/j556xu/team-7/-/releases/1.0.0
