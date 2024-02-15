@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.sp
 import com.example.myapplication.models.Housing
 import com.example.myapplication.R
 import com.example.myapplication.ui.theme.MyApplicationTheme
+import com.example.myapplication.routers.*
 
 
 @Composable
@@ -35,7 +36,8 @@ fun HousingList(housings: List<Housing>) {
     }
 
     if (selectedIndex >= 0) {
-        HousingDescriptionScreen(housings[selectedIndex])
+        Navigator.navigate(Screen.House) // navigator is an object
+
     }
 }
 
@@ -58,18 +60,6 @@ fun HousingItem(housing: Housing, onClick: () -> Unit) {
         Spacer(modifier = Modifier.width(16.dp))
 
         // Inventory Details
-        Column {
-            Text(text = housing.name, fontSize = 20.sp)
-            Text(text = housing.description, fontSize = 14.sp)
-            Text(text = housing.seller, fontSize = 14.sp)
-        }
-    }
-}
-
-
-@Composable
-fun HousingDescriptionScreen(housing: Housing){
-    MyApplicationTheme {
         Column {
             Text(text = housing.name, fontSize = 20.sp)
             Text(text = housing.description, fontSize = 14.sp)

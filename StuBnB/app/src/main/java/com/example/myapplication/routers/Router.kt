@@ -10,6 +10,8 @@ import com.example.myapplication.views.CreateAccount
 import com.example.myapplication.views.Home
 import com.example.myapplication.views.Login
 import com.example.myapplication.views.UploadInventory
+import com.example.myapplication.views.*
+
 
 @Composable
 fun Router() {
@@ -29,8 +31,12 @@ fun Router() {
                 is Screen.Home -> {
                     Home()
                 }
+
                 is Screen.UploadInventory -> {
                     UploadInventory()
+                }
+                is Screen.House -> {
+                    House()
                 }
             }
         }
