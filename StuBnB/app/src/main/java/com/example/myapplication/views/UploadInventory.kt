@@ -1,8 +1,6 @@
 package com.example.myapplication.views
 
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
@@ -16,26 +14,27 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.R
+import com.example.myapplication.components.ActionButton
 import com.example.myapplication.components.TextField
 import com.example.myapplication.components.TitleText
-import com.example.myapplication.data.InventoryRepository
 import com.example.myapplication.data.LoginViewModel
-import com.example.myapplication.models.Inventory
+import com.example.myapplication.data.UploadInventoryEvent
+import com.example.myapplication.data.UploadInventoryViewModel
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun UploadInventory(loginViewModel: LoginViewModel = viewModel()) {
+fun UploadInventory(loginViewModel: LoginViewModel = viewModel(), uploadInventoryViewModel: UploadInventoryViewModel = viewModel()) {
 
-    var name = ""
+//    var name = ""
     var userId = loginViewModel.getEncryptedEmail() //placeholder
-    var description = ""
+//    var description = ""
     var imageLinks = mutableListOf("picture.png") //placeholder
-    var price = 0
-    var subject = ""
-    var category = ""
-    var condition = ""
+//    var price = 0
+//    var subject = ""
+//    var category = ""
+//    var condition = ""
+    uploadInventoryViewModel.setEmailAndImage(userId, imageLinks)
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Surface(
@@ -46,13 +45,15 @@ fun UploadInventory(loginViewModel: LoginViewModel = viewModel()) {
                 TitleText(value = "Add Your Inventory Info")
                 TextField(labelValue = "Item Name", painterResource = painterResource(id = R.drawable.profile),
                     onTextSelected = {
-                        name = it
-                    }
+                        uploadInventoryViewModel.onEvent(UploadInventoryEvent.NameChange(it))
+                    },
+                    errorStatus = uploadInventoryViewModel.uploadState.value.nameError
                 )
                 TextField(labelValue = "Description", painterResource = painterResource(id = R.drawable.profile),
                     onTextSelected = {
-                        description = it
-                    }
+                        uploadInventoryViewModel.onEvent(UploadInventoryEvent.DescriptionChange(it))
+                    },
+                    errorStatus = uploadInventoryViewModel.uploadState.value.descriptionError
                 )
                 /*TextField(labelValue = "Item Name", painterResource = painterResource(id = R.drawable.profile),
                     onTextSelected = {
@@ -61,40 +62,49 @@ fun UploadInventory(loginViewModel: LoginViewModel = viewModel()) {
                 )*/
                 TextField(labelValue = "Price", painterResource = painterResource(id = R.drawable.profile),
                     onTextSelected = {
-                        price = it.toInt()
-                    }
+                        uploadInventoryViewModel.onEvent(UploadInventoryEvent.PriceChange(it))
+                    },
+                    errorStatus = uploadInventoryViewModel.uploadState.value.priceError
                 )
                 TextField(labelValue = "Subject", painterResource = painterResource(id = R.drawable.profile),
                     onTextSelected = {
-                        subject = it
-                    }
+                        uploadInventoryViewModel.onEvent(UploadInventoryEvent.SubjectChange(it))
+                    },
+                    errorStatus = uploadInventoryViewModel.uploadState.value.subjectError
                 )
                 TextField(labelValue = "Category", painterResource = painterResource(id = R.drawable.profile),
                     onTextSelected = {
-                        category = it
-                    }
+                        uploadInventoryViewModel.onEvent(UploadInventoryEvent.CategoryChange(it))
+                    },
+                    errorStatus = uploadInventoryViewModel.uploadState.value.categoryError
                 )
                 TextField(labelValue = "Condition", painterResource = painterResource(id = R.drawable.profile),
                     onTextSelected = {
-                        condition = it
-                    }
+                        uploadInventoryViewModel.onEvent(UploadInventoryEvent.ConditionChange(it))
+                    },
+                    errorStatus = uploadInventoryViewModel.uploadState.value.conditionError
                 )
 
                 Spacer(modifier = Modifier.height(50.dp))
 
-                Button(
-                    onClick = {
-                        val invRep = InventoryRepository()
-                        val inventoryTemp = Inventory(
-                             name, userId, description, imageLinks, price, subject, category, condition
-                        )
-                        invRep.createInventory(inventoryTemp)
-                        Navigator.navigate(Screen.Home)
-                    }
-                ) {
-                    Text(text = "UPLOAD INVENTORY LISTING")
-                    //value = "UPLOAD INVENTORY LISTING",
-                }
+                ActionButton(
+                    value = "UPLOAD INVENTORY LISTING",
+                    buttonClicked = {
+                        uploadInventoryViewModel.onEvent(UploadInventoryEvent.ButtonClicked)
+//                        uploadListingViewModel.uploadListing(
+//                            name, userId, description, imageLinks, price
+//                        )
+//                        val invRep = InventoryRepository()
+//                        val inventoryTemp = Inventory(
+//                             name, userId, description, imageLinks, price, subject, category, condition
+//                        )
+//                        invRep.createInventory(inventoryTemp)
+//                        Navigator.navigate(Screen.DisplayProfileScreen)
+                    },
+                    isEnabled = if (uploadInventoryViewModel.uploadState.value.name.isNullOrEmpty() and uploadInventoryViewModel.uploadState.value.description.isNullOrEmpty() and
+                        uploadInventoryViewModel.uploadState.value.price.isNullOrEmpty() and uploadInventoryViewModel.uploadState.value.subject.isNullOrEmpty() and
+                        uploadInventoryViewModel.uploadState.value.category.isNullOrEmpty() and uploadInventoryViewModel.uploadState.value.condition.isNullOrEmpty()) false else uploadInventoryViewModel.validationPassed.value
+                )
                 Spacer(modifier = Modifier.height(20.dp))
                 Button(
                     onClick = {

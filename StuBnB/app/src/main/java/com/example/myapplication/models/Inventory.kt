@@ -5,12 +5,12 @@ data class Inventory(
     val userId: String,
     val description: String,
     val imageLinks: MutableList<String>,
-    val price: Int,
+    val price: Double,
     val subject: String,
     val category: String,
     val condition: String
 ){
-    constructor() : this("", "", "", mutableListOf(), 0, "", "", "")
+    constructor() : this("", "", "", mutableListOf(), 0.0, "", "", "")
 }
 
 //data class Person(val name: String, var age: Int)

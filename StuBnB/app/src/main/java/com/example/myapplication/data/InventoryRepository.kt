@@ -1,12 +1,8 @@
 package com.example.myapplication.data
 
 import android.util.Log
-import com.example.myapplication.models.*
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.example.myapplication.models.Inventory
+import com.google.firebase.database.*
 
 class InventoryRepository : IInventoryRepository {
 
@@ -20,7 +16,7 @@ class InventoryRepository : IInventoryRepository {
                     userId = "",
                     description = "Description of Item $it",
                     imageLinks = mutableListOf("link1", "link2", "link3"),
-                    price = 100 * it,
+                    price = 100.0 * it,
                     subject = "Subject $it",
                     category = "Category $it",
                     condition = "Condition $it"
