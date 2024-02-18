@@ -1,10 +1,11 @@
 package com.example.myapplication.views
 
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,19 +16,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.R
-import com.example.myapplication.components.*
-import com.example.myapplication.data.CreateAccountEvent
-import com.example.myapplication.data.CreateAccountViewModel
+import com.example.myapplication.components.TextField
+import com.example.myapplication.components.TitleText
 import com.example.myapplication.data.InventoryRepository
+import com.example.myapplication.data.LoginViewModel
 import com.example.myapplication.models.Inventory
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun UploadInventory() {
+fun UploadInventory(loginViewModel: LoginViewModel = viewModel()) {
 
     var name = ""
-    var userId = "benwen2" //placeholder
+    var userId = loginViewModel.getEncryptedEmail() //placeholder
     var description = ""
     var imageLinks = mutableListOf("picture.png") //placeholder
     var price = 0
@@ -82,7 +84,6 @@ fun UploadInventory() {
 
                 Button(
                     onClick = {
-                        //println("ran")
                         val invRep = InventoryRepository()
                         val inventoryTemp = Inventory(
                              name, userId, description, imageLinks, price, subject, category, condition

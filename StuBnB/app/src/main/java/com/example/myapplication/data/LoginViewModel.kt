@@ -48,6 +48,11 @@ class LoginViewModel: ViewModel() {
             }
     }
 
+    fun getEncryptedEmail(): String {
+        val encryptedEmail = loginState.value.email.replace('.', ',')
+        return encryptedEmail
+    }
+
     private fun validateData() {
 
         val emailResult = Validator.validateEmail(
