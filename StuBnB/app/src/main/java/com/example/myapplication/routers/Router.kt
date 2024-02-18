@@ -34,6 +34,9 @@ fun Router() {
                 is Screen.House -> {
                     House()
                 }
+                is Screen.Profile -> {
+                    Profile()
+                }
             }
         }
     }

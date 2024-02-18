@@ -10,7 +10,6 @@ import com.example.myapplication.routers.Screen
 class UploadInventoryViewModel: ViewModel() {
     var uploadState = mutableStateOf(UploadInventoryState())
     var validationPassed = mutableStateOf(true)
-    var uploadProgress = mutableStateOf(false)
 
     fun onEvent(event: UploadInventoryEvent) {
         when(event) {
@@ -64,7 +63,7 @@ class UploadInventoryViewModel: ViewModel() {
             uploadState.value.price.toDouble(), uploadState.value.subject, uploadState.value.category, uploadState.value.condition
         )
         invRep.createInventory(inventoryTemp)
-        Navigator.navigate(Screen.Home)
+        Navigator.navigate(Screen.Profile)
     }
 
     fun setEmailAndImage(email: String, imageLinks: MutableList<String>) {

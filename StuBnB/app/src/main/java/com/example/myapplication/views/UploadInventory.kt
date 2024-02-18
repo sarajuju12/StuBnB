@@ -26,14 +26,8 @@ import com.example.myapplication.routers.Screen
 @Composable
 fun UploadInventory(loginViewModel: LoginViewModel = viewModel(), uploadInventoryViewModel: UploadInventoryViewModel = viewModel()) {
 
-//    var name = ""
-    var userId = loginViewModel.getEncryptedEmail() //placeholder
-//    var description = ""
+    var userId = loginViewModel.getEncryptedEmail()
     var imageLinks = mutableListOf("picture.png") //placeholder
-//    var price = 0
-//    var subject = ""
-//    var category = ""
-//    var condition = ""
     uploadInventoryViewModel.setEmailAndImage(userId, imageLinks)
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -91,15 +85,6 @@ fun UploadInventory(loginViewModel: LoginViewModel = viewModel(), uploadInventor
                     value = "UPLOAD INVENTORY LISTING",
                     buttonClicked = {
                         uploadInventoryViewModel.onEvent(UploadInventoryEvent.ButtonClicked)
-//                        uploadListingViewModel.uploadListing(
-//                            name, userId, description, imageLinks, price
-//                        )
-//                        val invRep = InventoryRepository()
-//                        val inventoryTemp = Inventory(
-//                             name, userId, description, imageLinks, price, subject, category, condition
-//                        )
-//                        invRep.createInventory(inventoryTemp)
-//                        Navigator.navigate(Screen.DisplayProfileScreen)
                     },
                     isEnabled = if (uploadInventoryViewModel.uploadState.value.name.isNullOrEmpty() and uploadInventoryViewModel.uploadState.value.description.isNullOrEmpty() and
                         uploadInventoryViewModel.uploadState.value.price.isNullOrEmpty() and uploadInventoryViewModel.uploadState.value.subject.isNullOrEmpty() and
@@ -108,11 +93,10 @@ fun UploadInventory(loginViewModel: LoginViewModel = viewModel(), uploadInventor
                 Spacer(modifier = Modifier.height(20.dp))
                 Button(
                     onClick = {
-                        Navigator.navigate(Screen.Home)
+                        Navigator.navigate(Screen.Profile)
                     }
                 ) {
                     Text(text = "BACK")
-                    //value = "UPLOAD INVENTORY LISTING",
                 }
                 Spacer(modifier = Modifier.height(20.dp))
 

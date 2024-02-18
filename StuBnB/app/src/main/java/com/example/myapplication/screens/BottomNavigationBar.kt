@@ -1,14 +1,12 @@
 package com.example.myapplication.screens
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.data.HomeViewModel
@@ -70,12 +68,12 @@ fun getBottomNavigationItems(): List<BottomNavigationItem> {
 
 // creates the bottom navigation bar
 @Composable
-fun DisplayBottomBar(){
+fun DisplayBottomBar(starter: Int){
     // call to get the list of bottom navigation items
     val items = getBottomNavigationItems()
     // *** selectedIndex hold the current selected index, changes when the status changes
     // *** initially at state 0, the housing tab
-    var selectedIndex by rememberSaveable { mutableStateOf(0) }
+    var selectedIndex by rememberSaveable { mutableStateOf(starter) }
 
     @OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
     Scaffold(

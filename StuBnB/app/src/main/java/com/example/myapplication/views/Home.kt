@@ -5,5 +5,10 @@ import com.example.myapplication.screens.DisplayBottomBar
 
 @Composable
 fun Home() {
-    DisplayBottomBar()
+    DisplayBottomBar(0)
+}
+
+@Composable
+fun Profile() {
+    DisplayBottomBar(4)
 }
