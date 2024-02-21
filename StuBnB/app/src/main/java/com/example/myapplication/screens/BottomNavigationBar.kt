@@ -10,7 +10,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.data.HomeViewModel
-import com.example.myapplication.data.HousingRepository
+import com.example.myapplication.data.housing.HousingRepository
 import com.example.myapplication.data.InventoryCallback
 import com.example.myapplication.data.InventoryRepository
 import com.example.myapplication.models.Inventory

@@ -1,4 +1,4 @@
-package com.example.myapplication.data
+package com.example.myapplication.data.housing
 
 import com.example.myapplication.models.Housing
 
