@@ -4,7 +4,6 @@ import com.example.myapplication.models.Housing
 import com.example.myapplication.models.Date
 import com.google.firebase.database.*
 import android.util.Log
-import com.example.myapplication.models.Inventory
 
 
 class HousingRepository : IHousingRepository {
@@ -41,15 +40,16 @@ class HousingRepository : IHousingRepository {
         myRef.addListenerForSingleValueEvent(
 
             object : ValueEventListener {
-
                 // dataSnapshot, of exactly at this moment.
                 override fun onDataChange(housingSnapshot: DataSnapshot) {
-                    //for (userSnapshot in housingSnapshot.children) {
-                        val housing = housingSnapshot.getValue(Housing::class.java)
-                        housing?.let {
-                            housingList.add(it)
+                    for (userSnapshot in housingSnapshot.children) {
+                        for (housingSnapshot in userSnapshot.children) {
+                            val housing = housingSnapshot.getValue(Housing::class.java)
+                            housing?.let {
+                                housingList.add(it)
+                            }
                         }
-                    //}
+                    }
                     callback.onHousingLoaded(housingList)
                 }
 
