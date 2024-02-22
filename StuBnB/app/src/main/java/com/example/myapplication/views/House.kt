@@ -9,6 +9,8 @@ import com.example.myapplication.screens.DisplayBottomBar
 import com.example.myapplication.routers.*
 import com.example.myapplication.data.HomeViewModel
 
+
+// when clicking on a row and from a housing tab
 @Composable
 fun House() {
     Column(modifier = Modifier.fillMaxSize()) {

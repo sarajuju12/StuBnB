@@ -1,13 +1,16 @@
 package com.example.myapplication.models
 
 data class Housing(
+    val userId: String, // data integrity
     val name: String,
     val description: String,
-    val imageLinks: MutableList<String>,
-
-    // new stuff
+    val imagelink: MutableList<String>,
     val seller: String,
-    val price: Int,
+    val price: Double,
     val startDate: Date,
-    val endDate: Date
-)
+    val endDate: Date,
+    // can extend more later
+){
+    constructor() : this(userId = "", name = "", description = "", imagelink = mutableListOf(),
+                seller= "", price = 0.0, startDate = Date(), endDate = Date())
+}
