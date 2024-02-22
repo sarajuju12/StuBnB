@@ -63,7 +63,7 @@ fun HousingItem(housing: Housing, onClick: () -> Unit) {
         Column {
             Text(text = housing.name, fontSize = 20.sp)
             Text(text = housing.description, fontSize = 14.sp)
-            Text(text = housing.seller, fontSize = 14.sp)
+            Text(text = housing.userId, fontSize = 14.sp)
         }
     }
 }

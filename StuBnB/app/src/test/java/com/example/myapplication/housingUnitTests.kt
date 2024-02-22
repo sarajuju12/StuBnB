@@ -1,13 +1,5 @@
 package com.example.myapplication
 
-import com.example.myapplication.data.housing.HousingRepository
-import com.example.myapplication.models.Date
-import org.junit.Test
-import com.example.myapplication.models.Housing
-import com.example.myapplication.screens.HousingScreen
-
-import org.junit.Assert.*
-
 /**
  * Example local unit test, which will execute on the development machine (host).
  *

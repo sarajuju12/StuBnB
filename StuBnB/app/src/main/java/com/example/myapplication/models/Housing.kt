@@ -1,16 +1,23 @@
 package com.example.myapplication.models
 
 data class Housing(
-    val userId: String, // data integrity
     val name: String,
     val description: String,
     val imagelink: MutableList<String>,
-    val seller: String,
+    val userId: String,
     val price: Double,
-    val startDate: Date,
-    val endDate: Date,
-    // can extend more later
+    val startDate: String,
+    val endDate: String,
+
+    val address: String,
+    val propertyType: String,
+    val genderRestriction: String,
+    val numOfGuests: kotlin.Int,
+    val numOfBedrooms: kotlin.Int,
+    val numOfBathrooms: kotlin.Int
 ){
-    constructor() : this(userId = "", name = "", description = "", imagelink = mutableListOf(),
-                seller= "", price = 0.0, startDate = Date(), endDate = Date())
+    constructor() : this (name = "", description = "", imagelink = mutableListOf(),
+                userId = "", price = 0.0, startDate = "", endDate = "", address = "",
+                propertyType = "", genderRestriction = "", numOfGuests = 0, numOfBedrooms = 0,
+                numOfBathrooms = 0)
 }

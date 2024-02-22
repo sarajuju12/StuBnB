@@ -1,7 +1,6 @@
 package com.example.myapplication.data.housing
 
 import com.example.myapplication.models.Housing
-import com.example.myapplication.models.Date
 import com.google.firebase.database.*
 import android.util.Log
 
@@ -11,22 +10,10 @@ class HousingRepository : IHousingRepository {
     private val temporaryTestingHousingList: MutableList<Housing> = mutableListOf()
 
     init {
-        // dummy dates
-        val startDate = Date(2019, 1, 28)
-        val endDate = Date(2024, 2, 4)
         // dummy data
         for (i in 1..3){
             temporaryTestingHousingList.add(
-                Housing(
-                    i.toString(),
-                    "House",
-                    "Description for House",
-                    mutableListOf("link1a", "link1b"), // links
-                    "cs346",
-                    14.5,
-                    startDate,
-                    endDate,
-                )
+                Housing()
             )
         }
     }
