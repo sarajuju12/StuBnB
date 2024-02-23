@@ -2,14 +2,17 @@ package com.example.myapplication.data
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.validation.Validator
 import com.example.myapplication.models.Inventory
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
+import kotlinx.coroutines.launch
 
 class UploadInventoryViewModel: ViewModel() {
     var uploadState = mutableStateOf(UploadInventoryState())
     var validationPassed = mutableStateOf(true)
+    var showAlert = mutableStateOf(false)
 
     fun onEvent(event: UploadInventoryEvent) {
         when(event) {
@@ -56,23 +59,50 @@ class UploadInventoryViewModel: ViewModel() {
         }
     }
 
-    fun uploadListing() {
-        val invRep = InventoryRepository()
-        val inventoryTemp = Inventory(
-            uploadState.value.name, uploadState.value.email, uploadState.value.description, uploadState.value.imageLinks,
-            uploadState.value.price.toDouble(), uploadState.value.subject, uploadState.value.category, uploadState.value.condition
-        )
-        invRep.createInventory(inventoryTemp)
-        Navigator.navigate(Screen.Profile)
+    private fun uploadListing() {
+        if (uploadState.value.imageLinks.isNullOrEmpty()) {
+            showAlert.value = true
+        } else {
+            val invRep = InventoryRepository()
+            val inventoryTemp = Inventory(
+                uploadState.value.name,
+                uploadState.value.email,
+                uploadState.value.description,
+                uploadState.value.imageLinks,
+                uploadState.value.price.toDouble(),
+                uploadState.value.subject,
+                uploadState.value.category,
+                uploadState.value.condition
+            )
+            invRep.createInventory(inventoryTemp)
+            Navigator.navigate(Screen.Profile)
+        }
     }
 
-    fun setEmailAndImage(email: String, imageLinks: MutableList<String>) {
+    fun setEmail(email: String) {
         uploadState.value = uploadState.value.copy(
             email = email
         )
-        uploadState.value = uploadState.value.copy(
-            imageLinks = imageLinks
-        )
+    }
+
+    fun updateImageLinks(newImageLinks: MutableList<String>) {
+        val updatedImageLinks = uploadState.value.imageLinks.toMutableList()
+        viewModelScope.launch {
+            updatedImageLinks += newImageLinks
+            uploadState.value = uploadState.value.copy(
+                imageLinks = updatedImageLinks.distinct()
+            )
+        }
+    }
+
+    fun onImageRemove(index: Int) {
+        val updatedImageLinks = uploadState.value.imageLinks.toMutableList()
+        viewModelScope.launch {
+            updatedImageLinks.removeAt(index)
+            uploadState.value = uploadState.value.copy(
+                imageLinks = updatedImageLinks.distinct()
+            )
+        }
     }
 
     private fun validateData() {

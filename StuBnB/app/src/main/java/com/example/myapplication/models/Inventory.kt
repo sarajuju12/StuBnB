@@ -4,7 +4,7 @@ data class Inventory(
     val name: String,
     val userId: String,
     val description: String,
-    val imageLinks: MutableList<String>,
+    val imageLinks: List<String>,
     val price: Double,
     val subject: String,
     val category: String,

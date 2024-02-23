@@ -22,7 +22,7 @@ fun Router() {
                 }
                 is Screen.Login -> {
                     Login()
-                    //Home()
+                    // Profile()
                 }
                 is Screen.Home -> {
                     Home()
