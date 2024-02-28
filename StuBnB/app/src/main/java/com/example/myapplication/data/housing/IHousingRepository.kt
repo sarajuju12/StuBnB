@@ -1,6 +1,5 @@
 package com.example.myapplication.data.housing
 
-import com.example.myapplication.data.housing.HousingCallback
 import com.example.myapplication.models.Housing
 
 interface IHousingRepository {
