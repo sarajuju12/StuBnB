@@ -24,17 +24,18 @@ fun DisplayProfileScreen(homeViewModel: HomeViewModel = viewModel()) {
         UploadListingPopup(onDismiss = {showDialog=false})
     }
 
-    Surface(modifier = Modifier.fillMaxSize()) {
-
+    Surface(
+        modifier = Modifier.fillMaxSize().padding(30.dp),
+    ) {
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier.fillMaxSize()) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
 
-            Button(onClick = { showDialog=true }) {
-                Text("Upload a listing")
-
-            }
-            Column(modifier = Modifier.fillMaxSize()) {
+                ActionButton(value = "UPLOAD A LISTING", buttonClicked = { showDialog = true }, isEnabled = true)
+                Spacer(modifier = Modifier.height(50.dp))
                 ActionButton(value = "LOG OUT", buttonClicked = { homeViewModel.logout() }, isEnabled = true)
             }
         }

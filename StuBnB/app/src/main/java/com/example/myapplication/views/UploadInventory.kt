@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -157,9 +158,12 @@ fun UploadInventory(loginViewModel: LoginViewModel = viewModel(), uploadInventor
                     ) {
                         Text(text = "BACK")
                     }
-                    Spacer(modifier = Modifier.height(20.dp))
+                    Spacer(modifier = Modifier.height(100.dp))
                 }
             }
+        }
+        if (uploadInventoryViewModel.uploadProgress.value) {
+            CircularProgressIndicator()
         }
         if (uploadInventoryViewModel.showAlert.value) {
             AlertDialogLogin(

@@ -9,6 +9,7 @@ data class UploadInventoryState(
     var condition: String = "",
     var email: String = "",
     var imageLinks: List<String> = emptyList(),
+    var downloadUrls: List<String> = emptyList(),
     var nameError: Boolean = true,
     var descriptionError: Boolean = true,
     var priceError: Boolean = true,
