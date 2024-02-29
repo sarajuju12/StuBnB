@@ -37,6 +37,9 @@ fun Router() {
                 is Screen.Profile -> {
                     Profile()
                 }
+                is Screen.UploadHousing -> {
+                    UploadHousing()
+                }
             }
         }
     }

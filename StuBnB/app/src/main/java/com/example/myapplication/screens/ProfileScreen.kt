@@ -62,7 +62,7 @@ fun UploadListingPopup(
                 verticalArrangement = Arrangement.Center
             ) {
                 Button(
-                    onClick = { /*selectedIndex = 1 */},
+                    onClick = { Navigator.navigate(Screen.UploadHousing) },
                     modifier = Modifier
                         .width(180.dp)
                         .padding(10.dp)

@@ -8,14 +8,14 @@ import org.junit.Assert.*
 
 class InventoryCreateGetUnitTest {
     val temporaryInventory = Inventory(
-        name = "item-335543641",
-        userId = "user-335543641",
-        description = "Description of Item 2",
-        imageLinks = mutableListOf("link1", "link2", "link3"),
-        price = 100 * 3,
-        subject = "Subject 2",
-        category = "Category 2",
-        condition = "Condition 2"
+        "item-335543641",
+        "user-335543641",
+        "Description of Item 2",
+        mutableListOf("link1", "link2", "link3"),
+        100.0 * 3,
+        "Subject 2",
+        "Category 2",
+        "Condition 2"
     )
 
     val invRepo = InventoryRepository();

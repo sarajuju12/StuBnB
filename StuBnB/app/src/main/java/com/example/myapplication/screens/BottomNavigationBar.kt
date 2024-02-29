@@ -10,9 +10,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.data.HomeViewModel
-import com.example.myapplication.data.HousingRepository
+import com.example.myapplication.data.housing.HousingRepository
 import com.example.myapplication.data.InventoryCallback
 import com.example.myapplication.data.InventoryRepository
+import com.example.myapplication.data.housing.HousingCallback
+import com.example.myapplication.models.Housing
 import com.example.myapplication.models.Inventory
 import com.example.myapplication.ui.theme.MyApplicationTheme
 
@@ -149,11 +151,25 @@ fun MainContent(selectedItemIndex: Int, innerPadding: PaddingValues, items: List
     }
 }
 
+// has database now
 @Composable
 fun HousingScreen() {
     val tempHousingRepository = HousingRepository()
+    val listOfHousing = remember { mutableStateOf<List<Housing>>(emptyList()) }
+
+    // Fetch inventory data when the screen is first displayed or recomposed
+    LaunchedEffect(key1 = true) {
+        // does not contribute to UI
+        tempHousingRepository.getHousing(object : HousingCallback {
+            override fun onHousingLoaded(housingList: MutableList<Housing>) {
+                // Update the state with the new inventory data
+                listOfHousing.value = housingList
+            }
+        })
+    }
+
     MyApplicationTheme {
-        HousingList(tempHousingRepository.getHousing())
+        HousingList(listOfHousing.value)
     }
 }
 

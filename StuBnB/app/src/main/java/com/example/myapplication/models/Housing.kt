@@ -3,11 +3,21 @@ package com.example.myapplication.models
 data class Housing(
     val name: String,
     val description: String,
-    val imageLinks: MutableList<String>,
+    val imagelink: MutableList<String>,
+    val userId: String,
+    val price: Double,
+    val startDate: String,
+    val endDate: String,
 
-    // new stuff
-    val seller: String,
-    val price: Int,
-    val startDate: Date,
-    val endDate: Date
-)
+    val address: String,
+    val propertyType: String,
+    val genderRestriction: String,
+    val numOfGuests: kotlin.Int,
+    val numOfBedrooms: kotlin.Int,
+    val numOfBathrooms: kotlin.Int
+){
+    constructor() : this (name = "", description = "", imagelink = mutableListOf(),
+                userId = "", price = 0.0, startDate = "", endDate = "", address = "",
+                propertyType = "", genderRestriction = "", numOfGuests = 0, numOfBedrooms = 0,
+                numOfBathrooms = 0)
+}
