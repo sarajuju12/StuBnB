@@ -1,15 +1,24 @@
 package com.example.myapplication.data
 
+import android.content.ContentValues.TAG
+import android.net.Uri
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.validation.Validator
 import com.example.myapplication.models.Inventory
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
+import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.launch
 
-class UploadInventoryViewModel: ViewModel() {
+
+class UploadInventoryViewModel : ViewModel() {
     var uploadState = mutableStateOf(UploadInventoryState())
     var validationPassed = mutableStateOf(true)
+    var showAlert = mutableStateOf(false)
+    var uploadProgress = mutableStateOf(false)
 
     fun onEvent(event: UploadInventoryEvent) {
         when(event) {
@@ -56,23 +65,86 @@ class UploadInventoryViewModel: ViewModel() {
         }
     }
 
-    fun uploadListing() {
-        val invRep = InventoryRepository()
-        val inventoryTemp = Inventory(
-            uploadState.value.name, uploadState.value.email, uploadState.value.description, uploadState.value.imageLinks,
-            uploadState.value.price.toDouble(), uploadState.value.subject, uploadState.value.category, uploadState.value.condition
-        )
-        invRep.createInventory(inventoryTemp)
-        Navigator.navigate(Screen.Profile)
+    private fun uploadListing() {
+        if (uploadState.value.imageLinks.isNullOrEmpty()) {
+            showAlert.value = true
+        } else {
+            uploadImagesToStorage(uploadState.value.imageLinks.map(Uri::parse))
+        }
     }
 
-    fun setEmailAndImage(email: String, imageLinks: MutableList<String>) {
+    fun setEmail(email: String) {
         uploadState.value = uploadState.value.copy(
             email = email
         )
-        uploadState.value = uploadState.value.copy(
-            imageLinks = imageLinks
-        )
+    }
+
+    fun updateImageLinks(newImageLinks: MutableList<String>) {
+        val updatedImageLinks = uploadState.value.imageLinks.toMutableList()
+        viewModelScope.launch {
+            updatedImageLinks += newImageLinks
+            uploadState.value = uploadState.value.copy(
+                imageLinks = updatedImageLinks.distinct()
+            )
+        }
+    }
+
+    fun onImageRemove(index: Int) {
+        val updatedImageLinks = uploadState.value.imageLinks.toMutableList()
+        viewModelScope.launch {
+            updatedImageLinks.removeAt(index)
+            uploadState.value = uploadState.value.copy(
+                imageLinks = updatedImageLinks.distinct()
+            )
+        }
+    }
+
+    private fun uploadImagesToStorage(imageUriList: List<Uri>) {
+        uploadProgress.value = true
+        val storageReference = FirebaseStorage.getInstance().reference
+        val myUrlList = mutableListOf<String>()
+        val expectedSize = imageUriList.size
+        for (i in imageUriList.indices) {
+            val fileReference = storageReference.child("${System.currentTimeMillis()}_${(imageUriList[i]).lastPathSegment}")
+            val uploadTask = fileReference.putFile(imageUriList[i])
+            uploadTask.continueWithTask { task ->
+                if (!task.isSuccessful) {
+                    throw task.exception ?: Exception("Unknown error")
+                }
+                fileReference.downloadUrl
+            }.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    fileReference.downloadUrl.addOnSuccessListener { uri ->
+                        val myUrl = uri.toString()
+                        Log.d(TAG, myUrl)
+                        myUrlList.add(myUrl)
+                        if (myUrlList.size == expectedSize) {
+                            Log.d(TAG, myUrlList.toString())
+                            uploadState.value = uploadState.value.copy(
+                                imageLinks = myUrlList
+                            )
+                            val invRep = InventoryRepository()
+                            val inventoryTemp = Inventory(
+                                uploadState.value.name,
+                                uploadState.value.email,
+                                uploadState.value.description,
+                                uploadState.value.imageLinks,
+                                uploadState.value.price.toDouble(),
+                                uploadState.value.subject,
+                                uploadState.value.category,
+                                uploadState.value.condition
+                            )
+                            invRep.createInventory(inventoryTemp)
+                            uploadProgress.value = false
+                            Navigator.navigate(Screen.Profile)
+                        }
+                    }
+                } else {
+                    val exception = task.exception ?: Exception("Unknown error")
+                    Log.e("UploadImages", "Error uploading image: $exception")
+                }
+            }
+        }
     }
 
     private fun validateData() {
