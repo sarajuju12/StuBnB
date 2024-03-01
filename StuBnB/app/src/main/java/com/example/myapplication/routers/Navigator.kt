@@ -10,6 +10,7 @@ sealed class Screen {
     object UploadInventory: Screen()
     object House: Screen()
     object Profile: Screen()
+    object ChatBox: Screen()
     object UploadHousing: Screen()
 }
 

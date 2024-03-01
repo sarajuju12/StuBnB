@@ -16,7 +16,10 @@ import com.example.myapplication.data.InventoryRepository
 import com.example.myapplication.data.housing.HousingCallback
 import com.example.myapplication.models.Housing
 import com.example.myapplication.models.Inventory
+import com.example.myapplication.routers.Navigator
+import com.example.myapplication.routers.Screen
 import com.example.myapplication.ui.theme.MyApplicationTheme
+import com.example.myapplication.views.Inbox
 
 data class BottomNavigationItem(
     val title: String,
@@ -200,11 +203,9 @@ fun WishScreen() {
 
 @Composable
 fun InboxScreen() {
-    /*
     MyApplicationTheme {
-        UploadInventory()
+        Inbox();
     }
-    */
 }
 
 @Composable

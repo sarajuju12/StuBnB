@@ -22,7 +22,8 @@ fun Router() {
                 }
                 is Screen.Login -> {
                     Login()
-                    // Profile()
+                    //Home()
+                    //Profile()
                 }
                 is Screen.Home -> {
                     Home()
@@ -36,9 +37,6 @@ fun Router() {
                 }
                 is Screen.Profile -> {
                     Profile()
-                }
-                is Screen.UploadHousing -> {
-                    UploadHousing()
                 }
             }
         }
