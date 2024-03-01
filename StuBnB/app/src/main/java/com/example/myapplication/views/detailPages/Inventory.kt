@@ -15,8 +15,9 @@ import com.example.myapplication.data.HomeViewModel
 fun Inventory() {
     Column(modifier = Modifier.fillMaxSize()) {
         ActionButton(value = "back",
-            buttonClicked = { Navigator.navigate(Screen.Home(1)) },
-
+            buttonClicked = {
+                Navigator.navigate(Screen.HomeInventory())
+            },
             isEnabled = true)
     }
 }

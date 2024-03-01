@@ -6,9 +6,13 @@ import androidx.compose.runtime.mutableStateOf
 sealed class Screen {
     object CreateAccount: Screen()
     object Login: Screen()
-    class Home(val selectedIndex: Int = 0) : Screen()
+    // Home tabs
+    class HomeHousing : Screen()
+    class HomeInventory : Screen()
+    class HomeWishlist : Screen()
+    class HomeInbox : Screen()
+    class HomeProfile : Screen()
     object UploadInventory: Screen()
-    object Profile: Screen()
     object UploadHousing: Screen()
     //detail pages
     object House: Screen()
@@ -18,11 +22,7 @@ sealed class Screen {
 object Navigator {
     var currentScreen: MutableState<Screen> = mutableStateOf(Screen.Login)
 
-    fun navigate(dest: Screen, index: Int = 0) {
+    fun navigate(dest: Screen) {
         currentScreen.value = dest
-
-        if (index != 0){
-            currentScreen.value = Screen.Home(index)
-        }
     }
 }

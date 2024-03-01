@@ -26,7 +26,7 @@ fun UploadHousing(/* */) {
 
     Column(modifier = Modifier.fillMaxSize()) {
         ActionButton(value = "back",
-            buttonClicked = { Navigator.navigate(Screen.Home(4)) },
+            buttonClicked = { Navigator.navigate(Screen.HomeProfile()) },
             isEnabled = true)
     }
 

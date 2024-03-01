@@ -153,7 +153,7 @@ fun UploadInventory(loginViewModel: LoginViewModel = viewModel(), uploadInventor
                     Spacer(modifier = Modifier.height(20.dp))
                     Button(
                         onClick = {
-                            Navigator.navigate(Screen.Profile)
+                            Navigator.navigate(Screen.HomeProfile())
                         }
                     ) {
                         Text(text = "BACK")

@@ -25,16 +25,31 @@ fun Router() {
                     Login()
                     // Profile()
                 }
-                is Screen.Home -> {
-                    Home()
+
+                is Screen.HomeHousing -> {
+                    Home(0)
+                }
+
+                is Screen.HomeInventory -> {
+                    Home(1)
+                }
+
+                is Screen.HomeWishlist -> {
+                    Home(2)
+                }
+
+                is Screen.HomeInbox -> {
+                    Home(3)
+                }
+
+                is Screen.HomeProfile -> {
+                    Home(4)
                 }
 
                 is Screen.UploadInventory -> {
                     UploadInventory()
                 }
-                is Screen.Profile -> {
-                    Profile()
-                }
+
                 is Screen.UploadHousing -> {
                     UploadHousing()
                 }

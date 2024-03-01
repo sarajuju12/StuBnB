@@ -15,7 +15,7 @@ import com.example.myapplication.data.HomeViewModel
 fun House() {
     Column(modifier = Modifier.fillMaxSize()) {
         ActionButton(value = "back",
-                    buttonClicked = { Navigator.navigate(Screen.Home(0)) },
+                    buttonClicked = { Navigator.navigate(Screen.HomeHousing()) },
                     isEnabled = true)
     }
 }
