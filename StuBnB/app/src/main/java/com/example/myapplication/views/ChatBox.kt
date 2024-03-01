@@ -5,5 +5,5 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun ChatBox() {
-    Text("Hello")
+    Text("Hello There im chatbox")
 }

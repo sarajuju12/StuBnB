@@ -1,6 +1,7 @@
 package com.example.myapplication.views
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -57,6 +58,10 @@ fun OpenChat(name: String, latestMessage: String) {
         modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth()
+            .clickable {
+                // Navigate to the chat screen
+                Navigator.navigate(Screen.ChatBox) // Assuming "chat/${name}" is your destination
+            }
     ) {
         // Image
         Image(
