@@ -37,7 +37,6 @@ fun HousingList(housings: List<Housing>) {
 
     if (selectedIndex >= 0) {
         Navigator.navigate(Screen.House) // navigator is an object
-
     }
 }
 

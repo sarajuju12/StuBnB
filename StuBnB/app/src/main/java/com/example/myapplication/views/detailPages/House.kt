@@ -1,4 +1,4 @@
-package com.example.myapplication.views
+package com.example.myapplication.views.detailPages
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,7 +15,7 @@ import com.example.myapplication.data.HomeViewModel
 fun House() {
     Column(modifier = Modifier.fillMaxSize()) {
         ActionButton(value = "back",
-                    buttonClicked = { Navigator.navigate(Screen.Home) },
+                    buttonClicked = { Navigator.navigate(Screen.Home(0)) },
                     isEnabled = true)
     }
 }

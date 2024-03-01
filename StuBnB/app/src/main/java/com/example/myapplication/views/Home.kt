@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import com.example.myapplication.screens.DisplayBottomBar
 
 @Composable
-fun Home() {
-    DisplayBottomBar(0)
+fun Home(index: Int = 0) {
+    DisplayBottomBar(index)
 }
 
 @Composable

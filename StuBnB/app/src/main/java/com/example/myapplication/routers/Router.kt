@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.example.myapplication.views.*
+import com.example.myapplication.views.detailPages.*
 
 
 @Composable
@@ -31,14 +32,18 @@ fun Router() {
                 is Screen.UploadInventory -> {
                     UploadInventory()
                 }
-                is Screen.House -> {
-                    House()
-                }
                 is Screen.Profile -> {
                     Profile()
                 }
                 is Screen.UploadHousing -> {
                     UploadHousing()
+                }
+                // details
+                is Screen.House -> {
+                    House()
+                }
+                is Screen.Inventory -> {
+                    Inventory()
                 }
             }
         }
