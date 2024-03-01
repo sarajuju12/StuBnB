@@ -1,4 +1,4 @@
-package com.example.myapplication.data
+package com.example.myapplication.data.inventory
 
 sealed class UploadInventoryEvent {
     data class NameChange(val name: String): UploadInventoryEvent()

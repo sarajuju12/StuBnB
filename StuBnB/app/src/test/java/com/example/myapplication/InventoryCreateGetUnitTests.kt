@@ -1,6 +1,6 @@
 package com.example.myapplication
 
-import com.example.myapplication.data.InventoryRepository
+import com.example.myapplication.data.inventory.InventoryRepository
 import com.example.myapplication.models.Inventory
 import org.junit.Test
 import org.junit.Assert.*

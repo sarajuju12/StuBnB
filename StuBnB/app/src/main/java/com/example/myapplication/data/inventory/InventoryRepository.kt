@@ -1,4 +1,4 @@
-package com.example.myapplication.data
+package com.example.myapplication.data.inventory
 
 import android.util.Log
 import com.example.myapplication.models.Inventory

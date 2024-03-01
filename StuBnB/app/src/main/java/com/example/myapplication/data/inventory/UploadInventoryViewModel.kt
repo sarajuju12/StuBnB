@@ -1,4 +1,4 @@
-package com.example.myapplication.data
+package com.example.myapplication.data.inventory
 
 import android.content.ContentValues.TAG
 import android.net.Uri
