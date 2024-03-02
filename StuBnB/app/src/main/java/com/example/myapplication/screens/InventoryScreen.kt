@@ -49,7 +49,7 @@ fun InventoryList(inventories: List<Inventory>) {
     }
 
     if (selectedIndex >= 0) {
-        Navigator.navigate(Screen.Inventory) // navigator is an object
+        Navigator.navigate(Screen.Inventory)
     }
 }
 

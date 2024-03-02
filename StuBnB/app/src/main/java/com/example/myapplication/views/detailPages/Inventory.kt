@@ -1,23 +1,27 @@
 package com.example.myapplication.views.detailPages
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.myapplication.components.ActionButton
-import com.example.myapplication.screens.DisplayBottomBar
+import com.example.myapplication.components.BackButton
 import com.example.myapplication.routers.*
-import com.example.myapplication.data.HomeViewModel
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.unit.dp
 
 
-// when clicking on a row and from a housing tab
+
 @Composable
 fun Inventory() {
-    Column(modifier = Modifier.fillMaxSize()) {
-        ActionButton(value = "back",
+    Box(modifier = Modifier.fillMaxSize()) {
+        BackButton(
             buttonClicked = {
-                Navigator.navigate(Screen.HomeInventory())
+                Navigator.navigate(Screen.HomeInventory)
             },
-            isEnabled = true)
+            modifier = Modifier
+                .size(78.dp)
+                .align(Alignment.TopStart)
+        )
     }
 }

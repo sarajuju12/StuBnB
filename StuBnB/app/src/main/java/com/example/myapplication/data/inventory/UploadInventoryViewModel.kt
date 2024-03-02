@@ -136,7 +136,7 @@ class UploadInventoryViewModel : ViewModel() {
                             )
                             invRep.createInventory(inventoryTemp)
                             uploadProgress.value = false
-                            Navigator.navigate(Screen.HomeProfile())
+                            Navigator.navigate(Screen.HomeProfile)
                         }
                     }
                 } else {

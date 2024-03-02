@@ -84,7 +84,7 @@ fun Login(loginViewModel: LoginViewModel = viewModel()) {
                 onDismissRequest = { loginViewModel.twoFactorAuth.value = false },
                 onConfirmation = {
                     loginViewModel.twoFactorAuth.value = false
-                    Navigator.navigate(Screen.HomeHousing())
+                    Navigator.navigate(Screen.HomeHousing)
                 },
                 dialogTitle = "Two-Factor Authentication",
                 dialogText = "Are you logging in to StuBnB?"

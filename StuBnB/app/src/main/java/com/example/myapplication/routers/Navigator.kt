@@ -7,11 +7,11 @@ sealed class Screen {
     object CreateAccount: Screen()
     object Login: Screen()
     // Home tabs
-    class HomeHousing : Screen()
-    class HomeInventory : Screen()
-    class HomeWishlist : Screen()
-    class HomeInbox : Screen()
-    class HomeProfile : Screen()
+    object HomeHousing : Screen()
+    object HomeInventory : Screen()
+    object HomeWishlist : Screen()
+    object HomeInbox : Screen()
+    object HomeProfile : Screen()
     object UploadInventory: Screen()
     object UploadHousing: Screen()
     //detail pages
