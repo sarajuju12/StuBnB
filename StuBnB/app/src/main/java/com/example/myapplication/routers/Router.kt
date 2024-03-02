@@ -53,12 +53,14 @@ fun Router() {
                 is Screen.UploadHousing -> {
                     UploadHousing()
                 }
+
                 // details
                 is Screen.House -> {
-                    House()
+                    House((currentState.value as Screen.House).housingItem)
                 }
+
                 is Screen.Inventory -> {
-                    Inventory()
+                    Inventory((currentState.value as Screen.Inventory).inventoryItem)
                 }
             }
         }

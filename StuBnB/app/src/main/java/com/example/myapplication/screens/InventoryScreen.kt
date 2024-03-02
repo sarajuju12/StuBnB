@@ -49,7 +49,7 @@ fun InventoryList(inventories: List<Inventory>) {
     }
 
     if (selectedIndex >= 0) {
-        Navigator.navigate(Screen.Inventory)
+        Navigator.navigate(Screen.Inventory(inventories[selectedIndex])) // pass in the selected item
     }
 }
 

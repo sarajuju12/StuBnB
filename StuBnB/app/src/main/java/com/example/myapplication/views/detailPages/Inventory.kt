@@ -9,11 +9,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
-
+import com.example.myapplication.models.*
+import androidx.compose.material3.Text
 
 
 @Composable
-fun Inventory() {
+fun Inventory(inventoryItem: Inventory) {
     Box(modifier = Modifier.fillMaxSize()) {
         BackButton(
             buttonClicked = {
@@ -24,4 +25,9 @@ fun Inventory() {
                 .align(Alignment.TopStart)
         )
     }
+
+    // Inventory Name
+    Text(
+        text = inventoryItem.name,
+    )
 }
