@@ -28,7 +28,6 @@ fun Router() {
                 is Screen.Home -> {
                     Home()
                 }
-
                 is Screen.UploadInventory -> {
                     UploadInventory()
                 }
@@ -37,6 +36,9 @@ fun Router() {
                 }
                 is Screen.Profile -> {
                     Profile()
+                }
+                is Screen.ChatBox -> {
+                    ChatBox()
                 }
             }
         }

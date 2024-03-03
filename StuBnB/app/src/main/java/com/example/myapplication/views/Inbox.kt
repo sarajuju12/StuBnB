@@ -60,7 +60,7 @@ fun OpenChat(name: String, latestMessage: String) {
             .fillMaxWidth()
             .clickable {
                 // Navigate to the chat screen
-                Navigator.navigate(Screen.ChatBox) // Assuming "chat/${name}" is your destination
+                Navigator.navigate(Screen.ChatBox("user1", "user2")) // Assuming "chat/${name}" is your destination
             }
     ) {
         // Image
