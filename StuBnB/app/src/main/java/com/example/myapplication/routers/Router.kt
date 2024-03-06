@@ -1,5 +1,7 @@
 package com.example.myapplication.routers
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
@@ -9,6 +11,7 @@ import androidx.compose.ui.graphics.Color
 import com.example.myapplication.views.*
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Router() {
     Surface(
@@ -30,6 +33,9 @@ fun Router() {
                 }
                 is Screen.UploadInventory -> {
                     UploadInventory()
+                }
+                is Screen.UploadHousing -> {
+                    UploadHousing()
                 }
                 is Screen.House -> {
                     House()

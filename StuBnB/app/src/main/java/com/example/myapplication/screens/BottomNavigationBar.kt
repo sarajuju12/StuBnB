@@ -10,16 +10,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.data.HomeViewModel
-import com.example.myapplication.data.repositories.HousingRepository
 import com.example.myapplication.data.repositories.InventoryCallback
 import com.example.myapplication.data.repositories.InventoryRepository
 import com.example.myapplication.data.housing.HousingCallback
+import com.example.myapplication.data.housing.HousingRepository
 import com.example.myapplication.models.Housing
 import com.example.myapplication.models.Inventory
-import com.example.myapplication.routers.Navigator
-import com.example.myapplication.routers.Screen
-import com.example.myapplication.ui.theme.MyApplicationTheme
 import com.example.myapplication.views.Inbox
+import com.example.myapplication.ui.theme.MyApplicationTheme
 
 data class BottomNavigationItem(
     val title: String,
