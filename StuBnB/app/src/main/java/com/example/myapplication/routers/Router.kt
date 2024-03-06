@@ -38,7 +38,9 @@ fun Router() {
                     Profile()
                 }
                 is Screen.ChatBox -> {
-                    ChatBox()
+                    val primaryUser = (currentState.value as Screen.ChatBox).primaryUser
+                    val secondaryUser = (currentState.value as Screen.ChatBox).secondaryUser
+                    ChatBox(primaryUser, secondaryUser)
                 }
             }
         }
