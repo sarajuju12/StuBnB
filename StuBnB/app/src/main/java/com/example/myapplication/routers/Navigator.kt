@@ -11,6 +11,7 @@ sealed class Screen {
     object House: Screen()
     object Profile: Screen()
     object UploadHousing: Screen()
+    data class ChatBox(val primaryUser: String, val secondaryUser: String) : Screen()
 }
 
 object Navigator {

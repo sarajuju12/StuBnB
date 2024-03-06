@@ -1,5 +1,7 @@
 package com.example.myapplication.routers
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
@@ -9,6 +11,7 @@ import androidx.compose.ui.graphics.Color
 import com.example.myapplication.views.*
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Router() {
     Surface(
@@ -22,14 +25,17 @@ fun Router() {
                 }
                 is Screen.Login -> {
                     Login()
-                    // Profile()
+                    //Home()
+                    //Profile()
                 }
                 is Screen.Home -> {
                     Home()
                 }
-
                 is Screen.UploadInventory -> {
                     UploadInventory()
+                }
+                is Screen.UploadHousing -> {
+                    UploadHousing()
                 }
                 is Screen.House -> {
                     House()
@@ -37,8 +43,10 @@ fun Router() {
                 is Screen.Profile -> {
                     Profile()
                 }
-                is Screen.UploadHousing -> {
-                    UploadHousing()
+                is Screen.ChatBox -> {
+                    val primaryUser = (currentState.value as Screen.ChatBox).primaryUser
+                    val secondaryUser = (currentState.value as Screen.ChatBox).secondaryUser
+                    ChatBox(primaryUser, secondaryUser)
                 }
             }
         }

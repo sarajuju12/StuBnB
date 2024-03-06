@@ -33,7 +33,6 @@ fun InventoryList(inventories: List<Inventory>) {
         }
     }
 }
-
 @Composable
 fun InventoryItem(inventory: Inventory) {
     Column(
