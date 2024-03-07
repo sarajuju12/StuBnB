@@ -2,16 +2,23 @@ package com.example.myapplication.routers
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import com.example.myapplication.models.*
 
 sealed class Screen {
     object CreateAccount: Screen()
     object Login: Screen()
-    object Home: Screen()
+    // Home tabs
+    object HomeHousing : Screen()
+    object HomeInventory : Screen()
+    object HomeWishlist : Screen()
+    object HomeInbox : Screen()
+    object HomeProfile : Screen()
     object UploadInventory: Screen()
-    object House: Screen()
-    object Profile: Screen()
     object UploadHousing: Screen()
     data class ChatBox(val primaryUser: String, val secondaryUser: String) : Screen()
+    //detail pages
+    data class House(val housingItem: Housing) : Screen()
+    data class Inventory(val inventoryItem: com.example.myapplication.models.Inventory) : Screen() // naming bug
 }
 
 object Navigator {

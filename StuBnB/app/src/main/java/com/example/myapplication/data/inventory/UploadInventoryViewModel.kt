@@ -1,4 +1,4 @@
-package com.example.myapplication.data
+package com.example.myapplication.data.inventory
 
 import android.content.ContentValues.TAG
 import android.net.Uri
@@ -137,7 +137,7 @@ class UploadInventoryViewModel : ViewModel() {
                             )
                             invRep.createInventory(inventoryTemp)
                             uploadProgress.value = false
-                            Navigator.navigate(Screen.Profile)
+                            Navigator.navigate(Screen.HomeProfile)
                         }
                     }
                 } else {

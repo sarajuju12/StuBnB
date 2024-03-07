@@ -29,8 +29,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.R
 import com.example.myapplication.components.*
 import com.example.myapplication.data.LoginViewModel
-import com.example.myapplication.data.UploadInventoryEvent
-import com.example.myapplication.data.UploadInventoryViewModel
+import com.example.myapplication.data.inventory.UploadInventoryEvent
+import com.example.myapplication.data.inventory.UploadInventoryViewModel
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -155,7 +155,7 @@ fun UploadInventory(loginViewModel: LoginViewModel = viewModel(), uploadInventor
                     Spacer(modifier = Modifier.height(20.dp))
                     Button(
                         onClick = {
-                            Navigator.navigate(Screen.Profile)
+                            Navigator.navigate(Screen.HomeProfile)
                         }
                     ) {
                         Text(text = "BACK")

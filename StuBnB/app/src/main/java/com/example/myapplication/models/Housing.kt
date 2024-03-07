@@ -4,6 +4,7 @@ data class Housing(
     val name: String,
     val description: String,
     val imageLinks: List<String>,
+
     val userId: String,
     val price: Double,
     val startDate: String,

@@ -30,8 +30,8 @@ import com.example.myapplication.components.ImagePreview
 import com.example.myapplication.components.TextField
 import com.example.myapplication.components.TitleText
 import com.example.myapplication.data.LoginViewModel
-import com.example.myapplication.data.UploadInventoryEvent
-import com.example.myapplication.data.UploadInventoryViewModel
+import com.example.myapplication.data.inventory.UploadInventoryEvent
+import com.example.myapplication.data.inventory.UploadInventoryViewModel
 import com.example.myapplication.data.housing.*
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
@@ -190,12 +190,12 @@ fun UploadHousing(loginViewModel: LoginViewModel = viewModel(), uploadHousingVie
                             uploadHousingViewModel.uploadState.value.propertyType.isNullOrEmpty() and uploadHousingViewModel.uploadState.value.genderRestriction.isNullOrEmpty() and
                             uploadHousingViewModel.uploadState.value.numOfGuests.isNullOrEmpty() and uploadHousingViewModel.uploadState.value.numOfBedrooms.isNullOrEmpty() and
                             uploadHousingViewModel.uploadState.value.numOfBathrooms.isNullOrEmpty()
-                            ) false else uploadHousingViewModel.validationPassed.value
+                        ) false else uploadHousingViewModel.validationPassed.value
                     )
                     Spacer(modifier = Modifier.height(20.dp))
                     Button(
                         onClick = {
-                            Navigator.navigate(Screen.Profile)
+                            Navigator.navigate(Screen.HomeProfile)
                         }
                     ) {
                         Text(text = "BACK")

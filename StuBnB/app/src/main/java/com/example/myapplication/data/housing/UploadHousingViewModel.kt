@@ -173,7 +173,7 @@ class UploadHousingViewModel : ViewModel() {
 
                             invRep.createHousing(housingTemp)
                             uploadProgress.value = false
-                            Navigator.navigate(Screen.Profile)
+                            Navigator.navigate(Screen.HomeProfile)
                         }
                     }
                 } else {

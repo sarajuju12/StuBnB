@@ -1,5 +1,6 @@
 package com.example.myapplication.data.repositories
 
+
 import com.example.myapplication.models.Inventory
 
 interface IInventoryRepository {

@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.example.myapplication.views.*
+import com.example.myapplication.views.detailPages.*
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -28,25 +29,51 @@ fun Router() {
                     //Home()
                     //Profile()
                 }
-                is Screen.Home -> {
-                    Home()
+
+                is Screen.HomeHousing -> {
+                    Home(0)
+                }
+
+                is Screen.HomeInventory -> {
+                    Home(1)
+                }
+
+                is Screen.HomeWishlist -> {
+                    Home(2)
+                }
+
+                is Screen.HomeInbox -> {
+                    Home(3)
+                }
+
+                is Screen.HomeProfile -> {
+                    Home(4)
                 }
                 is Screen.UploadInventory -> {
                     UploadInventory()
                 }
+
                 is Screen.UploadHousing -> {
                     UploadHousing()
                 }
-                is Screen.House -> {
-                    House()
-                }
-                is Screen.Profile -> {
-                    Profile()
-                }
+
                 is Screen.ChatBox -> {
                     val primaryUser = (currentState.value as Screen.ChatBox).primaryUser
                     val secondaryUser = (currentState.value as Screen.ChatBox).secondaryUser
                     ChatBox(primaryUser, secondaryUser)
+                }
+
+                is Screen.UploadHousing -> {
+                    UploadHousing()
+                }
+
+                // details
+                is Screen.House -> {
+                    House((currentState.value as Screen.House).housingItem)
+                }
+
+                is Screen.Inventory -> {
+                    Inventory((currentState.value as Screen.Inventory).inventoryItem)
                 }
             }
         }

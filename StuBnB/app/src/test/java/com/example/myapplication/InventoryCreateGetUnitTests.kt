@@ -25,7 +25,7 @@ class InventoryCreateGetUnitTest {
         assertEquals(temporaryInventory.name, "item-335543641")
         assertEquals(temporaryInventory.userId, "user-335543641")
         assertEquals(temporaryInventory.description, "Description of Item 2")
-        assertEquals(temporaryInventory.price, 300)
+        assertEquals(temporaryInventory.price, 300.0, 0.0)
         assertEquals(temporaryInventory.imageLinks[0], "link1")
         assertEquals(temporaryInventory.imageLinks[1], "link2")
         assertEquals(temporaryInventory.imageLinks[2], "link3")

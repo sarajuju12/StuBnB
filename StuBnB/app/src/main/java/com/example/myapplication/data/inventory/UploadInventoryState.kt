@@ -1,4 +1,4 @@
-package com.example.myapplication.data
+package com.example.myapplication.data.inventory
 
 data class UploadInventoryState(
     var name: String = "",
