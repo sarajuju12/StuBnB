@@ -95,11 +95,25 @@ fun UploadHousing(loginViewModel: LoginViewModel = viewModel(), uploadHousingVie
                         Text(text = "UPLOAD IMAGES")
                     }
                     TextField(
-                        labelValue = "Item Name", painterResource = painterResource(id = R.drawable.profile),
+                        labelValue = "University", painterResource = painterResource(id = R.drawable.profile),
                         onTextSelected = {
                             uploadHousingViewModel.onEvent(UploadHousingEvent.NameChange(it))
                         },
                         errorStatus = uploadHousingViewModel.uploadState.value.nameError
+                    )
+                    TextField(
+                        labelValue = "Address", painterResource = painterResource(id = R.drawable.profile),
+                        onTextSelected = {
+                            uploadHousingViewModel.onEvent(UploadHousingEvent.AddressChange(it))
+                        },
+                        errorStatus = uploadHousingViewModel.uploadState.value.addressError
+                    )
+                    TextField(
+                        labelValue = "Property Type", painterResource = painterResource(id = R.drawable.profile),
+                        onTextSelected = {
+                            uploadHousingViewModel.onEvent(UploadHousingEvent.PropertyTypeChange(it))
+                        },
+                        errorStatus = uploadHousingViewModel.uploadState.value.propertyTypeError
                     )
                     TextField(
                         labelValue = "Description", painterResource = painterResource(id = R.drawable.profile),
@@ -109,7 +123,7 @@ fun UploadHousing(loginViewModel: LoginViewModel = viewModel(), uploadHousingVie
                         errorStatus = uploadHousingViewModel.uploadState.value.descriptionError
                     )
                     TextField(
-                        labelValue = "Price", painterResource = painterResource(id = R.drawable.profile),
+                        labelValue = "Price (per month)", painterResource = painterResource(id = R.drawable.profile),
                         onTextSelected = {
                             uploadHousingViewModel.onEvent(UploadHousingEvent.PriceChange(it))
                         },
@@ -128,20 +142,6 @@ fun UploadHousing(loginViewModel: LoginViewModel = viewModel(), uploadHousingVie
                             uploadHousingViewModel.onEvent(UploadHousingEvent.EndDateChange(it))
                         },
                         errorStatus = uploadHousingViewModel.uploadState.value.endDateError
-                    )
-                    TextField(
-                        labelValue = "Address", painterResource = painterResource(id = R.drawable.profile),
-                        onTextSelected = {
-                            uploadHousingViewModel.onEvent(UploadHousingEvent.AddressChange(it))
-                        },
-                        errorStatus = uploadHousingViewModel.uploadState.value.addressError
-                    )
-                    TextField(
-                        labelValue = "Property Type", painterResource = painterResource(id = R.drawable.profile),
-                        onTextSelected = {
-                            uploadHousingViewModel.onEvent(UploadHousingEvent.PropertyTypeChange(it))
-                        },
-                        errorStatus = uploadHousingViewModel.uploadState.value.propertyTypeError
                     )
                     TextField(
                         labelValue = "Gender Restriction", painterResource = painterResource(id = R.drawable.profile),
@@ -195,7 +195,7 @@ fun UploadHousing(loginViewModel: LoginViewModel = viewModel(), uploadHousingVie
                     ) {
                         Text(text = "BACK")
                     }
-                    Spacer(modifier = Modifier.height(100.dp))
+                    Spacer(modifier = Modifier.height(110.dp))
                 }
             }
         }
