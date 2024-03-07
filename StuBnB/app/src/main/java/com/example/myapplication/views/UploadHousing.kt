@@ -24,15 +24,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.R
-import com.example.myapplication.components.ActionButton
-import com.example.myapplication.components.AlertDialogLogin
-import com.example.myapplication.components.ImagePreview
-import com.example.myapplication.components.TextField
-import com.example.myapplication.components.TitleText
+import com.example.myapplication.components.*
 import com.example.myapplication.data.LoginViewModel
-import com.example.myapplication.data.inventory.UploadInventoryEvent
-import com.example.myapplication.data.inventory.UploadInventoryViewModel
-import com.example.myapplication.data.housing.*
+import com.example.myapplication.data.housing.UploadHousingEvent
+import com.example.myapplication.data.housing.UploadHousingViewModel
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -121,14 +116,14 @@ fun UploadHousing(loginViewModel: LoginViewModel = viewModel(), uploadHousingVie
                         errorStatus = uploadHousingViewModel.uploadState.value.priceError
                     )
                     TextField(
-                        labelValue = "Start Date", painterResource = painterResource(id = R.drawable.profile),
+                        labelValue = "Start Date (DD/MM/YYYY)", painterResource = painterResource(id = R.drawable.profile),
                         onTextSelected = {
                             uploadHousingViewModel.onEvent(UploadHousingEvent.StartDateChange(it))
                         },
                         errorStatus = uploadHousingViewModel.uploadState.value.startDateError
                     )
                     TextField(
-                        labelValue = "End Date", painterResource = painterResource(id = R.drawable.profile),
+                        labelValue = "End Date (DD/MM/YYYY)", painterResource = painterResource(id = R.drawable.profile),
                         onTextSelected = {
                             uploadHousingViewModel.onEvent(UploadHousingEvent.EndDateChange(it))
                         },
