@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.validation.Validator
 import com.example.myapplication.models.Housing
-import com.example.myapplication.models.Inventory
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
 import com.google.firebase.storage.FirebaseStorage
@@ -198,12 +197,12 @@ class UploadHousingViewModel : ViewModel() {
             price = uploadState.value.price
         )
 
-        val startDateResult = Validator.validateName(
-            name = uploadState.value.startDate
+        val startDateResult = Validator.validateDate(
+            dateStr = uploadState.value.startDate
         )
 
-        val endDateResult = Validator.validateName(
-            name = uploadState.value.endDate
+        val endDateResult = Validator.validateDate(
+            dateStr = uploadState.value.endDate
         )
 
         val addressResult = Validator.validateName(
@@ -218,19 +217,17 @@ class UploadHousingViewModel : ViewModel() {
             name = uploadState.value.genderRestriction
         )
 
-        val numOfGuestsResult = Validator.validateName(
-            name = uploadState.value.numOfGuests
+        val numOfGuestsResult = Validator.validateNum(
+            number = uploadState.value.numOfGuests
         )
 
-        val numOfBedroomsResult = Validator.validateName(
-            name = uploadState.value.numOfBedrooms
+        val numOfBedroomsResult = Validator.validateNum(
+            number = uploadState.value.numOfBedrooms
         )
 
-        val numOfBathroomsResult = Validator.validateName(
-            name = uploadState.value.numOfBathrooms
+        val numOfBathroomsResult = Validator.validateNum(
+            number = uploadState.value.numOfBathrooms
         )
-
-
 
         uploadState.value = uploadState.value.copy(
             nameError = nameResult.status,

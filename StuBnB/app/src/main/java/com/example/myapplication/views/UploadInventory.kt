@@ -3,10 +3,8 @@ package com.example.myapplication.views
 
 import android.Manifest
 import android.net.Uri
-import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -160,7 +158,7 @@ fun UploadInventory(loginViewModel: LoginViewModel = viewModel(), uploadInventor
                     ) {
                         Text(text = "BACK")
                     }
-                    Spacer(modifier = Modifier.height(100.dp))
+                    Spacer(modifier = Modifier.height(110.dp))
                 }
             }
         }

@@ -1,6 +1,8 @@
 package com.example.myapplication.data.validation
 
 import java.lang.Double.parseDouble
+import java.text.SimpleDateFormat
+import java.util.*
 
 object Validator {
     private val EMAIL_REGEX = Regex("^\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(\\.\\w{2,})+\$")
@@ -24,6 +26,23 @@ object Validator {
             numeric = false
         }
         return ValidationResult(numeric)
+    }
+
+    fun validateDate(dateStr: String): ValidationResult {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        dateFormat.isLenient = false
+        try {
+            val date = dateFormat.parse(dateStr)
+            val currentDate = Date()
+            return ValidationResult(date != null && date.after(currentDate))
+        } catch (e: Exception) {
+            return ValidationResult(false)
+        }
+    }
+
+    fun validateNum(number: String): ValidationResult {
+        val num = number.toIntOrNull()
+        return ValidationResult(num != null && num > 0 && number == num.toString())
     }
 }
 

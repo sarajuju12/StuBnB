@@ -26,6 +26,8 @@ import com.example.myapplication.models.Housing
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
 import com.example.myapplication.ui.theme.poppins
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 @Composable
@@ -91,8 +93,10 @@ fun HousingItem(housing: Housing, onClick: () -> Unit) {
                 contentAlignment = Alignment.BottomStart
             ) {
                 Column {
+                    val oldDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                    val newDateFormat = SimpleDateFormat("MMM yyyy", Locale.getDefault())
                     Text(text = "$%.2f".format(housing.price), color = Color.Black, fontSize = 20.sp, fontFamily = poppins, fontWeight = FontWeight.SemiBold)
-                    Text(text = housing.startDate + " - " + housing.endDate, color = Color.Black, fontSize = 16.sp, fontFamily = poppins, fontWeight = FontWeight.SemiBold)
+                    Text(text = newDateFormat.format(oldDateFormat.parse(housing.startDate)) + " - " + newDateFormat.format(oldDateFormat.parse(housing.endDate)), color = Color.Black, fontSize = 16.sp, fontFamily = poppins, fontWeight = FontWeight.SemiBold)
                 }
             }
         }
