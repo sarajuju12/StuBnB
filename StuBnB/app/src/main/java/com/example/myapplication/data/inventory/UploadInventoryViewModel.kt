@@ -134,6 +134,7 @@ class UploadInventoryViewModel : ViewModel() {
                                 uploadState.value.subject,
                                 uploadState.value.category,
                                 uploadState.value.condition,
+                                false
                             )
                             invRep.createInventory(inventoryTemp)
                             uploadProgress.value = false

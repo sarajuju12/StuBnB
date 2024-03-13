@@ -167,7 +167,8 @@ class UploadHousingViewModel : ViewModel() {
                                 uploadState.value.genderRestriction,
                                 uploadState.value.numOfGuests.toInt(),
                                 uploadState.value.numOfBedrooms.toInt(),
-                                uploadState.value.numOfBathrooms.toInt()
+                                uploadState.value.numOfBathrooms.toInt(),
+                                false
                             )
 
                             invRep.createHousing(housingTemp)

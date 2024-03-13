@@ -20,4 +20,16 @@ data class Housing(
                 userId = "", price = 0.0, startDate = "", endDate = "", address = "",
                 propertyType = "", genderRestriction = "", numOfGuests = 0, numOfBedrooms = 0,
                 numOfBathrooms = 0, favourite = false)
+
+    override fun equals(other: Any?): Boolean { // override equal so contain work as expected
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Housing
+
+        if (name != other.name) return false
+        if (userId != other.userId) return false
+
+        return true
+    }
 }

@@ -35,9 +35,21 @@ fun DisplayHeartButton(
     IconButton(
         onClick = {
             if (isHousing) {
+                if (house.favourite){
+                    WishList.deleteHousing(house)
+                } else {
+                    WishList.addHousing((house))
+                }
+
                 house.favourite = !house.favourite
                 setIcon(if (house.favourite) Icons.Filled.Favorite else Icons.Outlined.Favorite)
             } else {
+                if (inventory.favourite){
+                    WishList.deleteInventory(inventory)
+                } else {
+                    WishList.addInventory(inventory)
+                }
+
                 inventory.favourite = !inventory.favourite
                 setIcon(if (inventory.favourite) Icons.Filled.Favorite else Icons.Outlined.Favorite)
             }
