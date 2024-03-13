@@ -10,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
-import com.example.myapplication.components.BackButton
+import com.example.myapplication.components.*
 import com.example.myapplication.routers.*
 import com.example.myapplication.models.Housing
 
@@ -54,6 +54,12 @@ fun House(HousingItem: Housing) {
             modifier = Modifier
                 .size(78.dp)
                 .align(Alignment.TopStart)
+        )
+
+        DisplayHeartButton(modifier = Modifier
+            .align(Alignment.TopEnd)
+            .padding(end = 16.dp, top = 16.dp)
+            .size(36.dp)
         )
     }
 }

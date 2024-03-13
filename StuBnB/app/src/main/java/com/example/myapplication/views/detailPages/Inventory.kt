@@ -3,7 +3,7 @@ package com.example.myapplication.views.detailPages
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.myapplication.components.BackButton
+import com.example.myapplication.components.*
 import com.example.myapplication.routers.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
@@ -63,6 +63,12 @@ fun Inventory(inventoryItem: Inventory) {
             modifier = Modifier
                 .size(78.dp)
                 .align(Alignment.TopStart)
+        )
+
+        DisplayHeartButton(modifier = Modifier
+            .align(Alignment.TopEnd)
+            .padding(end = 16.dp, top = 16.dp)
+            .size(36.dp)
         )
     }
 }
