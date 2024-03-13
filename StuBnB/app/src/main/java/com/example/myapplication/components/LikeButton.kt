@@ -10,37 +10,45 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-
-data class LikeButtonItem(
-    val selectedIcon: ImageVector,
-    val unselectedIcon: ImageVector,
-)
+import com.example.myapplication.models.Housing
+import com.example.myapplication.models.Inventory
+import com.example.myapplication.models.WishList
 
 @Composable
-fun DisplayHeartButton(modifier: Modifier = Modifier, onHeartButtonClick: () -> Unit) {
+fun DisplayHeartButton(
+    modifier: Modifier = Modifier,
+    isHousing: Boolean,
+    house: Housing,
+    inventory: Inventory
+) {
 
-    var isSelected by remember { mutableStateOf(false) }
-
-    val button = if (isSelected) {
-        LikeButtonItem(Icons.Filled.Favorite, Icons.Outlined.Favorite)
-    } else {
-        LikeButtonItem(Icons.Outlined.Favorite, Icons.Filled.Favorite)
+    val (icon, setIcon) = remember {
+        mutableStateOf(
+            if (isHousing && house.favourite || !isHousing && inventory.favourite) {
+                Icons.Filled.Favorite
+            } else {
+                Icons.Outlined.Favorite
+            }
+        )
     }
 
-    // Ensure you use the incoming modifier, with any additional modifications appended
     IconButton(
-        onClick = { isSelected = !isSelected
-                    onHeartButtonClick()
-                  },
-        modifier = modifier.size(24.dp) // append the size to the incoming modifier
+        onClick = {
+            if (isHousing) {
+                house.favourite = !house.favourite
+                setIcon(if (house.favourite) Icons.Filled.Favorite else Icons.Outlined.Favorite)
+            } else {
+                inventory.favourite = !inventory.favourite
+                setIcon(if (inventory.favourite) Icons.Filled.Favorite else Icons.Outlined.Favorite)
+            }
+        },
+        modifier = modifier
     ) {
         Icon(
-            imageVector = if (isSelected) button.selectedIcon else button.unselectedIcon,
+            imageVector = icon,
             contentDescription = "Heart",
-            tint = if (isSelected) Color.Red else Color.Gray
+            tint = if (icon == Icons.Filled.Favorite) Color.Red else Color.Gray
         )
     }
 }
-
-
 

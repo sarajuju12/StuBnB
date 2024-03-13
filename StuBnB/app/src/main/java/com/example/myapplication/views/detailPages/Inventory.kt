@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.ui.layout.ContentScale
 import coil.compose.rememberImagePainter
+import com.example.myapplication.screens.InventoryItem
 
 
 @Composable
@@ -65,15 +66,13 @@ fun Inventory(inventoryItem: Inventory) {
                 .align(Alignment.TopStart)
         )
 
-        val onHeartButtonClick = {
-            WishList.addInventory(inventoryItem)
-        }
-
         DisplayHeartButton(modifier = Modifier
             .align(Alignment.TopEnd)
             .padding(end = 16.dp, top = 16.dp)
             .size(36.dp),
-            onHeartButtonClick = onHeartButtonClick
+            false, // is housing
+            Housing(),
+            inventoryItem
         )
     }
 }

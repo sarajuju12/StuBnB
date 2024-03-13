@@ -133,7 +133,7 @@ class UploadInventoryViewModel : ViewModel() {
                                 uploadState.value.price.toDouble(),
                                 uploadState.value.subject,
                                 uploadState.value.category,
-                                uploadState.value.condition
+                                uploadState.value.condition,
                             )
                             invRep.createInventory(inventoryTemp)
                             uploadProgress.value = false

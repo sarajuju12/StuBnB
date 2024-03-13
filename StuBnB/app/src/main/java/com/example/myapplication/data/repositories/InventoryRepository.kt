@@ -20,7 +20,8 @@ class InventoryRepository : IInventoryRepository {
                     price = 100.0 * it,
                     subject = "Subject $it",
                     category = "Category $it",
-                    condition = "Condition $it"
+                    condition = "Condition $it",
+                    favourite = false
                 )
             )
         }

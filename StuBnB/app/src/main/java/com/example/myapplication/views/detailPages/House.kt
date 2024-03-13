@@ -57,15 +57,14 @@ fun House(HousingItem: Housing) {
                 .align(Alignment.TopStart)
         )
 
-        val onHeartButtonClick = {
-            WishList.addHousing(HousingItem)
-        }
 
         DisplayHeartButton(modifier = Modifier
             .align(Alignment.TopEnd)
             .padding(end = 16.dp, top = 16.dp)
             .size(36.dp),
-                onHeartButtonClick = onHeartButtonClick
+            true, // is housing
+            HousingItem,
+            com.example.myapplication.models.Inventory()
         )
     }
 }

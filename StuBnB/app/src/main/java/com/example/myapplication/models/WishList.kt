@@ -16,6 +16,14 @@ object WishList {
         }
     }
 
+    fun deleteInventory(item: Inventory) {
+        inventories.remove(item)
+    }
+
+    fun deleteHousing(item: Housing) {
+        housings.remove(item)
+    }
+
     fun initialize(initialInventories: List<Inventory>, initialHousings: List<Housing>) {
         inventories.clear()
         housings.clear()

@@ -8,9 +8,10 @@ data class Inventory(
     val price: Double,
     val subject: String,
     val category: String,
-    val condition: String
+    val condition: String,
+    var favourite: Boolean
 ){
-    constructor() : this("", "", "", mutableListOf(), 0.0, "", "", "")
+    constructor() : this("", "", "", mutableListOf(), 0.0, "", "", "", false)
 }
 
 //data class Person(val name: String, var age: Int)
