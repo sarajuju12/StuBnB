@@ -13,6 +13,7 @@ import coil.compose.rememberImagePainter
 import com.example.myapplication.components.*
 import com.example.myapplication.routers.*
 import com.example.myapplication.models.Housing
+import com.example.myapplication.models.WishList
 
 
 @Composable
@@ -56,10 +57,15 @@ fun House(HousingItem: Housing) {
                 .align(Alignment.TopStart)
         )
 
+        val onHeartButtonClick = {
+            WishList.addHousing(HousingItem)
+        }
+
         DisplayHeartButton(modifier = Modifier
             .align(Alignment.TopEnd)
             .padding(end = 16.dp, top = 16.dp)
-            .size(36.dp)
+            .size(36.dp),
+                onHeartButtonClick = onHeartButtonClick
         )
     }
 }

@@ -17,7 +17,8 @@ data class LikeButtonItem(
 )
 
 @Composable
-fun DisplayHeartButton(modifier: Modifier = Modifier) {
+fun DisplayHeartButton(modifier: Modifier = Modifier, onHeartButtonClick: () -> Unit) {
+
     var isSelected by remember { mutableStateOf(false) }
 
     val button = if (isSelected) {
@@ -28,7 +29,9 @@ fun DisplayHeartButton(modifier: Modifier = Modifier) {
 
     // Ensure you use the incoming modifier, with any additional modifications appended
     IconButton(
-        onClick = { isSelected = !isSelected },
+        onClick = { isSelected = !isSelected
+                    onHeartButtonClick()
+                  },
         modifier = modifier.size(24.dp) // append the size to the incoming modifier
     ) {
         Icon(

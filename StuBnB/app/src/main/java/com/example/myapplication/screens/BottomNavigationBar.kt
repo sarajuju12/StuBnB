@@ -196,7 +196,7 @@ fun InventoryScreen() {
 
 @Composable
 fun WishScreen() {
-
+    WishListScreen()
 }
 
 @Composable

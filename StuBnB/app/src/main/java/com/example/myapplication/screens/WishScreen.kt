@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import com.example.myapplication.models.WishList
 
 @Composable
-fun WishList(wish: WishList) {
-    HousingList(wish.housings)
-    InventoryList(wish.inventories)
+fun WishListScreen() {
+    HousingList(WishList.housings)
+    InventoryList(WishList.inventories)
 }
