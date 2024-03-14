@@ -51,11 +51,11 @@ fun WishListScreen() {
         }
 
         if (selectedIndex >= 0) {
-            Navigator.navigate(Screen.Inventory(inventories[selectedIndex])) // pass in the selected item
+            Navigator.navigate(Screen.Inventory(inventories[selectedIndex], false)) // pass in the selected item
         }
 
         if (Sindex >= 0) {
-            Navigator.navigate(Screen.House(housings[Sindex])) // navigator is an object
+            Navigator.navigate(Screen.House(housings[Sindex], false)) // navigator is an object
         }
 
 }

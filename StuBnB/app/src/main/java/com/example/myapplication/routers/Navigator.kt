@@ -17,8 +17,8 @@ sealed class Screen {
     object UploadHousing: Screen()
     data class ChatBox(val primaryUser: String, val secondaryUser: String) : Screen()
     //detail pages
-    data class House(val housingItem: Housing) : Screen()
-    data class Inventory(val inventoryItem: com.example.myapplication.models.Inventory) : Screen() // naming bug
+    data class House(val housingItem: Housing, val fromHos: Boolean) : Screen()
+    data class Inventory(val inventoryItem: com.example.myapplication.models.Inventory, val fromInv: Boolean) : Screen() // naming bug
 }
 
 object Navigator {

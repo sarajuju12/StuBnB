@@ -17,7 +17,7 @@ import com.example.myapplication.models.WishList
 
 
 @Composable
-fun House(HousingItem: Housing) {
+fun House(HousingItem: Housing, fromHos: Boolean) {
     LazyColumn(modifier = Modifier.fillMaxSize().padding(16.dp)) {
 
         items(HousingItem.imageLinks) { imageUrl ->
@@ -50,7 +50,8 @@ fun House(HousingItem: Housing) {
     Box(modifier = Modifier.fillMaxSize()) {
         BackButton(
             buttonClicked = {
-                Navigator.navigate(Screen.HomeHousing)
+                if (fromHos) Navigator.navigate(Screen.HomeHousing)
+                else Navigator.navigate(Screen.HomeWishlist)
             },
             modifier = Modifier
                 .size(78.dp)

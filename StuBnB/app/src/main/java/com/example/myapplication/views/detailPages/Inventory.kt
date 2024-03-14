@@ -18,7 +18,7 @@ import com.example.myapplication.screens.InventoryItem
 
 
 @Composable
-fun Inventory(inventoryItem: Inventory) {
+fun Inventory(inventoryItem: Inventory, fromInv: Boolean) {
     LazyColumn(modifier = Modifier.fillMaxSize().padding(16.dp)) {
 
         items(inventoryItem.imageLinks) { imageUrl ->
@@ -45,34 +45,33 @@ fun Inventory(inventoryItem: Inventory) {
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = "Item Name: ${inventoryItem.name}")
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "Seller: ${inventoryItem.userId}".replace(",","."))
+            Text(text = "Seller: ${inventoryItem.userId}".replace(",", "."))
             Spacer(modifier = Modifier.height(24.dp))
         }
-//        Button(onClick = { }) {// chat box
-//            Text("Send Seller a Message")
-//        }
     }
 
 
+        // put the back button on the top most layer
+        Box(modifier = Modifier.fillMaxSize()) {
+            BackButton(
+                buttonClicked = {
+                    if (fromInv) Navigator.navigate(Screen.HomeInventory)
+                    else Navigator.navigate(Screen.HomeWishlist)
+                },
+                modifier = Modifier
+                    .size(78.dp)
+                    .align(Alignment.TopStart)
+            )
 
-    // put the back button on the top most layer
-    Box(modifier = Modifier.fillMaxSize()) {
-        BackButton(
-            buttonClicked = {
-                Navigator.navigate(Screen.HomeInventory)
-            },
-            modifier = Modifier
-                .size(78.dp)
-                .align(Alignment.TopStart)
-        )
+            DisplayHeartButton(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(end = 16.dp, top = 16.dp)
+                    .size(36.dp),
+                false, // is housing
+                Housing(),
+                inventoryItem
+            )
+        }
 
-        DisplayHeartButton(modifier = Modifier
-            .align(Alignment.TopEnd)
-            .padding(end = 16.dp, top = 16.dp)
-            .size(36.dp),
-            false, // is housing
-            Housing(),
-            inventoryItem
-        )
-    }
 }
