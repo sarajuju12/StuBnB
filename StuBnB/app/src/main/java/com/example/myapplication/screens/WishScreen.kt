@@ -31,9 +31,6 @@ fun WishListScreen() {
                 }
 
                 InventoryItem(inventory = inventory, onClick = onItemClick)
-                if (index == inventories.size - 1) {
-                    Spacer(modifier = Modifier.height(100.dp))
-                }
             }
 
             items(housings.size) { index ->
