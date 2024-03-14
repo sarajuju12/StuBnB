@@ -1,4 +1,5 @@
 package com.example.myapplication.screens
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
@@ -7,25 +8,31 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.components.ActionButton
 import com.example.myapplication.data.HomeViewModel
+import com.example.myapplication.data.LoginViewModel
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
+import com.example.myapplication.ui.theme.poppins
+import com.google.firebase.database.*
 
 @Composable
-fun DisplayProfileScreen(homeViewModel: HomeViewModel = viewModel()) {
+fun DisplayProfileScreen(homeViewModel: HomeViewModel = viewModel(), loginViewModel: LoginViewModel = viewModel()) {
 
+    val userId = loginViewModel.getEncryptedEmail()
     var showDialog by remember { mutableStateOf(false)}
-
-
     if (showDialog) {
         UploadListingPopup(onDismiss = {showDialog=false})
     }
 
     Surface(
-        modifier = Modifier.fillMaxSize().padding(30.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(30.dp),
     ) {
         Box(
             contentAlignment = Alignment.Center,
@@ -33,7 +40,7 @@ fun DisplayProfileScreen(homeViewModel: HomeViewModel = viewModel()) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
+                DisplayUserName(userId = userId)
                 ActionButton(value = "UPLOAD A LISTING", buttonClicked = { showDialog = true }, isEnabled = true)
                 Spacer(modifier = Modifier.height(50.dp))
                 ActionButton(value = "LOG OUT", buttonClicked = { homeViewModel.logout() }, isEnabled = true)
@@ -47,8 +54,6 @@ fun DisplayProfileScreen(homeViewModel: HomeViewModel = viewModel()) {
 fun UploadListingPopup(
     onDismiss:()->Unit
 ) {
-
-    //var selectedIndex by rememberSaveable { mutableStateOf(0) }
 
     androidx.compose.material3.AlertDialog(
         onDismissRequest = onDismiss,
@@ -82,32 +87,29 @@ fun UploadListingPopup(
         }
     )
 }
-/*
+
 @Composable
-fun MainContent(selectedItemIndex: Int) {
-    when (selectedItemIndex) {
-        1 -> UploadHousingScreen()
-        2 -> UploadInventoryScreen()
-    }
+fun DisplayUserName(userId: String) {
+    val userNameState = remember { mutableStateOf("") }
+    getNameOfUser({ userName ->
+        userNameState.value = userName ?: "User not found"
+    }, userId)
+    Text("${userNameState.value}", color = Color.Black, fontSize = 20.sp, fontFamily = poppins, fontWeight = FontWeight.SemiBold)
 }
 
- */
-@Composable
-fun UploadHousingScreen() {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = Color.Gray
-    ) {
+fun getNameOfUser(callback: (String?) -> Unit, userEmail: String) {
+    val database = FirebaseDatabase.getInstance()
+    val myRef: DatabaseReference = database.getReference("users")
 
-    }
-}
+    myRef.child(userEmail).addListenerForSingleValueEvent(object : ValueEventListener {
+        override fun onDataChange(userSnapshot: DataSnapshot) {
+            val userName = userSnapshot.getValue(String::class.java)
+            callback(userName)
+        }
 
-@Composable
-fun UploadInventoryScreen() {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = Color.Gray
-    ) {
-
-    }
+        override fun onCancelled(databaseError: DatabaseError) {
+            Log.e("getNameOfUser", "Failed to get name of user $userEmail.", databaseError.toException())
+            callback(null)
+        }
+    })
 }
