@@ -88,6 +88,12 @@ class UploadHousingViewModel : ViewModel() {
                 )
                 validateData()
             }
+            is UploadHousingEvent.FavouriteChange -> {
+                uploadState.value = uploadState.value.copy(
+                    favourite = event.favourite
+                )
+                // validateData()
+            }
             is UploadHousingEvent.ButtonClicked -> {
                 validateData()
                 uploadListing()
@@ -168,7 +174,8 @@ class UploadHousingViewModel : ViewModel() {
                                 uploadState.value.numOfGuests.toInt(),
                                 uploadState.value.numOfBedrooms.toInt(),
                                 uploadState.value.numOfBathrooms.toInt(),
-                                false
+                               // false
+                                uploadState.value.favourite
                             )
 
                             invRep.createHousing(housingTemp)

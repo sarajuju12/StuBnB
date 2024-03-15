@@ -36,8 +36,10 @@ fun DisplayHeartButton(
         onClick = {
             if (isHousing) {
                 if (house.favourite){
+
                     WishList.deleteHousing(house)
                 } else {
+
                     WishList.addHousing((house))
                 }
 

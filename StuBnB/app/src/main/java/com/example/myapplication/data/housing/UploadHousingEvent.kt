@@ -12,5 +12,6 @@ sealed class UploadHousingEvent {
     data class NumOfGuestsChange(val numOfGuests: String): UploadHousingEvent()
     data class NumOfBedroomsChange(val numOfBedrooms: String): UploadHousingEvent()
     data class NumOfBathroomsChange(val numOfBathrooms: String): UploadHousingEvent()
+    data class FavouriteChange(val favourite: Boolean) : UploadHousingEvent()
     object ButtonClicked: UploadHousingEvent()
 }

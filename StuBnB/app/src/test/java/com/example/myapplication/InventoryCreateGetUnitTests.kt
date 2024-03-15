@@ -15,7 +15,8 @@ class InventoryCreateGetUnitTest {
         100.0 * 3,
         "Subject 2",
         "Category 2",
-        "Condition 2"
+        "Condition 2",
+        true
     )
 
     val invRepo = InventoryRepository();

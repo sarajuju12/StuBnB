@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.myapplication.data.housing.UploadHousingEvent
 import com.example.myapplication.data.repositories.InventoryRepository
 import com.example.myapplication.data.validation.Validator
 import com.example.myapplication.models.Inventory
@@ -59,6 +60,14 @@ class UploadInventoryViewModel : ViewModel() {
                 )
                 validateData()
             }
+
+            is UploadInventoryEvent.FavouriteChange -> {
+                uploadState.value = uploadState.value.copy(
+                    favourite = event.favourite
+                )
+                // validateData()
+            }
+
             is UploadInventoryEvent.ButtonClicked -> {
                 validateData()
                 uploadListing()
