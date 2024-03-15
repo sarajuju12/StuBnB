@@ -10,14 +10,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
-import com.example.myapplication.components.*
+import com.example.myapplication.components.BackButton
 import com.example.myapplication.routers.*
 import com.example.myapplication.models.Housing
-import com.example.myapplication.models.WishList
 
 
 @Composable
-fun House(HousingItem: Housing, fromHos: Boolean) {
+fun House(HousingItem: Housing) {
     LazyColumn(modifier = Modifier.fillMaxSize().padding(16.dp)) {
 
         items(HousingItem.imageLinks) { imageUrl ->
@@ -50,22 +49,11 @@ fun House(HousingItem: Housing, fromHos: Boolean) {
     Box(modifier = Modifier.fillMaxSize()) {
         BackButton(
             buttonClicked = {
-                if (fromHos) Navigator.navigate(Screen.HomeHousing)
-                else Navigator.navigate(Screen.HomeWishlist)
+                Navigator.navigate(Screen.HomeHousing)
             },
             modifier = Modifier
                 .size(78.dp)
                 .align(Alignment.TopStart)
-        )
-
-
-        DisplayHeartButton(modifier = Modifier
-            .align(Alignment.TopEnd)
-            .padding(end = 16.dp, top = 16.dp)
-            .size(36.dp),
-            true, // is housing
-            HousingItem,
-            com.example.myapplication.models.Inventory()
         )
     }
 }

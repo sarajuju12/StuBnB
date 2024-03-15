@@ -8,22 +8,9 @@ data class Inventory(
     val price: Double,
     val subject: String,
     val category: String,
-    val condition: String,
-    var favourite: Boolean
+    val condition: String
 ){
-    constructor() : this("", "", "", mutableListOf(), 0.0, "", "", "", false)
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Inventory
-
-        if (name != other.name) return false
-        if (userId != other.userId) return false
-
-        return true
-    }
+    constructor() : this("", "", "", mutableListOf(), 0.0, "", "", "")
 }
 
 //data class Person(val name: String, var age: Int)

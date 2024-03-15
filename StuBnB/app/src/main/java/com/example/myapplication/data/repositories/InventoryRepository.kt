@@ -3,7 +3,6 @@ package com.example.myapplication.data.repositories
 
 import android.util.Log
 import com.example.myapplication.models.Inventory
-import com.example.myapplication.models.WishList
 import com.google.firebase.database.*
 
 class InventoryRepository : IInventoryRepository {
@@ -21,8 +20,7 @@ class InventoryRepository : IInventoryRepository {
                     price = 100.0 * it,
                     subject = "Subject $it",
                     category = "Category $it",
-                    condition = "Condition $it",
-                    favourite = false
+                    condition = "Condition $it"
                 )
             )
         }
@@ -44,11 +42,6 @@ class InventoryRepository : IInventoryRepository {
                         val inventory = inventorySnapshot.getValue(Inventory::class.java)
                         inventory?.let {
                             inventoryList.add(it)
-
-                            // add on spawn
-                            if (inventory.favourite){
-                                WishList.addInventory(inventory)
-                            }
                         }
                     }
                 }
@@ -63,24 +56,24 @@ class InventoryRepository : IInventoryRepository {
     }
 
     override fun getInventoryOfUser(callback: InventoryCallback, userID : String){
-//        val database = FirebaseDatabase.getInstance()
-//        val myRef: DatabaseReference = database.getReference("inventory")
-//        val inventoryList: MutableList<Inventory> = mutableListOf()
-//
-//        myRef.child(userID).addListenerForSingleValueEvent(object : ValueEventListener {
-//            override fun onDataChange(userSnapshot: DataSnapshot) {
-//                for (inventorySnapshot in userSnapshot.children) {
-//                    val inventory = inventorySnapshot.getValue(Inventory::class.java)
-//                    inventory?.let { inventoryList.add(it) }
-//                }
-//
-//                callback.onInventoryLoaded(inventoryList)
-//            }
-//
-//            override fun onCancelled(databaseError: DatabaseError) {
-//                Log.e("getInventoryOfUser", "Failed to get inventory items of user $userID.", databaseError.toException())
-//            }
-//        })
+        val database = FirebaseDatabase.getInstance()
+        val myRef: DatabaseReference = database.getReference("inventory")
+        val inventoryList: MutableList<Inventory> = mutableListOf()
+
+        myRef.child(userID).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(userSnapshot: DataSnapshot) {
+                for (inventorySnapshot in userSnapshot.children) {
+                    val inventory = inventorySnapshot.getValue(Inventory::class.java)
+                    inventory?.let { inventoryList.add(it) }
+                }
+
+                callback.onInventoryLoaded(inventoryList)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("getInventoryOfUser", "Failed to get inventory items of user $userID.", databaseError.toException())
+            }
+        })
     }
 
     override fun createInventory(newInventoryItem : Inventory){
