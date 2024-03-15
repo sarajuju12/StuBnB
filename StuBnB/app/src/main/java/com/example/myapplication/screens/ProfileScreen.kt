@@ -1,20 +1,28 @@
 package com.example.myapplication.screens
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.rememberImagePainter
+import coil.transform.CircleCropTransformation
+import com.example.myapplication.R
 import com.example.myapplication.components.ActionButton
 import com.example.myapplication.data.HomeViewModel
 import com.example.myapplication.data.LoginViewModel
+import com.example.myapplication.models.User
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
 import com.example.myapplication.ui.theme.poppins
@@ -91,10 +99,42 @@ fun UploadListingPopup(
 @Composable
 fun DisplayUserName(userId: String) {
     val userNameState = remember { mutableStateOf("") }
+    val userPicState = remember { mutableStateOf("") }
     getNameOfUser({ userName ->
         userNameState.value = userName ?: "User not found"
     }, userId)
-    Text("${userNameState.value}", color = Color.Black, fontSize = 20.sp, fontFamily = poppins, fontWeight = FontWeight.SemiBold)
+    getProfilePic({ profilePicUrl ->
+        if (profilePicUrl != null) {
+            userPicState.value = profilePicUrl
+        }
+    }, userId)
+    //val painter = rememberImagePainter(userPicState.value ?: R.drawable.profile)
+    val painter = rememberImagePainter(
+        data = userPicState.value, // URL of the user's profile picture
+        builder = {
+            error(R.drawable.profile) // Default profile picture drawable
+            transformations(CircleCropTransformation()) // Apply circular transformation
+        }
+    )
+    Column(
+        modifier = Modifier.padding(16.dp)
+    ) {
+        Image(
+            painter = painter,
+            contentDescription = null,
+            modifier = Modifier
+                .size(100.dp)
+                .clip(CircleShape),
+            contentScale = ContentScale.Crop
+        )
+        Text(
+            "${userNameState.value}",
+            color = Color.Black,
+            fontSize = 30.sp,
+            fontFamily = poppins,
+            fontWeight = FontWeight.SemiBold
+        )
+    }
 }
 
 fun getNameOfUser(callback: (String?) -> Unit, userEmail: String) {
@@ -103,12 +143,31 @@ fun getNameOfUser(callback: (String?) -> Unit, userEmail: String) {
 
     myRef.child(userEmail).addListenerForSingleValueEvent(object : ValueEventListener {
         override fun onDataChange(userSnapshot: DataSnapshot) {
-            val userName = userSnapshot.getValue(String::class.java)
+            val user = userSnapshot.getValue(User::class.java)
+            val userName = user?.name
             callback(userName)
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
             Log.e("getNameOfUser", "Failed to get name of user $userEmail.", databaseError.toException())
+            callback(null)
+        }
+    })
+}
+
+fun getProfilePic(callback: (String?) -> Unit, userEmail: String) {
+    val database = FirebaseDatabase.getInstance()
+    val myRef: DatabaseReference = database.getReference("users")
+
+    myRef.child(userEmail).addListenerForSingleValueEvent(object : ValueEventListener {
+        override fun onDataChange(userSnapshot: DataSnapshot) {
+            val user = userSnapshot.getValue(User::class.java)
+            val userPic = user?.imageLink
+            callback(userPic)
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            Log.e("getProfilePic", "Failed to get image of user $userEmail.", databaseError.toException())
             callback(null)
         }
     })
