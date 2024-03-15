@@ -27,14 +27,11 @@ data class BottomNavigationItem(
     val badgeCount: MutableState<Int> 
 )
 
-object BottomNavigationList{
-    val Blist = getBottomNavigationItems()
-}
 
 // get the bottom 5 tabs as a list
 fun getBottomNavigationItems(): List<BottomNavigationItem> {
     return listOf(
-        BottomNavigationItem(
+        BottomNavigationItem(  // todo badge count event
             title = "Housing",
             selectedIcon = Icons.Filled.Home,
             unselectedIcon = Icons.Outlined.Home,
@@ -76,7 +73,7 @@ fun getBottomNavigationItems(): List<BottomNavigationItem> {
 @Composable
 fun DisplayBottomBar(starter: Int){
     // call to get the list of bottom navigation items
-    val items = BottomNavigationList.Blist
+    val items = getBottomNavigationItems()
     // *** selectedIndex hold the current selected index, changes when the status changes
     // *** initially at state 0, the housing tab
     var selectedIndex by rememberSaveable { mutableStateOf(starter) }

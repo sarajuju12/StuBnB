@@ -16,7 +16,6 @@ import com.example.myapplication.data.housing.UploadHousingViewModel
 import com.example.myapplication.data.inventory.UploadInventoryEvent
 import com.example.myapplication.data.inventory.UploadInventoryViewModel
 import com.example.myapplication.routers.Screen
-import com.example.myapplication.screens.BottomNavigationList
 
 
 @Composable
@@ -42,11 +41,8 @@ fun DisplayHeartButton(
             if (isHousing) {
                 if (house.favourite){
                     WishList.deleteHousing(house)
-                    if (BottomNavigationList.Blist[2].badgeCount.value > 0)
-                        BottomNavigationList.Blist[2].badgeCount.value--
                 } else {
                     WishList.addHousing((house))
-                    BottomNavigationList.Blist[2].badgeCount.value++
                 }
 
                 house.favourite = !house.favourite
@@ -59,11 +55,8 @@ fun DisplayHeartButton(
             } else {
                 if (inventory.favourite){
                     WishList.deleteInventory(inventory)
-                    if (BottomNavigationList.Blist[2].badgeCount.value > 0)
-                        BottomNavigationList.Blist[2].badgeCount.value--
                 } else {
                     WishList.addInventory(inventory)
-                    BottomNavigationList.Blist[2].badgeCount.value++
                 }
 
                 inventory.favourite = !inventory.favourite
