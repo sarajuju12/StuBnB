@@ -1,9 +1,12 @@
 package com.example.myapplication.screens
+import android.net.Uri
 import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
-import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
@@ -30,6 +33,7 @@ import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
 import com.example.myapplication.ui.theme.poppins
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
 
 @Composable
 fun DisplayProfileScreen(homeViewModel: HomeViewModel = viewModel(), loginViewModel: LoginViewModel = viewModel()) {
@@ -39,7 +43,7 @@ fun DisplayProfileScreen(homeViewModel: HomeViewModel = viewModel(), loginViewMo
     if (showDialog) {
         UploadListingPopup(onDismiss = {showDialog=false})
     }
-
+    var selectedProfilePicUri by remember { mutableStateOf<Uri?>(null) }
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -51,7 +55,9 @@ fun DisplayProfileScreen(homeViewModel: HomeViewModel = viewModel(), loginViewMo
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                DisplayUserPic(userId = userId)
+                DisplayUserPic(userId = userId) {uri ->
+                    selectedProfilePicUri = uri
+                }
                 DisplayUserName(userId = userId)
                 ActionButton(value = "UPLOAD A LISTING", buttonClicked = { showDialog = true }, isEnabled = true)
                 Spacer(modifier = Modifier.height(50.dp))
@@ -122,8 +128,14 @@ fun DisplayUserName(userId: String) {
 }
 
 @Composable
-fun DisplayUserPic(userId: String) {
+fun DisplayUserPic(userId: String, onPicSelected: (Uri) -> Unit) {
     val userPicState = remember { mutableStateOf("") }
+    val galleryLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let {
+            onPicSelected(it)
+            uploadImageToStorage(it, userId, userPicState)
+        }
+    }
     getProfilePic({ profilePicUrl ->
         if (profilePicUrl != null) {
             userPicState.value = profilePicUrl
@@ -141,16 +153,51 @@ fun DisplayUserPic(userId: String) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        val interactionSource = remember { MutableInteractionSource() }
         Image(
             painter = painter,
             contentDescription = null,
             modifier = Modifier
                 .size(200.dp)
                 .clip(CircleShape)
-                .border(BorderStroke(1.dp, Color.Black), CircleShape),
+                .border(BorderStroke(1.dp, Color.Black), CircleShape)
+                .clickable {
+                    // Trigger the opening of the gallery
+                    galleryLauncher.launch("image/*")
+                },
             contentScale = ContentScale.Crop
         )
+    }
+}
+
+private fun uploadImageToStorage(imageUri: Uri, userId: String, userPicState: MutableState<String>) {
+    val storageReference = FirebaseStorage.getInstance().reference
+    val fileReference = storageReference.child("${System.currentTimeMillis()}_${imageUri.lastPathSegment}")
+    val uploadTask = fileReference.putFile(imageUri)
+    uploadTask.continueWithTask { task ->
+        if (!task.isSuccessful) {
+            throw task.exception ?: Exception("Unknown error")
+        }
+        fileReference.downloadUrl
+    }.addOnCompleteListener { task ->
+        if (task.isSuccessful) {
+            fileReference.downloadUrl.addOnSuccessListener { uri ->
+                val imageUrl = uri.toString()
+                updateProfilePicture(imageUrl, userId, userPicState)
+            }
+        } else {
+            val exception = task.exception ?: Exception("Unknown error")
+        }
+    }
+}
+
+private fun updateProfilePicture(imageUrl: String, userId: String, userPicState: MutableState<String>) {
+    val databaseReference = FirebaseDatabase.getInstance().getReference("users/$userId/imageLink")
+    databaseReference.setValue(imageUrl).addOnSuccessListener {
+        getProfilePic({ profilePicUrl ->
+            if (profilePicUrl != null) {
+                userPicState.value = profilePicUrl
+            }
+        }, userId)
     }
 }
 
