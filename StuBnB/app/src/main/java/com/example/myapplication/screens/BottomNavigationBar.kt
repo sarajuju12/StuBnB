@@ -49,7 +49,7 @@ fun getBottomNavigationItems(): List<BottomNavigationItem> {
             title = "Wishlist",
             selectedIcon = Icons.Filled.Favorite,
             unselectedIcon = Icons.Outlined.Favorite,
-            hasNews = mutableStateOf(false), // for sprint 1 demo
+            hasNews = mutableStateOf(true), // for sprint 1 demo
             badgeCount = mutableStateOf(0)
         ),
         BottomNavigationItem(
@@ -57,7 +57,7 @@ fun getBottomNavigationItems(): List<BottomNavigationItem> {
             selectedIcon = Icons.Filled.Email,
             unselectedIcon = Icons.Outlined.Email,
             hasNews = mutableStateOf(false),
-            badgeCount = mutableStateOf(0) // for sprint 1 demo
+            badgeCount = mutableStateOf(3) // for sprint 1 demo
         ),
         BottomNavigationItem(
             title = "Profile",
@@ -116,7 +116,6 @@ fun DisplayBottomBar(starter: Int){
             }
         }
     ) {
-
         innerPadding -> MainContent(selectedIndex, innerPadding, items)
     }
 }
@@ -125,7 +124,6 @@ fun DisplayBottomBar(starter: Int){
 fun MainContent(selectedItemIndex: Int, innerPadding: PaddingValues, items: List<BottomNavigationItem>) {
     when (selectedItemIndex) {
         0 -> {
-            callGetInventory()  // for wishlist
             HousingScreen()
             items[0].hasNews.value = false
             items[0].badgeCount.value = 0
@@ -177,7 +175,7 @@ fun HousingScreen() {
 }
 
 @Composable
-fun callGetInventory(): List<Inventory> {
+fun InventoryScreen() {
     val tempInventoryRepository = InventoryRepository()
     val listOfInventory = remember { mutableStateOf<List<Inventory>>(emptyList()) }
 
@@ -191,20 +189,14 @@ fun callGetInventory(): List<Inventory> {
         })
     }
 
-    return listOfInventory.value
-}
-@Composable
-fun InventoryScreen() {
-    val listOfInventory = callGetInventory()
-
     MyApplicationTheme {
-        InventoryList(listOfInventory)
+        InventoryList(listOfInventory.value)
     }
 }
 
 @Composable
 fun WishScreen() {
-    WishListScreen()
+
 }
 
 @Composable

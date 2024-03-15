@@ -25,6 +25,5 @@ data class UploadHousingState(
     var genderRestrictionError: Boolean = true,
     var numOfGuestsError: Boolean = true,
     var numOfBedroomsError: Boolean = true,
-    var numOfBathroomsError: Boolean = true,
-    var favourite: Boolean = false
+    var numOfBathroomsError: Boolean = true
 )
