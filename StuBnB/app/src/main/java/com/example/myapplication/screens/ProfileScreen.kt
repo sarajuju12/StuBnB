@@ -1,6 +1,9 @@
 package com.example.myapplication.screens
 import android.util.Log
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
@@ -48,6 +51,7 @@ fun DisplayProfileScreen(homeViewModel: HomeViewModel = viewModel(), loginViewMo
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                DisplayUserPic(userId = userId)
                 DisplayUserName(userId = userId)
                 ActionButton(value = "UPLOAD A LISTING", buttonClicked = { showDialog = true }, isEnabled = true)
                 Spacer(modifier = Modifier.height(50.dp))
@@ -99,16 +103,32 @@ fun UploadListingPopup(
 @Composable
 fun DisplayUserName(userId: String) {
     val userNameState = remember { mutableStateOf("") }
-    val userPicState = remember { mutableStateOf("") }
     getNameOfUser({ userName ->
         userNameState.value = userName ?: "User not found"
     }, userId)
+    Column(
+        modifier = Modifier.padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            "${userNameState.value}",
+            color = Color.Black,
+            fontSize = 30.sp,
+            fontFamily = poppins,
+            fontWeight = FontWeight.SemiBold
+        )
+    }
+}
+
+@Composable
+fun DisplayUserPic(userId: String) {
+    val userPicState = remember { mutableStateOf("") }
     getProfilePic({ profilePicUrl ->
         if (profilePicUrl != null) {
             userPicState.value = profilePicUrl
         }
     }, userId)
-    //val painter = rememberImagePainter(userPicState.value ?: R.drawable.profile)
     val painter = rememberImagePainter(
         data = userPicState.value, // URL of the user's profile picture
         builder = {
@@ -117,22 +137,19 @@ fun DisplayUserName(userId: String) {
         }
     )
     Column(
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier.padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
+        val interactionSource = remember { MutableInteractionSource() }
         Image(
             painter = painter,
             contentDescription = null,
             modifier = Modifier
-                .size(100.dp)
-                .clip(CircleShape),
+                .size(200.dp)
+                .clip(CircleShape)
+                .border(BorderStroke(1.dp, Color.Black), CircleShape),
             contentScale = ContentScale.Crop
-        )
-        Text(
-            "${userNameState.value}",
-            color = Color.Black,
-            fontSize = 30.sp,
-            fontFamily = poppins,
-            fontWeight = FontWeight.SemiBold
         )
     }
 }

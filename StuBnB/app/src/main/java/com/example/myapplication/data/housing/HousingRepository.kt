@@ -1,8 +1,8 @@
 package com.example.myapplication.data.housing
 
+import android.util.Log
 import com.example.myapplication.models.Housing
 import com.google.firebase.database.*
-import android.util.Log
 
 
 class HousingRepository : IHousingRepository {
@@ -69,6 +69,6 @@ class HousingRepository : IHousingRepository {
         val database = FirebaseDatabase.getInstance()
         val myRef: DatabaseReference = database.getReference("housing")
 
-        myRef.child(newHousingItem.userId).child(newHousingItem.name).setValue(newHousingItem)
+        myRef.child(newHousingItem.userId).child(newHousingItem.name + "_${System.currentTimeMillis()}").setValue(newHousingItem)
     }
 }
