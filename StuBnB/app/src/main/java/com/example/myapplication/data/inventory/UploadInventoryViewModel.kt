@@ -12,6 +12,10 @@ import com.example.myapplication.data.validation.Validator
 import com.example.myapplication.models.Inventory
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.launch
 
@@ -63,9 +67,22 @@ class UploadInventoryViewModel : ViewModel() {
 
             is UploadInventoryEvent.FavouriteChange -> {
                 uploadState.value = uploadState.value.copy(
-                    favourite = event.favourite
+                    favourite = event.inventory.favourite
                 )
-                // validateData()
+
+                val databaseReference = FirebaseDatabase.getInstance().getReference("inventory")
+                val ref = databaseReference.child("sarajuju12@gmail,com").child(event.inventory.name.trim())
+
+                ref.child("favourite").addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val isFavourite = snapshot.getValue(Boolean::class.java) ?: false
+                        ref.child("favourite").setValue(!isFavourite)
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.d("Firebase", databaseError.message)
+                    }
+                })
             }
 
             is UploadInventoryEvent.ButtonClicked -> {

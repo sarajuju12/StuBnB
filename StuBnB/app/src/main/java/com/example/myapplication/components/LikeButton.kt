@@ -1,6 +1,6 @@
 package com.example.myapplication.components
 
-import androidx.compose.foundation.layout.size
+
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.Favorite
@@ -8,11 +8,15 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.unit.dp
+import com.example.myapplication.data.housing.UploadHousingEvent
 import com.example.myapplication.models.Housing
 import com.example.myapplication.models.Inventory
 import com.example.myapplication.models.WishList
+import com.example.myapplication.data.housing.UploadHousingViewModel
+import com.example.myapplication.data.inventory.UploadInventoryEvent
+import com.example.myapplication.data.inventory.UploadInventoryViewModel
+import com.example.myapplication.routers.Screen
+
 
 @Composable
 fun DisplayHeartButton(
@@ -36,14 +40,17 @@ fun DisplayHeartButton(
         onClick = {
             if (isHousing) {
                 if (house.favourite){
-
                     WishList.deleteHousing(house)
                 } else {
-
                     WishList.addHousing((house))
                 }
 
                 house.favourite = !house.favourite
+
+                // upload the changes to the database
+                val model = UploadHousingViewModel()
+                model.onEvent(UploadHousingEvent.FavouriteChange(house))
+
                 setIcon(if (house.favourite) Icons.Filled.Favorite else Icons.Outlined.Favorite)
             } else {
                 if (inventory.favourite){
@@ -53,6 +60,11 @@ fun DisplayHeartButton(
                 }
 
                 inventory.favourite = !inventory.favourite
+
+                // upload the changes to the database
+                val model = UploadInventoryViewModel()
+                model.onEvent(UploadInventoryEvent.FavouriteChange(inventory))
+
                 setIcon(if (inventory.favourite) Icons.Filled.Favorite else Icons.Outlined.Favorite)
             }
         },

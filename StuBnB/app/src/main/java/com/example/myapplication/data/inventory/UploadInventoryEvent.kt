@@ -1,6 +1,7 @@
 package com.example.myapplication.data.inventory
 
 import com.example.myapplication.data.housing.UploadHousingEvent
+import com.example.myapplication.models.Inventory
 
 sealed class UploadInventoryEvent {
     data class NameChange(val name: String): UploadInventoryEvent()
@@ -9,6 +10,6 @@ sealed class UploadInventoryEvent {
     data class SubjectChange(val subject: String): UploadInventoryEvent()
     data class CategoryChange(val category: String): UploadInventoryEvent()
     data class ConditionChange(val condition: String): UploadInventoryEvent()
-    data class FavouriteChange(val favourite: Boolean) : UploadInventoryEvent()
+    data class FavouriteChange(val inventory: Inventory) : UploadInventoryEvent()
     object ButtonClicked: UploadInventoryEvent()
 }

@@ -204,9 +204,6 @@ fun InventoryScreen() {
 
 @Composable
 fun WishScreen() {
-    // get housing already called
-
-
     WishListScreen()
 }
 
