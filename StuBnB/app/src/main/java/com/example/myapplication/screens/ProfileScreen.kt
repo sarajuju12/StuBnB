@@ -10,6 +10,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -34,6 +35,8 @@ import com.example.myapplication.routers.Screen
 import com.example.myapplication.ui.theme.poppins
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
+
+var uploadProgress = mutableStateOf(false)
 
 @Composable
 fun DisplayProfileScreen(homeViewModel: HomeViewModel = viewModel(), loginViewModel: LoginViewModel = viewModel()) {
@@ -63,9 +66,11 @@ fun DisplayProfileScreen(homeViewModel: HomeViewModel = viewModel(), loginViewMo
                 Spacer(modifier = Modifier.height(50.dp))
                 ActionButton(value = "LOG OUT", buttonClicked = { homeViewModel.logout() }, isEnabled = true)
             }
+            if (uploadProgress.value) {
+                CircularProgressIndicator()
+            }
         }
     }
-
 }
 
 @Composable
@@ -170,6 +175,7 @@ fun DisplayUserPic(userId: String, onPicSelected: (Uri) -> Unit) {
 }
 
 private fun uploadImageToStorage(imageUri: Uri, userId: String, userPicState: MutableState<String>) {
+    uploadProgress.value = true
     val storageReference = FirebaseStorage.getInstance().reference
     val fileReference = storageReference.child("${System.currentTimeMillis()}_${imageUri.lastPathSegment}")
     val uploadTask = fileReference.putFile(imageUri)
@@ -228,6 +234,7 @@ fun getProfilePic(callback: (String?) -> Unit, userEmail: String) {
             val user = userSnapshot.getValue(User::class.java)
             val userPic = user?.imageLink
             callback(userPic)
+            uploadProgress.value = false
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
