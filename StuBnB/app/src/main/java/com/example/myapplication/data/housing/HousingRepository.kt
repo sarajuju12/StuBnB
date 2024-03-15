@@ -3,6 +3,7 @@ package com.example.myapplication.data.housing
 import com.example.myapplication.models.Housing
 import com.google.firebase.database.*
 import android.util.Log
+import com.example.myapplication.models.WishList
 
 
 class HousingRepository : IHousingRepository {
@@ -34,6 +35,11 @@ class HousingRepository : IHousingRepository {
                             val housing = housingSnapshot.getValue(Housing::class.java)
                             housing?.let {
                                 housingList.add(it)
+
+                                // add on spawn
+                                if (housing.favourite){
+                                    WishList.addHousing(housing)
+                                }
                             }
                         }
                     }
@@ -44,26 +50,27 @@ class HousingRepository : IHousingRepository {
                     Log.e("getHousing", "Failed to get housing items.", databaseError.toException())
                 }
             })
+
     }
     override fun getHousingOfUser(callback: HousingCallback, userID : String){
-        val database = FirebaseDatabase.getInstance()
-        val myRef: DatabaseReference = database.getReference("housing")
-        val housingList: MutableList<Housing> = mutableListOf()
-
-        myRef.child(userID).addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(userSnapshot: DataSnapshot) {
-                for (housingSnapshot in userSnapshot.children) {
-                    val housing = housingSnapshot.getValue(Housing::class.java)
-                    housing?.let { housingList.add(it) }
-                }
-
-                callback.onHousingLoaded(housingList)
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("getHousingOfUser", "Failed to get housing items of user $userID.", databaseError.toException())
-            }
-        })
+//        val database = FirebaseDatabase.getInstance()
+//        val myRef: DatabaseReference = database.getReference("housing")
+//        val housingList: MutableList<Housing> = mutableListOf()
+//
+//        myRef.child(userID).addListenerForSingleValueEvent(object : ValueEventListener {
+//            override fun onDataChange(userSnapshot: DataSnapshot) {
+//                for (housingSnapshot in userSnapshot.children) {
+//                    val housing = housingSnapshot.getValue(Housing::class.java)
+//                    housing?.let { housingList.add(it) }
+//                }
+//
+//                callback.onHousingLoaded(housingList)
+//            }
+//
+//            override fun onCancelled(databaseError: DatabaseError) {
+//                Log.e("getHousingOfUser", "Failed to get housing items of user $userID.", databaseError.toException())
+//            }
+//        })
     }
     override fun createHousing(newHousingItem : Housing){
         val database = FirebaseDatabase.getInstance()

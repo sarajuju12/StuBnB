@@ -6,11 +6,16 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.myapplication.data.housing.UploadHousingEvent
 import com.example.myapplication.data.repositories.InventoryRepository
 import com.example.myapplication.data.validation.Validator
 import com.example.myapplication.models.Inventory
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.launch
 
@@ -59,6 +64,27 @@ class UploadInventoryViewModel : ViewModel() {
                 )
                 validateData()
             }
+
+            is UploadInventoryEvent.FavouriteChange -> {
+                uploadState.value = uploadState.value.copy(
+                    favourite = event.inventory.favourite
+                )
+
+                val databaseReference = FirebaseDatabase.getInstance().getReference("inventory")
+                val ref = databaseReference.child("sarajuju12@gmail,com").child(event.inventory.name.trim())
+
+                ref.child("favourite").addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val isFavourite = snapshot.getValue(Boolean::class.java) ?: false
+                        ref.child("favourite").setValue(!isFavourite)
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.d("Firebase", databaseError.message)
+                    }
+                })
+            }
+
             is UploadInventoryEvent.ButtonClicked -> {
                 validateData()
                 uploadListing()
@@ -133,7 +159,8 @@ class UploadInventoryViewModel : ViewModel() {
                                 uploadState.value.price.toDouble(),
                                 uploadState.value.subject,
                                 uploadState.value.category,
-                                uploadState.value.condition
+                                uploadState.value.condition,
+                                false
                             )
                             invRep.createInventory(inventoryTemp)
                             uploadProgress.value = false

@@ -10,6 +10,10 @@ import com.example.myapplication.data.validation.Validator
 import com.example.myapplication.models.Housing
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.launch
 
@@ -87,6 +91,25 @@ class UploadHousingViewModel : ViewModel() {
                     numOfBathrooms = event.numOfBathrooms
                 )
                 validateData()
+            }
+            is UploadHousingEvent.FavouriteChange -> {
+                uploadState.value = uploadState.value.copy(
+                    favourite = event.house.favourite
+                )
+
+                val databaseReference = FirebaseDatabase.getInstance().getReference("housing")
+                val ref = databaseReference.child("sarajuju12@gmail,com").child(event.house.name.trim())
+
+                ref.child("favourite").addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val isFavourite = snapshot.getValue(Boolean::class.java) ?: false
+                        ref.child("favourite").setValue(!isFavourite)
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.d("Firebase", databaseError.message)
+                    }
+                })
             }
             is UploadHousingEvent.ButtonClicked -> {
                 validateData()
@@ -167,7 +190,9 @@ class UploadHousingViewModel : ViewModel() {
                                 uploadState.value.genderRestriction,
                                 uploadState.value.numOfGuests.toInt(),
                                 uploadState.value.numOfBedrooms.toInt(),
-                                uploadState.value.numOfBathrooms.toInt()
+                                uploadState.value.numOfBathrooms.toInt(),
+                               // false
+                                uploadState.value.favourite
                             )
 
                             invRep.createHousing(housingTemp)
