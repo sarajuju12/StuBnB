@@ -130,14 +130,52 @@ fun DisplayBottomBar(starter: Int){
     }
 }
 
+fun retriveWishlistData(){
+    val email = LoginViewModel.getEncryptedEmail()
+    val safeEmail = email.replace(".", ",")
+    val housingRef = FirebaseDatabase.getInstance().getReference("wishlist/$safeEmail/housing")
+
+    housingRef.addValueEventListener(object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            for (houseSnapshot in dataSnapshot.children) {
+                val house = houseSnapshot.getValue(Housing::class.java)
+                house?.let {
+                    WishList.addHousing(it)
+                }
+            }
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+        }
+    })
+
+    // retrieve wishlist inventory data
+    val inventoryRef = FirebaseDatabase.getInstance().getReference("wishlist/$safeEmail/inventory")
+
+    inventoryRef.addValueEventListener(object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            for (inventorySnapshot in dataSnapshot.children) {
+                val inventory = inventorySnapshot.getValue(Inventory::class.java)
+                inventory?.let {
+                    WishList.addInventory(it)
+                }
+            }
+        }
+        override fun onCancelled(databaseError: DatabaseError) {
+        }
+    })
+}
+
 @Composable
 fun MainContent(selectedItemIndex: Int, innerPadding: PaddingValues, items: List<BottomNavigationItem>) {
     when (selectedItemIndex) {
         0 -> {
+            retriveWishlistData()
             HousingScreen()
             items[0].hasNews.value = false
             items[0].badgeCount.value = 0
         }
+
         1 -> {
             InventoryScreen()
             items[1].hasNews.value = false
