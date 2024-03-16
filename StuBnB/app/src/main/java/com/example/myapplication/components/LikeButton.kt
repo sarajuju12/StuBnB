@@ -77,6 +77,14 @@ fun DisplayHeartButton  (
     val email = LoginViewModel.getEncryptedEmail()
     var iconState by remember { mutableStateOf(Icons.Outlined.Favorite) }
 
+    LaunchedEffect(key1 = house, key2 = inventory) {
+        iconState = if (isHousing) {
+            if (WishList.includeHousing(house)) Icons.Filled.Favorite else Icons.Outlined.Favorite
+        } else {
+            if (WishList.includeInventory(inventory)) Icons.Filled.Favorite else Icons.Outlined.Favorite
+        }
+    }
+
     IconButton(
         onClick = {
             var isFavourite = if (isHousing) {
