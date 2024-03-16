@@ -9,8 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberImagePainter
 import com.example.myapplication.components.*
+import com.example.myapplication.data.LoginViewModel
 import com.example.myapplication.routers.*
 import com.example.myapplication.models.Housing
 import com.example.myapplication.models.WishList

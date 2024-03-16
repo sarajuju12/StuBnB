@@ -36,10 +36,6 @@ class HousingRepository : IHousingRepository {
                             housing?.let {
                                 housingList.add(it)
 
-                                // add on spawn
-                                if (housing.favourite){
-                                    WishList.addHousing(housing)
-                                }
                             }
                         }
                     }

@@ -14,12 +14,11 @@ data class Housing(
     val numOfGuests: kotlin.Int,
     val numOfBedrooms: kotlin.Int,
     val numOfBathrooms: kotlin.Int,
-    var favourite: Boolean
 ){
     constructor() : this (name = "", description = "", imageLinks = mutableListOf(),
                 userId = "", price = 0.0, startDate = "", endDate = "", address = "",
                 propertyType = "", genderRestriction = "", numOfGuests = 0, numOfBedrooms = 0,
-                numOfBathrooms = 0, favourite = false)
+                numOfBathrooms = 0)
 
     override fun equals(other: Any?): Boolean { // override equal so contain work as expected
         if (this === other) return true
@@ -29,6 +28,8 @@ data class Housing(
 
         if (name != other.name) return false
         if (userId != other.userId) return false
+        if (price != other.price) return false
+        if (startDate != other.startDate) return false
 
         return true
     }

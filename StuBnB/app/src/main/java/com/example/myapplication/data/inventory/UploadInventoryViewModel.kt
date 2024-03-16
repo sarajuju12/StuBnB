@@ -65,26 +65,6 @@ class UploadInventoryViewModel : ViewModel() {
                 validateData()
             }
 
-            is UploadInventoryEvent.FavouriteChange -> {
-                uploadState.value = uploadState.value.copy(
-                    favourite = event.inventory.favourite
-                )
-
-                val databaseReference = FirebaseDatabase.getInstance().getReference("inventory")
-                val ref = databaseReference.child("sarajuju12@gmail,com").child(event.inventory.name.trim())
-
-                ref.child("favourite").addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        val isFavourite = snapshot.getValue(Boolean::class.java) ?: false
-                        ref.child("favourite").setValue(!isFavourite)
-                    }
-
-                    override fun onCancelled(databaseError: DatabaseError) {
-                        Log.d("Firebase", databaseError.message)
-                    }
-                })
-            }
-
             is UploadInventoryEvent.ButtonClicked -> {
                 validateData()
                 uploadListing()
@@ -160,7 +140,6 @@ class UploadInventoryViewModel : ViewModel() {
                                 uploadState.value.subject,
                                 uploadState.value.category,
                                 uploadState.value.condition,
-                                false
                             )
                             invRep.createInventory(inventoryTemp)
                             uploadProgress.value = false

@@ -4,6 +4,14 @@ object WishList {
     val inventories: MutableList<Inventory> = mutableListOf()
     val housings: MutableList<Housing> = mutableListOf()
 
+    fun includeInventory(item: Inventory): Boolean {
+        return inventories.contains((item))
+    }
+
+    fun includeHousing(item: Housing): Boolean {
+        return housings.contains((item))
+    }
+
     fun addInventory(item: Inventory) { // this is a set
         if (!inventories.contains(item)) {
             inventories.add(item)

@@ -10,6 +10,5 @@ sealed class UploadInventoryEvent {
     data class SubjectChange(val subject: String): UploadInventoryEvent()
     data class CategoryChange(val category: String): UploadInventoryEvent()
     data class ConditionChange(val condition: String): UploadInventoryEvent()
-    data class FavouriteChange(val inventory: Inventory) : UploadInventoryEvent()
     object ButtonClicked: UploadInventoryEvent()
 }

@@ -10,14 +10,20 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.data.HomeViewModel
+import com.example.myapplication.data.LoginViewModel
 import com.example.myapplication.data.repositories.InventoryCallback
 import com.example.myapplication.data.repositories.InventoryRepository
 import com.example.myapplication.data.housing.HousingRepository
 import com.example.myapplication.data.housing.HousingCallback
 import com.example.myapplication.models.Housing
 import com.example.myapplication.models.Inventory
+import com.example.myapplication.models.WishList
 import com.example.myapplication.views.Inbox
 import com.example.myapplication.ui.theme.MyApplicationTheme
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 data class BottomNavigationItem(
     val title: String,
@@ -128,7 +134,6 @@ fun DisplayBottomBar(starter: Int){
 fun MainContent(selectedItemIndex: Int, innerPadding: PaddingValues, items: List<BottomNavigationItem>) {
     when (selectedItemIndex) {
         0 -> {
-            callGetInventory()  // for wishlist
             HousingScreen()
             items[0].hasNews.value = false
             items[0].badgeCount.value = 0
@@ -207,6 +212,7 @@ fun InventoryScreen() {
 
 @Composable
 fun WishScreen() {
+
     WishListScreen()
 }
 

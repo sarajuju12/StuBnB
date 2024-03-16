@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.example.myapplication.data.validation.Validator
 import com.google.firebase.auth.FirebaseAuth
 
-class LoginViewModel: ViewModel() {
+object LoginViewModel: ViewModel() {
     var loginState = mutableStateOf(LoginState())
     var validationPassed = mutableStateOf(true)
     var loginProgress = mutableStateOf(false)

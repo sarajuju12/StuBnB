@@ -22,7 +22,6 @@ class InventoryRepository : IInventoryRepository {
                     subject = "Subject $it",
                     category = "Category $it",
                     condition = "Condition $it",
-                    favourite = false
                 )
             )
         }
@@ -45,10 +44,6 @@ class InventoryRepository : IInventoryRepository {
                         inventory?.let {
                             inventoryList.add(it)
 
-                            // add on spawn
-                            if (inventory.favourite){
-                                WishList.addInventory(inventory)
-                            }
                         }
                     }
                 }

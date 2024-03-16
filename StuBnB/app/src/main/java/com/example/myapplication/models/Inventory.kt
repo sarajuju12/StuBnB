@@ -9,9 +9,8 @@ data class Inventory(
     val subject: String,
     val category: String,
     val condition: String,
-    var favourite: Boolean
 ){
-    constructor() : this("", "", "", mutableListOf(), 0.0, "", "", "", false)
+    constructor() : this("", "", "", mutableListOf(), 0.0, "", "", "")
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -21,6 +20,8 @@ data class Inventory(
 
         if (name != other.name) return false
         if (userId != other.userId) return false
+        if (description != other.description) return false
+        if (imageLinks != other.imageLinks) return false
 
         return true
     }
