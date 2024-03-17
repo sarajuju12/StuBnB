@@ -1,8 +1,10 @@
 package com.example.myapplication.data
 
 import androidx.lifecycle.ViewModel
+import com.example.myapplication.models.WishList
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
+import com.example.myapplication.screens.WishListScreen
 import com.google.firebase.auth.FirebaseAuth
 
 class HomeViewModel: ViewModel() {
@@ -15,5 +17,8 @@ class HomeViewModel: ViewModel() {
             }
         }
         firebaseAuth.addAuthStateListener(authStateListener)
+
+        // clear wishlist when logout
+        WishList.clearAll()
     }
 }

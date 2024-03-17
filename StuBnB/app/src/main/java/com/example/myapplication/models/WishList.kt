@@ -4,6 +4,11 @@ object WishList {
     val inventories: MutableList<Inventory> = mutableListOf()
     val housings: MutableList<Housing> = mutableListOf()
 
+    fun clearAll(){
+        inventories.clear()
+        housings.clear()
+    }
+
     fun includeInventory(item: Inventory): Boolean {
         return inventories.contains((item))
     }
