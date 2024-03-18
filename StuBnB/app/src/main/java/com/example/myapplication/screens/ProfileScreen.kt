@@ -38,6 +38,7 @@ import com.example.myapplication.models.User
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
 import com.example.myapplication.ui.theme.MyApplicationTheme
+import com.example.myapplication.ui.theme.Purple40
 import com.example.myapplication.ui.theme.poppins
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
@@ -77,7 +78,7 @@ fun DisplayProfileScreen(homeViewModel: HomeViewModel = viewModel(), loginViewMo
                         Button(
                             onClick = { homeViewModel.logout() },
                             enabled = true, // Modify this as per your logic
-                            colors = ButtonDefaults.buttonColors(Color.Blue), // Modify the color as needed
+                            colors = ButtonDefaults.buttonColors(Purple40), // Modify the color as needed
                             modifier = Modifier.padding(horizontal = 8.dp)
                         ) {
                             Text("LOG OUT")
@@ -238,7 +239,7 @@ fun UserUploadList(inventories: List<Inventory>, housings: List<Housing>, email:
                 val onItemClick = {
                     selectedIndexInventory = index
                 }
-                InventoryItem(inventory = inventory, onClick = onItemClick)
+                InventoryItem(inventory = inventory, onClick = onItemClick, delete = true)
             }
         }
         housings.forEachIndexed { index, housing ->
@@ -246,7 +247,7 @@ fun UserUploadList(inventories: List<Inventory>, housings: List<Housing>, email:
                 val onItemClick = {
                     selectedIndexHousing = index
                 }
-                HousingItem(housing = housing, onClick = onItemClick)
+                HousingItem(housing = housing, onClick = onItemClick, delete = true)
             }
         }
     }

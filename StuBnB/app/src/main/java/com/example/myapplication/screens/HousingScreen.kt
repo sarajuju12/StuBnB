@@ -5,9 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -56,7 +54,7 @@ fun HousingList(housings: List<Housing>) {
 }
 
 @Composable
-fun HousingItem(housing: Housing, onClick: () -> Unit) {
+fun HousingItem(housing: Housing, onClick: () -> Unit, delete: Boolean = false) {
     Column(
         modifier = Modifier
             .padding(16.dp)
@@ -92,11 +90,43 @@ fun HousingItem(housing: Housing, onClick: () -> Unit) {
                 modifier = Modifier.fillMaxSize().padding(15.dp),
                 contentAlignment = Alignment.BottomStart
             ) {
-                Column {
-                    val oldDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                    val newDateFormat = SimpleDateFormat("MMM yyyy", Locale.getDefault())
-                    Text(text = "$%.2f".format(housing.price), color = Color.Black, fontSize = 20.sp, fontFamily = poppins, fontWeight = FontWeight.SemiBold)
-                    Text(text = newDateFormat.format(oldDateFormat.parse(housing.startDate)) + " - " + newDateFormat.format(oldDateFormat.parse(housing.endDate)), color = Color.Black, fontSize = 16.sp, fontFamily = poppins, fontWeight = FontWeight.SemiBold)
+                Row (
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column {
+                        val oldDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                        val newDateFormat = SimpleDateFormat("MMM yyyy", Locale.getDefault())
+                        Text(
+                            text = "$%.2f".format(housing.price),
+                            color = Color.Black,
+                            fontSize = 20.sp,
+                            fontFamily = poppins,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                        Text(
+                            text = newDateFormat.format(oldDateFormat.parse(housing.startDate)) + " - " + newDateFormat.format(
+                                oldDateFormat.parse(housing.endDate)
+                            ),
+                            color = Color.Black,
+                            fontSize = 16.sp,
+                            fontFamily = poppins,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
+                    Column {
+                        if (delete) {
+                            Button(
+                                onClick = { /* Handle delete action */ },
+                                enabled = true, // Modify as per your logic
+                                colors = ButtonDefaults.buttonColors(Color.Red), // Modify the color as needed
+                                modifier = Modifier.padding(horizontal = 8.dp)
+                            ) {
+                                Text("Delete")
+                            }
+                        }
+                    }
                 }
             }
         }
