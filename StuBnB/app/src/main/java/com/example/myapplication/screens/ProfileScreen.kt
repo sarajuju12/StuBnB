@@ -8,12 +8,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,9 +28,16 @@ import com.example.myapplication.R
 import com.example.myapplication.components.ActionButton
 import com.example.myapplication.data.HomeViewModel
 import com.example.myapplication.data.LoginViewModel
+import com.example.myapplication.data.housing.HousingCallback
+import com.example.myapplication.data.housing.HousingRepository
+import com.example.myapplication.data.repositories.InventoryCallback
+import com.example.myapplication.data.repositories.InventoryRepository
+import com.example.myapplication.models.Housing
+import com.example.myapplication.models.Inventory
 import com.example.myapplication.models.User
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
+import com.example.myapplication.ui.theme.MyApplicationTheme
 import com.example.myapplication.ui.theme.poppins
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
@@ -50,22 +56,68 @@ fun DisplayProfileScreen(homeViewModel: HomeViewModel = viewModel(), loginViewMo
     Surface(
         modifier = Modifier
             .fillMaxSize()
-            .padding(30.dp),
+            .padding(5.dp),
     ) {
         Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxSize()) {
-            Column(
+            contentAlignment = Alignment.TopCenter,
+            modifier = Modifier.fillMaxSize())
+        {
+            // LOG OUT button at top right
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                DisplayUserPic(userId = userId) {uri ->
-                    selectedProfilePicUri = uri
+                item {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(end = 16.dp, top = 16.dp),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        Button(
+                            onClick = { homeViewModel.logout() },
+                            enabled = true, // Modify this as per your logic
+                            colors = ButtonDefaults.buttonColors(Color.Blue), // Modify the color as needed
+                            modifier = Modifier.padding(horizontal = 8.dp)
+                        ) {
+                            Text("LOG OUT")
+                        }
+                    }
                 }
-                DisplayUserName(userId = userId)
-                ActionButton(value = "UPLOAD A LISTING", buttonClicked = { showDialog = true }, isEnabled = true)
-                Spacer(modifier = Modifier.height(50.dp))
-                ActionButton(value = "LOG OUT", buttonClicked = { homeViewModel.logout() }, isEnabled = true)
+                item {
+                    DisplayUserPic(userId = userId) { uri ->
+                        selectedProfilePicUri = uri
+                    }
+                    DisplayUserName(userId = userId)
+                    ActionButton(
+                        value = "UPLOAD A LISTING",
+                        buttonClicked = { showDialog = true },
+                        isEnabled = true
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                }
+
+                item {
+                    Text(
+                        "My Listings",
+                        color = Color.Black,
+                        fontSize = 30.sp,
+                        fontFamily = poppins,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
+
+                item {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        InventoryHousingScreen(email = userId)
+                        Spacer(modifier = Modifier.height(100.dp))
+                    }
+                }
             }
+
             if (uploadProgress.value) {
                 CircularProgressIndicator()
             }
@@ -174,6 +226,74 @@ fun DisplayUserPic(userId: String, onPicSelected: (Uri) -> Unit) {
     }
 }
 
+@Composable
+fun UserUploadList(inventories: List<Inventory>, housings: List<Housing>, email: String) {
+
+    var selectedIndexInventory by rememberSaveable { mutableStateOf(-1) }
+    var selectedIndexHousing by rememberSaveable { mutableStateOf(-1) }
+
+    Column {
+        inventories.forEachIndexed { index, inventory ->
+            if (inventory.userId == email) {
+                val onItemClick = {
+                    selectedIndexInventory = index
+                }
+                InventoryItem(inventory = inventory, onClick = onItemClick)
+            }
+        }
+        housings.forEachIndexed { index, housing ->
+            if (housing.userId == email) {
+                val onItemClick = {
+                    selectedIndexHousing = index
+                }
+                HousingItem(housing = housing, onClick = onItemClick)
+            }
+        }
+    }
+
+    if (selectedIndexInventory >= 0) {
+        Navigator.navigate(Screen.Inventory(inventories[selectedIndexInventory])) // pass in the selected item
+    }
+
+    if (selectedIndexHousing >= 0) {
+        Navigator.navigate(Screen.House(housings[selectedIndexHousing])) // navigator is an object
+    }
+}
+
+@Composable
+fun InventoryHousingScreen(email: String) {
+    val tempInventoryRepository = InventoryRepository()
+    val listOfInventory = remember { mutableStateOf<List<Inventory>>(emptyList()) }
+
+    // Fetch inventory data when the screen is first displayed or recomposed
+    LaunchedEffect(key1 = true) {
+        tempInventoryRepository.getInventory(object : InventoryCallback {
+            override fun onInventoryLoaded(inventoryList: MutableList<Inventory>) {
+                // Update the state with the new inventory data
+                listOfInventory.value = inventoryList
+            }
+        })
+    }
+
+    val tempHousingRepository = HousingRepository()
+    val listOfHousing = remember { mutableStateOf<List<Housing>>(emptyList()) }
+
+    // Fetch inventory data when the screen is first displayed or recomposed
+    LaunchedEffect(key1 = true) {
+        // does not contribute to UI
+        tempHousingRepository.getHousing(object : HousingCallback {
+            override fun onHousingLoaded(housingList: MutableList<Housing>) {
+                // Update the state with the new inventory data
+                listOfHousing.value = housingList
+            }
+        })
+    }
+
+    MyApplicationTheme {
+        UserUploadList(listOfInventory.value, listOfHousing.value, email)
+    }
+}
+
 private fun uploadImageToStorage(imageUri: Uri, userId: String, userPicState: MutableState<String>) {
     uploadProgress.value = true
     val storageReference = FirebaseStorage.getInstance().reference
@@ -191,7 +311,7 @@ private fun uploadImageToStorage(imageUri: Uri, userId: String, userPicState: Mu
                 updateProfilePicture(imageUrl, userId, userPicState)
             }
         } else {
-            val exception = task.exception ?: Exception("Unknown error")
+            task.exception ?: Exception("Unknown error")
         }
     }
 }
