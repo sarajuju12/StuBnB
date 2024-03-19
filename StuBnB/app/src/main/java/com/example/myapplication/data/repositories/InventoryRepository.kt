@@ -80,6 +80,6 @@ class InventoryRepository : IInventoryRepository {
         val database = FirebaseDatabase.getInstance()
         val myRef: DatabaseReference = database.getReference("inventory")
 
-        myRef.child(newInventoryItem.userId).child(newInventoryItem.name).setValue(newInventoryItem)
+        myRef.child(newInventoryItem.userId).child(newInventoryItem.name + "_${System.currentTimeMillis()}").setValue(newInventoryItem)
     }
 }

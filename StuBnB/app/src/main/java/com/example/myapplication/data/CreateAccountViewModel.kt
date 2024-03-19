@@ -3,9 +3,12 @@ package com.example.myapplication.data
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.data.validation.Validator
+import com.example.myapplication.models.User
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class CreateAccountViewModel: ViewModel() {
     var createAccountState = mutableStateOf(CreateAccountState())
@@ -46,12 +49,21 @@ class CreateAccountViewModel: ViewModel() {
             .createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {
                 createAccountProgress.value = false
+                writeNewUser(createAccountState.value.email, createAccountState.value.name)
                 if (it.isSuccessful) Navigator.navigate(Screen.Login)
             }
             .addOnFailureListener {
                 createAccountProgress.value = false
                 showAlert.value = true
             }
+    }
+
+    fun writeNewUser(userId: String, name: String) {
+        val user = User(userId, name, "")
+        val encryptedEmail = user.email.replace('.', ',')
+        val database = FirebaseDatabase.getInstance()
+        val myRef: DatabaseReference = database.getReference("users")
+        myRef.child(encryptedEmail).setValue(user)
     }
 
     private fun validateData() {
