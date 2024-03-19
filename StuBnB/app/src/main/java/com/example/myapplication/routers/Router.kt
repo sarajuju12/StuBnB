@@ -60,7 +60,7 @@ fun Router() {
                 is Screen.ChatBox -> {
                     val primaryUser = (currentState.value as Screen.ChatBox).primaryUser
                     val secondaryUser = (currentState.value as Screen.ChatBox).secondaryUser
-                    ChatBox(primaryUser, secondaryUser)
+                    ChatBoxWrapper(primaryUser, secondaryUser)
                 }
 
                 is Screen.UploadHousing -> {
