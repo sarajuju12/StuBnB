@@ -211,7 +211,9 @@ fun TwoFactorAuthentication(
     onDismissRequest: () -> Unit,
     onConfirmation: () -> Unit,
     dialogTitle: String,
-    dialogText: String
+    dialogText: String,
+    textConfirm: String = "Approve",
+    textDismiss: String = "Deny"
 ) {
     AlertDialog(
         title = {
@@ -229,7 +231,7 @@ fun TwoFactorAuthentication(
                     onConfirmation()
                 }
             ) {
-                Text("Approve")
+                Text(textConfirm)
             }
         },
         dismissButton = {
@@ -238,7 +240,7 @@ fun TwoFactorAuthentication(
                     onDismissRequest()
                 }
             ) {
-                Text("Deny")
+                Text(textDismiss)
             }
         }
     )

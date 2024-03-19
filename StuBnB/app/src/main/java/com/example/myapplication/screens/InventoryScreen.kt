@@ -6,11 +6,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,11 +17,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
+import com.example.myapplication.components.TwoFactorAuthentication
 import com.example.myapplication.models.Inventory
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
 import com.example.myapplication.ui.theme.poppins
-
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 @Composable
 fun InventoryList(inventories: List<Inventory>) {
@@ -52,6 +51,7 @@ fun InventoryList(inventories: List<Inventory>) {
 }
 @Composable
 fun InventoryItem(inventory: Inventory, onClick: () -> Unit, delete: Boolean = false) {
+    var showDeleteConfirmationDialog by remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
             .padding(16.dp)
@@ -75,7 +75,6 @@ fun InventoryItem(inventory: Inventory, onClick: () -> Unit, delete: Boolean = f
             Box(
                 modifier = Modifier.height(400.dp)
             ) {
-                // Image
                 Image(
                     painter = painter,
                     contentDescription = "Inventory Picture",
@@ -111,9 +110,9 @@ fun InventoryItem(inventory: Inventory, onClick: () -> Unit, delete: Boolean = f
                     Column {
                         if (delete) {
                             Button(
-                                onClick = { /* Handle delete action */ },
-                                enabled = true, // Modify as per your logic
-                                colors = ButtonDefaults.buttonColors(Color.Red), // Modify the color as needed
+                                onClick = { showDeleteConfirmationDialog = true },
+                                enabled = true,
+                                colors = ButtonDefaults.buttonColors(Color.Red),
                                 modifier = Modifier.padding(horizontal = 8.dp)
                             ) {
                                 Text("Delete")
@@ -125,9 +124,29 @@ fun InventoryItem(inventory: Inventory, onClick: () -> Unit, delete: Boolean = f
         }
         Spacer(modifier = Modifier.width(16.dp))
     }
+    if (showDeleteConfirmationDialog) {
+        TwoFactorAuthentication(
+            onDismissRequest = { showDeleteConfirmationDialog = false },
+            onConfirmation = {
+                deleteInventory(inventory.userId, inventory.name)
+                showDeleteConfirmationDialog = false
+             },
+            dialogTitle = "Are you sure you want to delete this listing?",
+            dialogText = "This item will be deleted immediately. You can't undo this action.",
+            textConfirm = "Delete",
+            textDismiss = "Cancel"
+        )
+    }
 }
 
+private fun deleteInventory(userId:String, listingId: String) {
+    val database = FirebaseDatabase.getInstance()
+    val myRef: DatabaseReference = database.getReference("inventory").child(userId).child(listingId)
+    myRef.removeValue()
+        .addOnSuccessListener {
+            Navigator.navigate(Screen.HomeProfile)
+        }
+        .addOnFailureListener {
 
-
-
-
+        }
+}
