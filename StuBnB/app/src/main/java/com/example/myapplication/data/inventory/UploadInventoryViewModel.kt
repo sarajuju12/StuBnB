@@ -59,6 +59,7 @@ class UploadInventoryViewModel : ViewModel() {
                 )
                 validateData()
             }
+
             is UploadInventoryEvent.ButtonClicked -> {
                 validateData()
                 uploadListing()

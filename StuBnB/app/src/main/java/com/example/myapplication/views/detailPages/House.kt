@@ -11,12 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.myapplication.components.BackButton
-import com.example.myapplication.routers.*
+import com.example.myapplication.components.DisplayHeartButton
 import com.example.myapplication.models.Housing
+import com.example.myapplication.routers.Navigator
+import com.example.myapplication.routers.Screen
 
 
 @Composable
-fun House(HousingItem: Housing) {
+fun House(HousingItem: Housing, fromHos: Boolean) {
     LazyColumn(modifier = Modifier.fillMaxSize().padding(16.dp)) {
 
         items(HousingItem.imageLinks) { imageUrl ->
@@ -31,15 +33,25 @@ fun House(HousingItem: Housing) {
         }
 
         item {
-            Text(text = "Category: ${HousingItem.description}")
+            Text(text = "University: ${HousingItem.name}")
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "Condition: ${HousingItem.address}")
+            Text(text = "Property Type: ${HousingItem.propertyType}")
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "Subject: ${HousingItem.genderRestriction}")
+            Text(text = "Description: ${HousingItem.description}")
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = "Address: ${HousingItem.address}")
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = "Gender Restrictions: ${HousingItem.genderRestriction}")
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = "Price: ${"$%.2f".format(HousingItem.price)}")
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "Item Name: ${HousingItem.startDate} - ${HousingItem.endDate}")
+            Text(text = "Rental Period: ${HousingItem.startDate} - ${HousingItem.endDate}")
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = "Number of Guests: ${HousingItem.numOfGuests}")
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = "Number of Bedrooms: ${HousingItem.numOfBedrooms}")
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = "Number of Bathrooms: ${HousingItem.numOfBathrooms}")
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = "Seller: ${HousingItem.userId}".replace(",", "."))
             Spacer(modifier = Modifier.height(24.dp))
@@ -49,11 +61,22 @@ fun House(HousingItem: Housing) {
     Box(modifier = Modifier.fillMaxSize()) {
         BackButton(
             buttonClicked = {
-                Navigator.navigate(Screen.HomeHousing)
+                if (fromHos) Navigator.navigate(Screen.HomeHousing)
+                else Navigator.navigate(Screen.HomeWishlist)
             },
             modifier = Modifier
                 .size(78.dp)
                 .align(Alignment.TopStart)
+        )
+
+
+        DisplayHeartButton(modifier = Modifier
+            .align(Alignment.TopEnd)
+            .padding(end = 16.dp, top = 16.dp)
+            .size(36.dp),
+            true, // is housing
+            HousingItem,
+            com.example.myapplication.models.Inventory()
         )
     }
 }

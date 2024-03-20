@@ -37,6 +37,7 @@ class sprint2DetailPagesTest {
             numOfGuests = 4,
             numOfBedrooms = 2,
             numOfBathrooms = 1
+
         )
 
         assertEquals("Test House", housing.name)

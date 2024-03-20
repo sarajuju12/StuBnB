@@ -10,6 +10,7 @@ import com.example.myapplication.data.validation.Validator
 import com.example.myapplication.models.Housing
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.launch
 
@@ -168,6 +169,7 @@ class UploadHousingViewModel : ViewModel() {
                                 uploadState.value.numOfGuests.toInt(),
                                 uploadState.value.numOfBedrooms.toInt(),
                                 uploadState.value.numOfBathrooms.toInt()
+
                             )
 
                             invRep.createHousing(housingTemp)

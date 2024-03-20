@@ -11,6 +11,20 @@ data class Inventory(
     val condition: String
 ){
     constructor() : this("", "", "", mutableListOf(), 0.0, "", "", "")
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Inventory
+
+        if (name != other.name) return false
+        if (userId != other.userId) return false
+        if (description != other.description) return false
+        if (imageLinks != other.imageLinks) return false
+
+        return true
+    }
 }
 
 //data class Person(val name: String, var age: Int)
