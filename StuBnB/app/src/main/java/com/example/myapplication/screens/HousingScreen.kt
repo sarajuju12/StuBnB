@@ -1,10 +1,14 @@
 package com.example.myapplication.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -27,29 +31,76 @@ import com.google.firebase.database.FirebaseDatabase
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HousingList(housings: List<Housing>) {
 
     var selectedIndex by rememberSaveable { mutableStateOf(-1) }
-
-    LazyColumn {
-        items(housings.size) { index ->
-            val housing = housings[index]
-
-            val onItemClick = {
-                selectedIndex = index
-            }
-
-            HousingItem(housing = housing, onClick = onItemClick)
-            if (index == housings.size - 1) {
-                Spacer(modifier = Modifier.height(100.dp))
-            }
-        }
-    }
+    var text by remember { mutableStateOf("") }
+    var active by remember { mutableStateOf(false) }
 
     if (selectedIndex >= 0) {
         Navigator.navigate(Screen.House(housings[selectedIndex])) // navigator is an object
+    }
+
+    Scaffold {
+        LazyColumn {
+            items(housings.size) { index ->
+                val housing = housings[index]
+                if (text == "" || text.uppercase() in housing.name.uppercase() || text.uppercase() in housing.address.uppercase()
+                    || text.uppercase() in housing.description.uppercase() || text in housing.startDate
+                    || text in housing.endDate || text.uppercase() in housing.propertyType.uppercase()
+                    || text.uppercase() in housing.genderRestriction.uppercase()) {
+                    val onItemClick = {
+                        selectedIndex = index
+                    }
+
+                    HousingItem(housing = housing, onClick = onItemClick)
+                    if (index == housings.size - 1) {
+                        Spacer(modifier = Modifier.height(100.dp))
+                    }
+                }
+            }
+        }
+        SearchBar(
+            modifier = Modifier.fillMaxWidth(),
+            query = text,
+            onQueryChange = {
+                text = it
+            },
+            onSearch = {
+                active = false
+            },
+            active = active,
+            onActiveChange = {
+                active = it
+            },
+            placeholder = {
+                Text(text = "Search")
+            },
+            leadingIcon = {
+                Icon(imageVector = Icons.Default.Search, contentDescription = "Search Icon")
+            },
+            trailingIcon = {
+                if (active) {
+                    Icon(
+                        modifier = Modifier.clickable {
+                            if (text.isNotEmpty()) {
+                                text = ""
+                            } else {
+                                active = false
+                            }
+                        },
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "Close Icon"
+                    )
+                }
+            }
+        ) {
+
+        }
+
     }
 }
 
