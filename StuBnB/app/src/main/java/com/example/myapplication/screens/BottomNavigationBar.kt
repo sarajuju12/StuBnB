@@ -11,15 +11,15 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.data.HomeViewModel
 import com.example.myapplication.data.LoginViewModel
+import com.example.myapplication.data.housing.HousingCallback
+import com.example.myapplication.data.housing.HousingRepository
 import com.example.myapplication.data.repositories.InventoryCallback
 import com.example.myapplication.data.repositories.InventoryRepository
-import com.example.myapplication.data.housing.HousingRepository
-import com.example.myapplication.data.housing.HousingCallback
 import com.example.myapplication.models.Housing
 import com.example.myapplication.models.Inventory
 import com.example.myapplication.models.WishList
-import com.example.myapplication.views.Inbox
 import com.example.myapplication.ui.theme.MyApplicationTheme
+import com.example.myapplication.views.Inbox
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -58,7 +58,7 @@ fun getBottomNavigationItems(): List<BottomNavigationItem> {
             title = "Wishlist",
             selectedIcon = Icons.Filled.Favorite,
             unselectedIcon = Icons.Outlined.Favorite,
-            hasNews = mutableStateOf(true), // for sprint 1 demo
+            hasNews = mutableStateOf(false),
             badgeCount = mutableStateOf(0)
         ),
         BottomNavigationItem(
@@ -66,7 +66,7 @@ fun getBottomNavigationItems(): List<BottomNavigationItem> {
             selectedIcon = Icons.Filled.Email,
             unselectedIcon = Icons.Outlined.Email,
             hasNews = mutableStateOf(false),
-            badgeCount = mutableStateOf(3) // for sprint 1 demo
+            badgeCount = mutableStateOf(0)
         ),
         BottomNavigationItem(
             title = "Profile",
