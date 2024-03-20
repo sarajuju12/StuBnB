@@ -253,11 +253,11 @@ fun UserUploadList(inventories: List<Inventory>, housings: List<Housing>, email:
     }
 
     if (selectedIndexInventory >= 0) {
-        Navigator.navigate(Screen.Inventory(inventories[selectedIndexInventory])) // pass in the selected item
+        Navigator.navigate(Screen.Inventory(inventories[selectedIndexInventory], false)) // pass in the selected item
     }
 
     if (selectedIndexHousing >= 0) {
-        Navigator.navigate(Screen.House(housings[selectedIndexHousing])) // navigator is an object
+        Navigator.navigate(Screen.House(housings[selectedIndexHousing], false)) // navigator is an object
     }
 }
 

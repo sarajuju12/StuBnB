@@ -10,14 +10,20 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.data.HomeViewModel
+import com.example.myapplication.data.LoginViewModel
 import com.example.myapplication.data.repositories.InventoryCallback
 import com.example.myapplication.data.repositories.InventoryRepository
 import com.example.myapplication.data.housing.HousingRepository
 import com.example.myapplication.data.housing.HousingCallback
 import com.example.myapplication.models.Housing
 import com.example.myapplication.models.Inventory
+import com.example.myapplication.models.WishList
 import com.example.myapplication.views.Inbox
 import com.example.myapplication.ui.theme.MyApplicationTheme
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 data class BottomNavigationItem(
     val title: String,
@@ -27,6 +33,9 @@ data class BottomNavigationItem(
     val badgeCount: MutableState<Int> 
 )
 
+object BottomNavigationList{
+    val Blist = getBottomNavigationItems()
+}
 
 // get the bottom 5 tabs as a list
 fun getBottomNavigationItems(): List<BottomNavigationItem> {
@@ -120,14 +129,52 @@ fun DisplayBottomBar(starter: Int){
     }
 }
 
+fun retriveWishlistData(){
+    val email = LoginViewModel.getEncryptedEmail()
+    val safeEmail = email.replace(".", ",")
+    val housingRef = FirebaseDatabase.getInstance().getReference("wishlist/$safeEmail/housing")
+
+    housingRef.addValueEventListener(object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            for (houseSnapshot in dataSnapshot.children) {
+                val house = houseSnapshot.getValue(Housing::class.java)
+                house?.let {
+                    WishList.addHousing(it)
+                }
+            }
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+        }
+    })
+
+    // retrieve wishlist inventory data
+    val inventoryRef = FirebaseDatabase.getInstance().getReference("wishlist/$safeEmail/inventory")
+
+    inventoryRef.addValueEventListener(object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            for (inventorySnapshot in dataSnapshot.children) {
+                val inventory = inventorySnapshot.getValue(Inventory::class.java)
+                inventory?.let {
+                    WishList.addInventory(it)
+                }
+            }
+        }
+        override fun onCancelled(databaseError: DatabaseError) {
+        }
+    })
+}
+
 @Composable
 fun MainContent(selectedItemIndex: Int, innerPadding: PaddingValues, items: List<BottomNavigationItem>) {
     when (selectedItemIndex) {
         0 -> {
+            retriveWishlistData()
             HousingScreen()
             items[0].hasNews.value = false
             items[0].badgeCount.value = 0
         }
+
         1 -> {
             InventoryScreen()
             items[1].hasNews.value = false
@@ -196,7 +243,7 @@ fun InventoryScreen() {
 
 @Composable
 fun WishScreen() {
-
+    WishListScreen()
 }
 
 @Composable

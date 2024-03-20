@@ -69,11 +69,11 @@ fun Router() {
 
                 // details
                 is Screen.House -> {
-                    House((currentState.value as Screen.House).housingItem)
+                    House((currentState.value as Screen.House).housingItem, (currentState.value as Screen.House).fromHos)
                 }
 
                 is Screen.Inventory -> {
-                    Inventory((currentState.value as Screen.Inventory).inventoryItem)
+                    Inventory((currentState.value as Screen.Inventory).inventoryItem, (currentState.value as Screen.Inventory).fromInv)
                 }
             }
         }

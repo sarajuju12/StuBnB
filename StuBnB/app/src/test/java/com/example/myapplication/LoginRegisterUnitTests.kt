@@ -36,7 +36,7 @@ class RegistrationManager(private val firebaseAuthWrapper: FirebaseAuthWrapper) 
 
 class LoginViewModelTest {
 
-    private val loginViewModel = LoginViewModel()
+    private val loginViewModel = LoginViewModel
     private val createAccountViewModel = CreateAccountViewModel()
     private val mockFirebaseAuthWrapper = mockk<FirebaseAuthWrapper>()
     private val loginManager = LoginManager(mockFirebaseAuthWrapper)
