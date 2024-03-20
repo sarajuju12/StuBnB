@@ -1,10 +1,14 @@
 package com.example.myapplication.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -25,28 +29,87 @@ import com.example.myapplication.ui.theme.poppins
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
+/*
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun InventorySearch() {
+
+}*/
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InventoryList(inventories: List<Inventory>) {
 
     var selectedIndex by rememberSaveable { mutableStateOf(-1) }
 
-    LazyColumn {
-        items(inventories.size) { index ->
-            val inventory = inventories[index]
 
-            val onItemClick = {
-                selectedIndex = index
-            }
-
-            InventoryItem(inventory = inventory, onClick = onItemClick)
-            if (index == inventories.size - 1) {
-                Spacer(modifier = Modifier.height(100.dp))
-            }
-        }
-    }
 
     if (selectedIndex >= 0) {
         Navigator.navigate(Screen.Inventory(inventories[selectedIndex], true)) // pass in the selected item
+    }
+
+    var text by remember { mutableStateOf("") }
+    var active by remember { mutableStateOf(false) }
+
+    Scaffold {
+        LazyColumn {
+            items(inventories.size) { index ->
+                val inventory = inventories[index]
+                if (text == "" || text.uppercase() in inventory.name.uppercase() || text.uppercase() in inventory.category.uppercase()
+                    || text.uppercase() in inventory.condition.uppercase() || text.uppercase() in inventory.description.uppercase()
+                    || text.uppercase() in inventory.subject.uppercase()) {
+
+
+                    val onItemClick = {
+                        selectedIndex = index
+                    }
+
+                    InventoryItem(inventory = inventory, onClick = onItemClick)
+                    if (index == inventories.size - 1) {
+                        Spacer(modifier = Modifier.height(100.dp))
+                    }
+                }
+
+            }
+        }
+        SearchBar(
+            modifier = Modifier.fillMaxWidth(),
+            query = text,
+            onQueryChange = {
+                text = it
+            },
+            onSearch = {
+                active = false
+            },
+            active = active,
+            onActiveChange = {
+                active = it
+            },
+            placeholder = {
+                Text(text = "Search")
+            },
+            leadingIcon = {
+                Icon(imageVector = Icons.Default.Search, contentDescription = "Search Icon")
+            },
+            trailingIcon = {
+                if (active) {
+                    Icon(
+                        modifier = Modifier.clickable {
+                            if (text.isNotEmpty()) {
+                                text = ""
+                            } else {
+                                active = false
+                            }
+                        },
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "Close Icon"
+                    )
+                }
+            }
+        ) {
+
+        }
     }
 }
 @Composable

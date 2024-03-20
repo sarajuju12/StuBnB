@@ -238,6 +238,7 @@ fun InventoryScreen() {
 
     MyApplicationTheme {
         InventoryList(listOfInventory.value)
+        //InventorySearch()
     }
 }
 
