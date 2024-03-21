@@ -13,7 +13,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -23,47 +22,39 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.myapplication.data.repositories.MessagingCallback
 import com.example.myapplication.data.repositories.MessagingRepository
 import com.example.myapplication.models.ChatMessage
-import com.example.myapplication.models.Inventory
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
-import com.example.myapplication.screens.InventoryList
+import com.example.myapplication.screens.getNameOfUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import java.time.LocalDateTime
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChatBoxWrapper(primaryUser: String, secondaryUser: String){
-    var newMessage by remember { mutableStateOf(TextFieldValue()) }
-    val messageRepository = MessagingRepository()
-
-    // Initialize with SnapshotStateList for observability
-    val messageList = remember { mutableStateListOf<ChatMessage>() }
-    val listState = rememberLazyListState()
-
+fun ChatBoxWrapper(primaryUserEmail: String, secondaryUserEmail: String, primaryUserName: String, secondaryUserName: String){
+    // Get the Chat between two the Two Users
     val database = FirebaseDatabase.getInstance()
     val myRef: DatabaseReference = database.getReference("messages")
+    val messageList = remember { mutableStateListOf<ChatMessage>() }
 
-    // messages / userFirst++userSecond <- sorted alphabetically
-    val keyToAccessChatBetweenTwo = if (primaryUser < secondaryUser) {
-        "$primaryUser++$secondaryUser"
+    // by convention, we make it so that the key for where a message is stored is the two emails, in order alphabetically.
+    val keyToAccessChatBetweenTwo = if (primaryUserEmail < secondaryUserEmail) {
+        "$primaryUserEmail++$secondaryUserEmail"
     } else {
-        "$primaryUser++$secondaryUser"
+        "$secondaryUserEmail++$primaryUserEmail"
     }
 
     myRef.child(keyToAccessChatBetweenTwo).addValueEventListener(object : ValueEventListener {
         override fun onDataChange(chatSnapshot: DataSnapshot) {
             val tempMessageList = mutableListOf<ChatMessage>()
             for (messageSnapshot in chatSnapshot.children) {
+                if(messageSnapshot.key == "latest") continue
                 val message = messageSnapshot.getValue(ChatMessage::class.java)
                 message?.let {
                     tempMessageList.add(it)
@@ -74,13 +65,20 @@ fun ChatBoxWrapper(primaryUser: String, secondaryUser: String){
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
-            Log.e("getMessagesFromDB", "Failed to get messages between user $primaryUser and $secondaryUser.", databaseError.toException())
+            Log.e("getMessagesFromDB", "Failed to get messages between user $primaryUserEmail and $secondaryUserEmail.", databaseError.toException())
         }
     })
 
+    // For uploading/sending a message.
+    var newMessage by remember { mutableStateOf(TextFieldValue()) }
+    val messageRepository = MessagingRepository()
+
+    // To keep track of where we are in the lazy column. Auto-scrolling down on sending a new message.
+    val listState = rememberLazyListState()
+
     Column(modifier = Modifier.fillMaxSize()) {
         TopAppBar(
-            title = { Text(text = primaryUser + "++" + secondaryUser) },
+            title = { Text(text = secondaryUserName) },
             navigationIcon = {
                 IconButton(onClick = { Navigator.navigate(Screen.HomeInbox) }) {
                     Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
@@ -123,7 +121,7 @@ fun ChatBoxWrapper(primaryUser: String, secondaryUser: String){
 
             Button(
                 onClick = {
-                    messageRepository.newMessageToDB(primaryUser, secondaryUser, newMessage.text)
+                    messageRepository.newMessageToDB(primaryUserEmail, secondaryUserEmail, newMessage.text)
                     newMessage = TextFieldValue()
                 }
             ) {
@@ -135,6 +133,11 @@ fun ChatBoxWrapper(primaryUser: String, secondaryUser: String){
 
 @Composable
 fun ChatMessageItem(chatMessage: ChatMessage) {
+    val senderNameState = remember { mutableStateOf("") }
+    getNameOfUser({ userName ->
+        senderNameState.value = userName ?: "User not found"
+    }, chatMessage.senderUserID)
+
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -143,7 +146,7 @@ fun ChatMessageItem(chatMessage: ChatMessage) {
         color = Color.LightGray,
     ) {
         Column(modifier = Modifier.padding(8.dp)) {
-            Text(text = chatMessage.senderUserID)
+            Text(text = senderNameState.value)
             Text(text = chatMessage.message)
         }
     }
