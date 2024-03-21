@@ -15,7 +15,7 @@ sealed class Screen {
     object HomeProfile : Screen()
     object UploadInventory: Screen()
     object UploadHousing: Screen()
-    data class ChatBox(val primaryUser: String, val secondaryUser: String) : Screen()
+    data class ChatBox(val primaryUserEmail: String, val secondaryUserEmail: String) : Screen()
     //detail pages
     data class House(val housingItem: Housing, val fromHos: Boolean) : Screen()
     data class Inventory(val inventoryItem: com.example.myapplication.models.Inventory, val fromInv: Boolean) : Screen()

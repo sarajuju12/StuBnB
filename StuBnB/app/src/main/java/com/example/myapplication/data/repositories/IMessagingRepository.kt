@@ -1,10 +1,10 @@
 package com.example.myapplication.data.repositories.messaging
 
-import com.example.myapplication.data.repositories.MessagingCallback
 import com.example.myapplication.models.ChatMessage
 
 interface IMessagingRepository{
-    fun getMessagesFromDB(userOne: String, userTwo: String, callback: MessagingCallback)
+    fun getAllMessagesInvolvingUserLatest(userEmail: String, callback: (MutableList<ChatMessage>) -> Unit)
+    fun getMessagesFromDB(userOne: String, userTwo: String, callback: (MutableList<ChatMessage>) -> Unit)
     fun newMessageToDB(sendingUser: String, receivingUser: String, message: String): Boolean
 }
 

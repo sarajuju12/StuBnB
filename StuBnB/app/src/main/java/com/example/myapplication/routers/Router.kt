@@ -6,8 +6,11 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.example.myapplication.screens.getNameOfUser
 import com.example.myapplication.views.*
 import com.example.myapplication.views.detailPages.*
 
@@ -58,9 +61,22 @@ fun Router() {
                 }
 
                 is Screen.ChatBox -> {
-                    val primaryUser = (currentState.value as Screen.ChatBox).primaryUser
-                    val secondaryUser = (currentState.value as Screen.ChatBox).secondaryUser
-                    ChatBoxWrapper(primaryUser, secondaryUser)
+                    val primaryUser = (currentState.value as Screen.ChatBox).primaryUserEmail
+                    val secondaryUser = (currentState.value as Screen.ChatBox).secondaryUserEmail
+
+                    // create primary user userID instead of email
+                    val userNamePrimaryState = remember { mutableStateOf("") }
+                    getNameOfUser({ userName ->
+                        userNamePrimaryState.value = userName ?: "User not found"
+                    }, secondaryUser)
+
+                    // create secondary user userID instead of email
+                    val userNameSecondaryState = remember { mutableStateOf("") }
+                    getNameOfUser({ userName ->
+                        userNameSecondaryState.value = userName ?: "User not found"
+                    }, secondaryUser)
+
+                    ChatBoxWrapper(primaryUser, secondaryUser, userNamePrimaryState.value, userNameSecondaryState.value)
                 }
 
                 is Screen.UploadHousing -> {
