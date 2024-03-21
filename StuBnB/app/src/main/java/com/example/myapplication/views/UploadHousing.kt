@@ -1,7 +1,6 @@
 package com.example.myapplication.views
 
 
-import android.Manifest
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -15,7 +14,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,8 +29,6 @@ import com.example.myapplication.data.housing.UploadHousingViewModel
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.isGranted
-import com.google.accompanist.permissions.rememberPermissionState
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -43,10 +39,6 @@ fun UploadHousing(loginViewModel: LoginViewModel = viewModel(), uploadHousingVie
     val screenWidth = configuration.screenWidthDp.dp
     val userId = loginViewModel.getEncryptedEmail()
     uploadHousingViewModel.setEmail(userId)
-    val permissionState = rememberPermissionState(permission = Manifest.permission.READ_EXTERNAL_STORAGE)
-    SideEffect {
-        permissionState.launchPermissionRequest()
-    }
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetMultipleContents()) { uris ->
         val stringUris = uris.map { it.toString() }
@@ -84,11 +76,7 @@ fun UploadHousing(loginViewModel: LoginViewModel = viewModel(), uploadHousingVie
                     }
                     Button(
                         onClick = {
-                            if (permissionState.status.isGranted) {
-                                galleryLauncher.launch("image/*")
-                            } else {
-                                permissionState.launchPermissionRequest()
-                            }
+                            galleryLauncher.launch("image/*")
                         },
                         modifier = Modifier.padding(vertical = 16.dp)
                     ) {
