@@ -146,6 +146,7 @@ class UploadInventoryViewModel : ViewModel() {
                                 uploadState.value.timeStamp
                             )
                             invRep.createInventory(inventoryTemp)
+                            uploadState.value = UploadInventoryState()
                             uploadProgress.value = false
                             Navigator.navigate(Screen.HomeProfile)
                         }

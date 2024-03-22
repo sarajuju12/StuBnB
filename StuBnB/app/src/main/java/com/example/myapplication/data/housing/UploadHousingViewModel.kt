@@ -178,8 +178,8 @@ class UploadHousingViewModel : ViewModel() {
                                 uploadState.value.numOfBathrooms.toInt(),
                                 uploadState.value.timeStamp
                             )
-
                             invRep.createHousing(housingTemp)
+                            uploadState.value = UploadHousingState()
                             uploadProgress.value = false
                             Navigator.navigate(Screen.HomeProfile)
                         }

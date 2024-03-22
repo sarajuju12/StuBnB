@@ -16,5 +16,5 @@ data class UploadInventoryState(
     var priceError: Boolean = true,
     var subjectError: Boolean = true,
     var categoryError: Boolean = true,
-    var conditionError: Boolean = true,
+    var conditionError: Boolean = true
 )
