@@ -238,6 +238,7 @@ fun InventoryScreen() {
 
     MyApplicationTheme {
         InventoryList(listOfInventory.value)
+        //InventorySearch()
     }
 }
 
@@ -249,7 +250,7 @@ fun WishScreen() {
 @Composable
 fun InboxScreen() {
     MyApplicationTheme {
-        Inbox()
+        Inbox();
     }
 }
 

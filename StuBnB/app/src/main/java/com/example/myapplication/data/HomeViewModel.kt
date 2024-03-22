@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.example.myapplication.models.WishList
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
+import com.example.myapplication.screens.WishListScreen
 import com.google.firebase.auth.FirebaseAuth
 
 class HomeViewModel: ViewModel() {
