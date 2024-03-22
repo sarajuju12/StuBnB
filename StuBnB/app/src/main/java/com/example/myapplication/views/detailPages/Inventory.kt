@@ -20,7 +20,7 @@ import com.example.myapplication.screens.InventoryItem
 
 
 @Composable
-fun Inventory(inventoryItem: Inventory, fromInv: Int) {
+fun Inventory(inventoryItem: Inventory, fromInv: Boolean) {
     LazyColumn(modifier = Modifier.fillMaxSize().padding(16.dp)) {
 
         items(inventoryItem.imageLinks) { imageUrl ->
@@ -57,8 +57,7 @@ fun Inventory(inventoryItem: Inventory, fromInv: Int) {
     Box(modifier = Modifier.fillMaxSize()) {
         BackButton(
             buttonClicked = {
-                if (fromInv == Inv) Navigator.navigate(Screen.HomeInventory)
-                if (fromInv == Prof) Navigator.navigate(Screen.HomeProfile)
+                if (fromInv) Navigator.navigate(Screen.HomeInventory)
                 else Navigator.navigate(Screen.HomeWishlist)
             },
             modifier = Modifier
