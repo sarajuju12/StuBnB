@@ -23,9 +23,11 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.example.myapplication.components.TwoFactorAuthentication
 import com.example.myapplication.models.Housing
+import com.example.myapplication.routers.Hos
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
 import com.example.myapplication.ui.theme.poppins
+import com.example.myapplication.views.SearchBar
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import java.text.SimpleDateFormat
@@ -41,7 +43,7 @@ fun HousingList(housings: List<Housing>) {
     var active by remember { mutableStateOf(false) }
 
     if (selectedIndex >= 0) {
-        Navigator.navigate(Screen.House(housings[selectedIndex], true)) // navigator is an object
+        Navigator.navigate(Screen.House(housings[selectedIndex], Hos)) // navigator is an object
     }
 
     Scaffold {

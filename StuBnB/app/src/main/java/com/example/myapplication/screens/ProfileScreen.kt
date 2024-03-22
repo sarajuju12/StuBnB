@@ -36,6 +36,7 @@ import com.example.myapplication.models.Housing
 import com.example.myapplication.models.Inventory
 import com.example.myapplication.models.User
 import com.example.myapplication.routers.Navigator
+import com.example.myapplication.routers.Prof
 import com.example.myapplication.routers.Screen
 import com.example.myapplication.ui.theme.MyApplicationTheme
 import com.example.myapplication.ui.theme.Purple40
@@ -253,11 +254,11 @@ fun UserUploadList(inventories: List<Inventory>, housings: List<Housing>, email:
     }
 
     if (selectedIndexInventory >= 0) {
-        Navigator.navigate(Screen.Inventory(inventories[selectedIndexInventory], false)) // pass in the selected item
+        Navigator.navigate(Screen.Inventory(inventories[selectedIndexInventory], Prof)) // pass in the selected item
     }
 
     if (selectedIndexHousing >= 0) {
-        Navigator.navigate(Screen.House(housings[selectedIndexHousing], false)) // navigator is an object
+        Navigator.navigate(Screen.House(housings[selectedIndexHousing], Prof)) // navigator is an object
     }
 }
 

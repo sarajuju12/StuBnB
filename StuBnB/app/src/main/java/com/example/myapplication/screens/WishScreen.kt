@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.example.myapplication.models.WishList
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
+import com.example.myapplication.routers.Wish
 
 @Composable
 fun WishListScreen() {
@@ -48,11 +49,11 @@ fun WishListScreen() {
         }
 
         if (selectedIndex >= 0) {
-            Navigator.navigate(Screen.Inventory(inventories[selectedIndex], false)) // pass in the selected item
+            Navigator.navigate(Screen.Inventory(inventories[selectedIndex], Wish)) // pass in the selected item
         }
 
         if (Sindex >= 0) {
-            Navigator.navigate(Screen.House(housings[Sindex], false)) // navigator is an object
+            Navigator.navigate(Screen.House(housings[Sindex], Wish)) // navigator is an object
         }
 
 }
