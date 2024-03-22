@@ -29,9 +29,7 @@ import com.example.myapplication.data.inventory.UploadInventoryEvent
 import com.example.myapplication.data.inventory.UploadInventoryViewModel
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
 
-@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun UploadInventory(loginViewModel: LoginViewModel = viewModel(), uploadInventoryViewModel: UploadInventoryViewModel = viewModel()) {
 

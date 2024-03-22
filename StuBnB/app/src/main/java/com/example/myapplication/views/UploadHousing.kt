@@ -28,9 +28,7 @@ import com.example.myapplication.data.housing.UploadHousingEvent
 import com.example.myapplication.data.housing.UploadHousingViewModel
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
 
-@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun UploadHousing(loginViewModel: LoginViewModel = viewModel(), uploadHousingViewModel: UploadHousingViewModel = viewModel()) {
 
