@@ -13,14 +13,12 @@ import coil.compose.rememberImagePainter
 import com.example.myapplication.components.BackButton
 import com.example.myapplication.components.DisplayHeartButton
 import com.example.myapplication.models.Housing
-import com.example.myapplication.routers.Hos
 import com.example.myapplication.routers.Navigator
-import com.example.myapplication.routers.Prof
 import com.example.myapplication.routers.Screen
 
 
 @Composable
-fun House(HousingItem: Housing, fromHos: Int) {
+fun House(HousingItem: Housing, fromHos: Boolean) {
     LazyColumn(modifier = Modifier.fillMaxSize().padding(16.dp)) {
 
         items(HousingItem.imageLinks) { imageUrl ->
@@ -63,8 +61,7 @@ fun House(HousingItem: Housing, fromHos: Int) {
     Box(modifier = Modifier.fillMaxSize()) {
         BackButton(
             buttonClicked = {
-                if (fromHos == Hos) Navigator.navigate(Screen.HomeHousing)
-                if (fromHos == Prof) Navigator.navigate(Screen.HomeProfile)
+                if (fromHos) Navigator.navigate(Screen.HomeHousing)
                 else Navigator.navigate(Screen.HomeWishlist)
             },
             modifier = Modifier
