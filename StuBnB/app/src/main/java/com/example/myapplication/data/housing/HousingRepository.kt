@@ -69,6 +69,6 @@ class HousingRepository : IHousingRepository {
         val database = FirebaseDatabase.getInstance()
         val myRef: DatabaseReference = database.getReference("housing")
 
-        myRef.child(newHousingItem.userId).child(newHousingItem.name + "_${System.currentTimeMillis()}").setValue(newHousingItem)
+        myRef.child(newHousingItem.userId).child(newHousingItem.name + "_${newHousingItem.timeStamp}").setValue(newHousingItem)
     }
 }

@@ -10,7 +10,6 @@ import com.example.myapplication.data.validation.Validator
 import com.example.myapplication.models.Housing
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.launch
 
@@ -130,13 +129,21 @@ class UploadHousingViewModel : ViewModel() {
         }
     }
 
+    private fun updateTimeStamp(timeStamp: String) {
+        uploadState.value = uploadState.value.copy(
+            timeStamp = timeStamp
+        )
+    }
+
     private fun uploadImagesToStorage(imageUriList: List<Uri>) {
         uploadProgress.value = true
         val storageReference = FirebaseStorage.getInstance().reference
         val myUrlList = mutableListOf<String>()
         val expectedSize = imageUriList.size
         for (i in imageUriList.indices) {
-            val fileReference = storageReference.child("${System.currentTimeMillis()}_${(imageUriList[i]).lastPathSegment}")
+            val tempTimestamp = System.currentTimeMillis().toString()
+            updateTimeStamp(tempTimestamp)
+            val fileReference = storageReference.child("${uploadState.value.timeStamp}_${(imageUriList[i]).lastPathSegment}")
             val uploadTask = fileReference.putFile(imageUriList[i])
             uploadTask.continueWithTask { task ->
                 if (!task.isSuccessful) {
@@ -168,8 +175,8 @@ class UploadHousingViewModel : ViewModel() {
                                 uploadState.value.genderRestriction,
                                 uploadState.value.numOfGuests.toInt(),
                                 uploadState.value.numOfBedrooms.toInt(),
-                                uploadState.value.numOfBathrooms.toInt()
-
+                                uploadState.value.numOfBathrooms.toInt(),
+                                uploadState.value.timeStamp
                             )
 
                             invRep.createHousing(housingTemp)

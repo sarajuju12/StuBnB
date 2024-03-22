@@ -13,6 +13,7 @@ data class UploadHousingState(
     var numOfGuests: String = "",
     var numOfBedrooms: String = "",
     var numOfBathrooms: String = "",
+    var timeStamp: String = "",
     var imageLinks: List<String> = emptyList(),
     var downloadUrls: List<String> = emptyList(),
     var nameError: Boolean = true,

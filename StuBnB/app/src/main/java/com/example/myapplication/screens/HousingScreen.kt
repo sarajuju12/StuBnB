@@ -190,7 +190,7 @@ fun HousingItem(housing: Housing, onClick: () -> Unit, delete: Boolean = false) 
         TwoFactorAuthentication(
             onDismissRequest = { showDeleteConfirmationDialog = false },
             onConfirmation = {
-                deleteHousing(housing.userId, housing.name)
+                deleteHousing(housing.userId, housing.name, housing.timeStamp)
                 showDeleteConfirmationDialog = false
              },
             dialogTitle = "Are you sure you want to delete this listing?",
@@ -201,12 +201,12 @@ fun HousingItem(housing: Housing, onClick: () -> Unit, delete: Boolean = false) 
     }
 }
 
-private fun deleteHousing(userId:String, listingId: String) {
+private fun deleteHousing(userId:String, listingId: String, timeStamp: String) {
     val database = FirebaseDatabase.getInstance()
-    val myRef: DatabaseReference = database.getReference("housing").child(userId).child(listingId)
+    val myRef: DatabaseReference = database.getReference("housing").child(userId).child("${listingId}_${timeStamp}")
     myRef.removeValue()
         .addOnSuccessListener {
-            Navigator.navigate(Screen.HomeProfile)
+            Navigator.navigate(Screen.HomeHousing)
         }
         .addOnFailureListener {
 
