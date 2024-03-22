@@ -2,7 +2,6 @@ package com.example.myapplication.models
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import java.time.LocalDateTime
 
 data class ChatMessage(
     val timeYear: Int,
