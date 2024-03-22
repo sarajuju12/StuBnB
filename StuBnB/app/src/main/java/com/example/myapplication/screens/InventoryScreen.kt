@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.example.myapplication.components.TwoFactorAuthentication
 import com.example.myapplication.models.Inventory
+import com.example.myapplication.routers.Inv
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
 import com.example.myapplication.ui.theme.poppins
@@ -46,7 +47,7 @@ fun InventoryList(inventories: List<Inventory>) {
 
 
     if (selectedIndex >= 0) {
-        Navigator.navigate(Screen.Inventory(inventories[selectedIndex], true)) // pass in the selected item
+        Navigator.navigate(Screen.Inventory(inventories[selectedIndex], Inv)) // pass in the selected item
     }
 
     var text by remember { mutableStateOf("") }
