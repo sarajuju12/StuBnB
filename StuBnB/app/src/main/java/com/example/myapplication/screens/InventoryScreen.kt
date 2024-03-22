@@ -59,19 +59,13 @@ fun InventoryList(inventories: List<Inventory>) {
                 if (text == "" || text.uppercase() in inventory.name.uppercase() || text.uppercase() in inventory.category.uppercase()
                     || text.uppercase() in inventory.condition.uppercase() || text.uppercase() in inventory.description.uppercase()
                     || text.uppercase() in inventory.subject.uppercase()) {
-
-
                     val onItemClick = {
                         selectedIndex = index
                     }
-
                     InventoryItem(inventory = inventory, onClick = onItemClick)
-                    if (index == inventories.size - 1) {
-                        Spacer(modifier = Modifier.height(100.dp))
-                    }
                 }
-
             }
+            item { Spacer(modifier = Modifier.height(100.dp)) }
         }
         SearchBar(
             modifier = Modifier.fillMaxWidth(),

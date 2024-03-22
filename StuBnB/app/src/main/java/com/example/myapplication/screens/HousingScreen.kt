@@ -55,13 +55,10 @@ fun HousingList(housings: List<Housing>) {
                     val onItemClick = {
                         selectedIndex = index
                     }
-
                     HousingItem(housing = housing, onClick = onItemClick)
-                    if (index == housings.size - 1) {
-                        Spacer(modifier = Modifier.height(100.dp))
-                    }
                 }
             }
+            item { Spacer(modifier = Modifier.height(100.dp)) }
         }
         SearchBar(
             modifier = Modifier.fillMaxWidth(),

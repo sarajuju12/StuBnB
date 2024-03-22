@@ -11,16 +11,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.myapplication.data.LoginViewModel
-import com.example.myapplication.models.Housing
-import com.example.myapplication.models.Inventory
 import com.example.myapplication.models.WishList
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 @Composable
 fun WishListScreen() {
@@ -50,10 +43,8 @@ fun WishListScreen() {
                 }
 
                 HousingItem(housing = housing, onClick = onItemClick)
-                if (index == housings.size - 1) {
-                    Spacer(modifier = Modifier.height(100.dp))
-                }
             }
+            item { Spacer(modifier = Modifier.height(100.dp)) }
         }
 
         if (selectedIndex >= 0) {

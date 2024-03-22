@@ -129,7 +129,7 @@ fun DisplayBottomBar(starter: Int){
     }
 }
 
-fun retriveWishlistData(){
+fun retrieveWishlistData(){
     val email = LoginViewModel.getEncryptedEmail()
     val safeEmail = email.replace(".", ",")
     val housingRef = FirebaseDatabase.getInstance().getReference("wishlist/$safeEmail/housing")
@@ -169,7 +169,7 @@ fun retriveWishlistData(){
 fun MainContent(selectedItemIndex: Int, innerPadding: PaddingValues, items: List<BottomNavigationItem>) {
     when (selectedItemIndex) {
         0 -> {
-            retriveWishlistData()
+            retrieveWishlistData()
             HousingScreen()
             items[0].hasNews.value = false
             items[0].badgeCount.value = 0
