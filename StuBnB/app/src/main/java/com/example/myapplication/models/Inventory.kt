@@ -8,9 +8,10 @@ data class Inventory(
     val price: Double,
     val subject: String,
     val category: String,
-    val condition: String
+    val condition: String,
+    val timeStamp: String
 ){
-    constructor() : this("", "", "", mutableListOf(), 0.0, "", "", "")
+    constructor() : this("", "", "", mutableListOf(), 0.0, "", "", "", "")
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

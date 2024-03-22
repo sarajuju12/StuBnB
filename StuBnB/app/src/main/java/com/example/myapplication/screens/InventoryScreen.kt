@@ -191,7 +191,7 @@ fun InventoryItem(inventory: Inventory, onClick: () -> Unit, delete: Boolean = f
         TwoFactorAuthentication(
             onDismissRequest = { showDeleteConfirmationDialog = false },
             onConfirmation = {
-                deleteInventory(inventory.userId, inventory.name)
+                deleteInventory(inventory.userId, inventory.name, inventory.timeStamp)
                 showDeleteConfirmationDialog = false
              },
             dialogTitle = "Are you sure you want to delete this listing?",
@@ -202,12 +202,12 @@ fun InventoryItem(inventory: Inventory, onClick: () -> Unit, delete: Boolean = f
     }
 }
 
-private fun deleteInventory(userId:String, listingId: String) {
+private fun deleteInventory(userId:String, listingId: String, timeStamp: String) {
     val database = FirebaseDatabase.getInstance()
-    val myRef: DatabaseReference = database.getReference("inventory").child(userId).child(listingId)
+    val myRef: DatabaseReference = database.getReference("inventory").child(userId).child("${listingId}_${timeStamp}")
     myRef.removeValue()
         .addOnSuccessListener {
-            Navigator.navigate(Screen.HomeProfile)
+            Navigator.navigate(Screen.HomeInventory)
         }
         .addOnFailureListener {
 

@@ -8,6 +8,7 @@ data class UploadInventoryState(
     var category: String = "",
     var condition: String = "",
     var email: String = "",
+    var timeStamp: String = "",
     var imageLinks: List<String> = emptyList(),
     var downloadUrls: List<String> = emptyList(),
     var nameError: Boolean = true,

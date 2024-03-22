@@ -101,13 +101,21 @@ class UploadInventoryViewModel : ViewModel() {
         }
     }
 
+    private fun updateTimeStamp(timeStamp: String) {
+        uploadState.value = uploadState.value.copy(
+            timeStamp = timeStamp
+        )
+    }
+
     private fun uploadImagesToStorage(imageUriList: List<Uri>) {
         uploadProgress.value = true
         val storageReference = FirebaseStorage.getInstance().reference
         val myUrlList = mutableListOf<String>()
         val expectedSize = imageUriList.size
         for (i in imageUriList.indices) {
-            val fileReference = storageReference.child("${System.currentTimeMillis()}_${(imageUriList[i]).lastPathSegment}")
+            val tempTimestamp = System.currentTimeMillis().toString()
+            updateTimeStamp(tempTimestamp)
+            val fileReference = storageReference.child("${uploadState.value.timeStamp}_${(imageUriList[i]).lastPathSegment}")
             val uploadTask = fileReference.putFile(imageUriList[i])
             uploadTask.continueWithTask { task ->
                 if (!task.isSuccessful) {
@@ -134,7 +142,8 @@ class UploadInventoryViewModel : ViewModel() {
                                 uploadState.value.price.toDouble(),
                                 uploadState.value.subject,
                                 uploadState.value.category,
-                                uploadState.value.condition
+                                uploadState.value.condition,
+                                uploadState.value.timeStamp
                             )
                             invRep.createInventory(inventoryTemp)
                             uploadProgress.value = false

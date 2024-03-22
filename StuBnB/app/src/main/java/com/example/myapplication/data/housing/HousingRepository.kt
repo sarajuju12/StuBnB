@@ -7,17 +7,6 @@ import com.google.firebase.database.*
 
 class HousingRepository : IHousingRepository {
 
-    private val temporaryTestingHousingList: MutableList<Housing> = mutableListOf()
-
-    init {
-        // dummy data
-        for (i in 1..3){
-            temporaryTestingHousingList.add(
-                Housing()
-            )
-        }
-    }
-
     override fun getHousing(callback: HousingCallback){
         val database = FirebaseDatabase.getInstance()
         val myRef: DatabaseReference = database.getReference("housing")

@@ -7,25 +7,6 @@ import com.google.firebase.database.*
 
 class InventoryRepository : IInventoryRepository {
 
-    val temporaryTestingInventoryList: MutableList<Inventory> = mutableListOf()
-
-    init {
-        repeat(5) {
-            temporaryTestingInventoryList.add(
-                Inventory(
-                    name = "Item $it",
-                    userId = "",
-                    description = "Description of Item $it",
-                    imageLinks = mutableListOf("link1", "link2", "link3"),
-                    price = 100.0 * it,
-                    subject = "Subject $it",
-                    category = "Category $it",
-                    condition = "Condition $it"
-                )
-            )
-        }
-    }
-
     override fun getInventory(callback: InventoryCallback){
         val database = FirebaseDatabase.getInstance()
         val myRef: DatabaseReference = database.getReference("inventory")
@@ -80,6 +61,6 @@ class InventoryRepository : IInventoryRepository {
         val database = FirebaseDatabase.getInstance()
         val myRef: DatabaseReference = database.getReference("inventory")
 
-        myRef.child(newInventoryItem.userId).child(newInventoryItem.name + "_${System.currentTimeMillis()}").setValue(newInventoryItem)
+        myRef.child(newInventoryItem.userId).child(newInventoryItem.name + "_${newInventoryItem.timeStamp}").setValue(newInventoryItem)
     }
 }
