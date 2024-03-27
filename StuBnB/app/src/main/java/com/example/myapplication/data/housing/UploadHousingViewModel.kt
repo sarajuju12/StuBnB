@@ -207,11 +207,15 @@ class UploadHousingViewModel : ViewModel() {
         )
 
         val startDateResult = Validator.validateDate(
-            dateStr = uploadState.value.startDate
+            dateStr = uploadState.value.startDate,
+            otherDate = uploadState.value.endDate,
+            start = true
         )
 
         val endDateResult = Validator.validateDate(
-            dateStr = uploadState.value.endDate
+            dateStr = uploadState.value.endDate,
+            otherDate = uploadState.value.startDate,
+            start = false
         )
 
         val addressResult = Validator.validateName(

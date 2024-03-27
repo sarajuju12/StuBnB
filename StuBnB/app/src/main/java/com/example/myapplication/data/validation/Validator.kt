@@ -28,13 +28,35 @@ object Validator {
         return ValidationResult(numeric)
     }
 
-    fun validateDate(dateStr: String): ValidationResult {
+    fun validateDate(dateStr: String, otherDate: String, start: Boolean): ValidationResult {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         dateFormat.isLenient = false
         try {
             val date = dateFormat.parse(dateStr)
             val currentDate = Date()
-            return ValidationResult(date != null && date.after(currentDate))
+            if (start) {
+                try {
+                    val endDate = dateFormat.parse(otherDate)
+                    if (endDate.before(date)) {
+                        return ValidationResult(false)
+                    } else {
+                        return ValidationResult(date != null && date.after(currentDate))
+                    }
+                } catch (e: Exception) {
+                    return ValidationResult(date != null && date.after(currentDate))
+                }
+            } else {
+                try {
+                    val startDate = dateFormat.parse(otherDate)
+                    if (startDate.after(date)) {
+                        return ValidationResult(false)
+                    } else {
+                        return ValidationResult(date != null && date.after(currentDate))
+                    }
+                } catch (e: Exception) {
+                    return ValidationResult(date != null && date.after(currentDate))
+                }
+            }
         } catch (e: Exception) {
             return ValidationResult(false)
         }
