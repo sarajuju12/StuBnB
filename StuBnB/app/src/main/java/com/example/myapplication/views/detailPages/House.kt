@@ -1,5 +1,7 @@
 package com.example.myapplication.views.detailPages
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,8 +18,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.example.myapplication.components.BackButton
 import com.example.myapplication.components.DisplayHeartButton
@@ -28,8 +34,12 @@ import com.example.myapplication.routers.Prof
 import com.example.myapplication.routers.Screen
 import com.example.myapplication.ui.theme.Purple40
 import com.example.myapplication.ui.theme.poppins
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun House(housingItem: Housing, fromHos: Int) {
@@ -47,7 +57,7 @@ fun House(housingItem: Housing, fromHos: Int) {
                 painter = rememberImagePainter(imageUrl),
                 contentDescription = "Item image",
                 modifier = Modifier
-                    .fillMaxWidth().aspectRatio(1.5f), // Adjust the aspect ratio as needed to maintain the image's width-to-height ratio
+                    .fillMaxWidth().aspectRatio(1.5f),
                 contentScale = ContentScale.Crop
             )
         }
@@ -73,26 +83,36 @@ fun House(housingItem: Housing, fromHos: Int) {
             }
 
             item {
-                Text(text = "University: ${housingItem.name}")
+                Text(text = housingItem.name, fontFamily = poppins, fontWeight = FontWeight.SemiBold, style = TextStyle(fontSize = 24.sp))
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Property Type: ${housingItem.propertyType}")
+                Text(text = "${housingItem.numOfGuests} guests · ${housingItem.numOfBedrooms} bedrooms · ${housingItem.numOfBathrooms} bathrooms", fontFamily = poppins, fontWeight = FontWeight.Normal, style = TextStyle(fontSize = 18.sp))
+                Spacer(modifier = Modifier.height(16.dp))
+                Divider(color = Color.Black)
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(text = "Property Type: ${housingItem.propertyType}", fontFamily = poppins, fontWeight = FontWeight.Normal, style = TextStyle(fontSize = 16.sp))
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Description: ${housingItem.description}")
+                Text(text = "Description: ${housingItem.description}", fontFamily = poppins, fontWeight = FontWeight.Normal, style = TextStyle(fontSize = 16.sp))
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Address: ${housingItem.address}")
+                Text(text = "Address: ${housingItem.address}", fontFamily = poppins, fontWeight = FontWeight.Normal, style = TextStyle(fontSize = 16.sp))
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Gender Restrictions: ${housingItem.genderRestriction}")
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Price: ${"$%.2f".format(housingItem.price)}")
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Rental Period: ${housingItem.startDate} - ${housingItem.endDate}")
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Number of Guests: ${housingItem.numOfGuests}")
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Number of Bedrooms: ${housingItem.numOfBedrooms}")
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Number of Bathrooms: ${housingItem.numOfBathrooms}")
-                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = "Gender Restrictions: ${housingItem.genderRestriction}", fontFamily = poppins, fontWeight = FontWeight.Normal, style = TextStyle(fontSize = 16.sp))
+                Spacer(modifier = Modifier.height(16.dp))
+                Divider(color = Color.Black)
+                Spacer(modifier = Modifier.height(16.dp))
+                val priceText = "$%.2f".format(housingItem.price)
+                val perMonthText = " per month"
+                Text(
+                    text = buildAnnotatedString {
+                        pushStyle(SpanStyle(fontFamily = poppins, fontWeight = FontWeight.SemiBold, fontSize = 24.sp))
+                        append(priceText)
+                        pop()
+                        pushStyle(SpanStyle(fontFamily = poppins, fontWeight = FontWeight.Normal, fontSize = 18.sp))
+                        append(perMonthText)
+                        toAnnotatedString()
+                    }
+                )
+                Text(text = "${formatDate(housingItem.startDate)} - ${formatDate(housingItem.endDate)}", fontWeight = FontWeight.SemiBold, fontSize = 18.sp)
+                Spacer(modifier = Modifier.height(16.dp))
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     elevation = CardDefaults.cardElevation(
@@ -152,4 +172,11 @@ fun House(housingItem: Housing, fromHos: Int) {
             com.example.myapplication.models.Inventory()
         )
     }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun formatDate(inputDate: String): String {
+    val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH)
+    val date = LocalDate.parse(inputDate, formatter)
+    return DateTimeFormatter.ofPattern("MMM. dd, yyyy").format(date)
 }
