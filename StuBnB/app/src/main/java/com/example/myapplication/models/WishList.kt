@@ -21,6 +21,8 @@ object WishList {
         if (!inventories.contains(item)) {
             inventories.add(item)
         }
+
+
     }
 
     fun addHousing(item: Housing) {

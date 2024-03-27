@@ -36,7 +36,8 @@ class sprint2DetailPagesTest {
             genderRestriction = "None",
             numOfGuests = 4,
             numOfBedrooms = 2,
-            numOfBathrooms = 1
+            numOfBathrooms = 1,
+            timeStamp = "ts 1"
 
         )
 
@@ -87,7 +88,8 @@ class sprint2DetailPagesTest {
             price = 200.0,
             subject = "Test Subject",
             category = "Test Category",
-            condition = "New"
+            condition = "New",
+            timeStamp = "ts 1"
         )
 
         assertEquals("Test Item", inventory.name)
@@ -98,6 +100,8 @@ class sprint2DetailPagesTest {
         assertEquals("Test Subject", inventory.subject)
         assertEquals("Test Category", inventory.category)
         assertEquals("New", inventory.condition)
+        assertEquals("ts 1", inventory.timeStamp)
+
     }
 
     @Test
