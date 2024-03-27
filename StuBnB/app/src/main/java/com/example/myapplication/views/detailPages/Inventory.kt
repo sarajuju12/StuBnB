@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
@@ -35,95 +36,93 @@ import com.example.myapplication.ui.theme.poppins
 fun Inventory(inventoryItem: Inventory, fromInv: Int) {
     val pagerState = remember { PagerState() }
     val pageCount = inventoryItem.imageLinks.size
-
-    LazyColumn(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        item {
-            HorizontalPager(
-                state = pagerState,
-                pageCount = pageCount,
-                modifier = Modifier.fillMaxWidth().height(200.dp)
-            ) { page ->
-                val imageUrl = inventoryItem.imageLinks[page]
-                Image(
-                    painter = rememberImagePainter(imageUrl),
-                    contentDescription = "Item image",
+    Column {
+        HorizontalPager(
+            state = pagerState,
+            pageCount = pageCount,
+            modifier = Modifier.fillMaxWidth().height(200.dp)
+        ) { page ->
+            val imageUrl = inventoryItem.imageLinks[page]
+            Image(
+                painter = rememberImagePainter(imageUrl),
+                contentDescription = "Item image",
+                modifier = Modifier
+                    .fillMaxWidth().aspectRatio(1.5f),
+                contentScale = ContentScale.Crop
+            )
+        }
+        LazyColumn(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+            item {
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(200.dp)
-                )
-            }
-        }
-
-        item {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                repeat(pageCount) { iteration ->
-                    val color = if (pagerState.currentPage == iteration) Color.DarkGray else Color.LightGray
-                    Box(
-                        modifier = Modifier
-                            .padding(2.dp)
-                            .clip(CircleShape)
-                            .background(color)
-                            .size(16.dp)
-                    )
-                }
-            }
-        }
-
-        item {
-            Text(text = "Category: ${inventoryItem.category}")
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "Condition: ${inventoryItem.condition}")
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "Subject: ${inventoryItem.subject}")
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "Description: ${inventoryItem.description}")
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "Price: ${"$%.2f".format(inventoryItem.price)}")
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "Item Name: ${inventoryItem.name}")
-            Spacer(modifier = Modifier.height(8.dp))
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                elevation = CardDefaults.cardElevation(
-                    defaultElevation = 10.dp
-                )
-            ) {
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Send seller a message", modifier = Modifier.padding(start = 5.dp), fontFamily = poppins,
-                    fontWeight = FontWeight.SemiBold)
-                Row (
-                    modifier = Modifier.fillMaxWidth().padding(5.dp)
+                        .padding(bottom = 8.dp),
+                    horizontalArrangement = Arrangement.Center
                 ) {
-                    TextField(
-                        value = "Hi, is this still available?",
-                        onValueChange = { },
-                        enabled = false,
-                        label = { },
-                        singleLine = true
-                    )
-                    Button(
-                        onClick = {
-                            // send host a message here
-                        },
-                        enabled = true,
-                        colors = ButtonDefaults.buttonColors(Purple40),
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text("SEND")
+                    repeat(pageCount) { iteration ->
+                        val color = if (pagerState.currentPage == iteration) Color.DarkGray else Color.LightGray
+                        Box(
+                            modifier = Modifier
+                                .padding(2.dp)
+                                .clip(CircleShape)
+                                .background(color)
+                                .size(16.dp)
+                        )
                     }
                 }
-                Spacer(modifier = Modifier.height(8.dp))
             }
-            Spacer(modifier = Modifier.height(24.dp))
+
+            item {
+                Text(text = "Category: ${inventoryItem.category}")
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = "Condition: ${inventoryItem.condition}")
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = "Subject: ${inventoryItem.subject}")
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = "Description: ${inventoryItem.description}")
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = "Price: ${"$%.2f".format(inventoryItem.price)}")
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = "Item Name: ${inventoryItem.name}")
+                Spacer(modifier = Modifier.height(8.dp))
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    elevation = CardDefaults.cardElevation(
+                        defaultElevation = 10.dp
+                    )
+                ) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "Send seller a message", modifier = Modifier.padding(start = 5.dp), fontFamily = poppins,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(5.dp)
+                    ) {
+                        TextField(
+                            value = "Hi, is this still available?",
+                            onValueChange = { },
+                            enabled = false,
+                            label = { },
+                            singleLine = true
+                        )
+                        Button(
+                            onClick = {
+                                // send host a message here
+                            },
+                            enabled = true,
+                            colors = ButtonDefaults.buttonColors(Purple40),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("SEND")
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+                Spacer(modifier = Modifier.height(24.dp))
+            }
         }
     }
-
-
     // put the back button on the top most layer
     Box(modifier = Modifier.fillMaxSize()) {
         BackButton(
@@ -147,5 +146,4 @@ fun Inventory(inventoryItem: Inventory, fromInv: Int) {
             inventoryItem
         )
     }
-
 }
