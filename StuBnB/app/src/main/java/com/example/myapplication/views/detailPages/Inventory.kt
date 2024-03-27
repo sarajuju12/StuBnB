@@ -16,8 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.example.myapplication.components.BackButton
 import com.example.myapplication.components.DisplayHeartButton
@@ -73,18 +75,22 @@ fun Inventory(inventoryItem: Inventory, fromInv: Int) {
             }
 
             item {
-                Text(text = "Category: ${inventoryItem.category}")
+                Text(text = inventoryItem.name, fontFamily = poppins, fontWeight = FontWeight.SemiBold, style = TextStyle(fontSize = 24.sp))
+                Spacer(modifier = Modifier.height(16.dp))
+                Divider(color = Color.Black)
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(text = "Description: ${inventoryItem.description}", fontFamily = poppins, fontWeight = FontWeight.Normal, style = TextStyle(fontSize = 16.sp))
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Condition: ${inventoryItem.condition}")
+                Text(text = "Category: ${inventoryItem.category}", fontFamily = poppins, fontWeight = FontWeight.Normal, style = TextStyle(fontSize = 16.sp))
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Subject: ${inventoryItem.subject}")
+                Text(text = "Subject: ${inventoryItem.subject}", fontFamily = poppins, fontWeight = FontWeight.Normal, style = TextStyle(fontSize = 16.sp))
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Description: ${inventoryItem.description}")
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Price: ${"$%.2f".format(inventoryItem.price)}")
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Item Name: ${inventoryItem.name}")
-                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = "Condition: ${inventoryItem.condition}", fontFamily = poppins, fontWeight = FontWeight.Normal, style = TextStyle(fontSize = 16.sp))
+                Spacer(modifier = Modifier.height(16.dp))
+                Divider(color = Color.Black)
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(text = "$%.2f".format(inventoryItem.price), fontFamily = poppins, fontWeight = FontWeight.SemiBold, style = TextStyle(fontSize = 24.sp))
+                Spacer(modifier = Modifier.height(16.dp))
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     elevation = CardDefaults.cardElevation(
