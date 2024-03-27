@@ -250,7 +250,7 @@ fun WishScreen() {
 @Composable
 fun InboxScreen() {
     MyApplicationTheme {
-        Inbox();
+        Inbox()
     }
 }
 

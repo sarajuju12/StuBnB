@@ -181,7 +181,7 @@ fun DisplayUserName(userId: String) {
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            "${userNameState.value}",
+            userNameState.value,
             color = Color.Black,
             fontSize = 30.sp,
             fontFamily = poppins,

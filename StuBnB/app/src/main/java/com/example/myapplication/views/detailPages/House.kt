@@ -29,10 +29,10 @@ fun House(HousingItem: Housing, fromHos: Int) {
         items(HousingItem.imageLinks) { imageUrl ->
             Image(
                 painter = rememberImagePainter(imageUrl),
-                contentDescription = "Item image", // provide proper content description
+                contentDescription = "Item image",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp) // Set the height you want
+                    .height(200.dp)
             )
             Spacer(modifier = Modifier.height(8.dp))
         }
@@ -90,7 +90,6 @@ fun House(HousingItem: Housing, fromHos: Int) {
                 }
                 Spacer(modifier = Modifier.height(8.dp))
             }
-            //Text(text = "Seller: ${HousingItem.userId}".replace(",", "."))
             Spacer(modifier = Modifier.height(24.dp))
         }
     }
@@ -106,8 +105,6 @@ fun House(HousingItem: Housing, fromHos: Int) {
                 .size(78.dp)
                 .align(Alignment.TopStart)
         )
-
-
         DisplayHeartButton(modifier = Modifier
             .align(Alignment.TopEnd)
             .padding(end = 16.dp, top = 16.dp)

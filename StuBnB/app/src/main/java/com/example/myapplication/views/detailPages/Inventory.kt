@@ -30,10 +30,10 @@ fun Inventory(inventoryItem: Inventory, fromInv: Int) {
         items(inventoryItem.imageLinks) { imageUrl ->
             Image(
                 painter = rememberImagePainter(imageUrl),
-                contentDescription = "Item image", // provide proper content description
+                contentDescription = "Item image",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp) // Set the height you want
+                    .height(200.dp)
             )
             Spacer(modifier = Modifier.height(8.dp))
         }
@@ -83,7 +83,6 @@ fun Inventory(inventoryItem: Inventory, fromInv: Int) {
                 }
                 Spacer(modifier = Modifier.height(8.dp))
             }
-            //Text(text = "Seller: ${inventoryItem.userId}".replace(",", "."))
             Spacer(modifier = Modifier.height(24.dp))
         }
     }
