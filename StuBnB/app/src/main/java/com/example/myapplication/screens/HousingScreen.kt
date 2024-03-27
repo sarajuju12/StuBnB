@@ -204,7 +204,7 @@ private fun deleteHousing(userId:String, listingId: String, timeStamp: String) {
     val myRef: DatabaseReference = database.getReference("housing").child(userId).child("${listingId}_${timeStamp}")
     myRef.removeValue()
         .addOnSuccessListener {
-            Navigator.navigate(Screen.HomeHousing)
+            Navigator.navigate(Screen.HomeProfile)
         }
         .addOnFailureListener {
 

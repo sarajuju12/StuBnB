@@ -202,7 +202,7 @@ private fun deleteInventory(userId:String, listingId: String, timeStamp: String)
     val myRef: DatabaseReference = database.getReference("inventory").child(userId).child("${listingId}_${timeStamp}")
     myRef.removeValue()
         .addOnSuccessListener {
-            Navigator.navigate(Screen.HomeInventory)
+            Navigator.navigate(Screen.HomeProfile)
         }
         .addOnFailureListener {
 

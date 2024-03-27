@@ -1,13 +1,20 @@
 package com.example.myapplication.views.detailPages
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
@@ -23,19 +30,48 @@ import com.example.myapplication.ui.theme.Purple40
 import com.example.myapplication.ui.theme.poppins
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Inventory(inventoryItem: Inventory, fromInv: Int) {
-    LazyColumn(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+    val pagerState = remember { PagerState() }
+    val pageCount = inventoryItem.imageLinks.size
 
-        items(inventoryItem.imageLinks) { imageUrl ->
-            Image(
-                painter = rememberImagePainter(imageUrl),
-                contentDescription = "Item image",
+    LazyColumn(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        item {
+            HorizontalPager(
+                state = pagerState,
+                pageCount = pageCount,
+                modifier = Modifier.fillMaxWidth().height(200.dp)
+            ) { page ->
+                val imageUrl = inventoryItem.imageLinks[page]
+                Image(
+                    painter = rememberImagePainter(imageUrl),
+                    contentDescription = "Item image",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                )
+            }
+        }
+
+        item {
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp)
-            )
-            Spacer(modifier = Modifier.height(8.dp))
+                    .padding(bottom = 8.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                repeat(pageCount) { iteration ->
+                    val color = if (pagerState.currentPage == iteration) Color.DarkGray else Color.LightGray
+                    Box(
+                        modifier = Modifier
+                            .padding(2.dp)
+                            .clip(CircleShape)
+                            .background(color)
+                            .size(16.dp)
+                    )
+                }
+            }
         }
 
         item {
