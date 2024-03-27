@@ -50,7 +50,10 @@ class CreateAccountViewModel: ViewModel() {
             .addOnCompleteListener {
                 createAccountProgress.value = false
                 writeNewUser(createAccountState.value.email, createAccountState.value.name)
-                if (it.isSuccessful) Navigator.navigate(Screen.Login)
+                if (it.isSuccessful) {
+                    createAccountState.value = CreateAccountState()
+                    Navigator.navigate(Screen.Login)
+                }
             }
             .addOnFailureListener {
                 createAccountProgress.value = false

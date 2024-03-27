@@ -27,6 +27,7 @@ import coil.transform.CircleCropTransformation
 import com.example.myapplication.R
 import com.example.myapplication.components.ActionButton
 import com.example.myapplication.data.HomeViewModel
+import com.example.myapplication.data.LoginState
 import com.example.myapplication.data.LoginViewModel
 import com.example.myapplication.data.housing.HousingCallback
 import com.example.myapplication.data.housing.HousingRepository
@@ -77,7 +78,10 @@ fun DisplayProfileScreen(homeViewModel: HomeViewModel = viewModel(), loginViewMo
                         horizontalArrangement = Arrangement.End
                     ) {
                         Button(
-                            onClick = { homeViewModel.logout() },
+                            onClick = {
+                                loginViewModel.loginState.value = LoginState()
+                                homeViewModel.logout()
+                              },
                             enabled = true, // Modify this as per your logic
                             colors = ButtonDefaults.buttonColors(Purple40), // Modify the color as needed
                             modifier = Modifier.padding(horizontal = 8.dp)
