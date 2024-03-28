@@ -8,6 +8,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.data.HomeViewModel
 import com.example.myapplication.data.LoginViewModel
@@ -19,6 +20,7 @@ import com.example.myapplication.models.Housing
 import com.example.myapplication.models.Inventory
 import com.example.myapplication.models.WishList
 import com.example.myapplication.ui.theme.MyApplicationTheme
+import com.example.myapplication.ui.theme.poppins
 import com.example.myapplication.views.Inbox
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -97,7 +99,7 @@ fun DisplayBottomBar(starter: Int){
                     NavigationBarItem(
                         selected = isSelected,
                         onClick = { selectedIndex = index },
-                        label = { Text(text = item.title) },
+                        label = { Text(text = item.title, fontFamily = poppins, fontWeight = FontWeight.Normal) },
                         alwaysShowLabel = true,     // easier to visualize
                         icon = {
                             //      reference : https://www.composables.com/material3/badgedbox

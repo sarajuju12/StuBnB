@@ -175,7 +175,7 @@ fun HousingItem(housing: Housing, onClick: () -> Unit, delete: Boolean = false) 
                                 colors = ButtonDefaults.buttonColors(Color.Red),
                                 modifier = Modifier.padding(horizontal = 8.dp)
                             ) {
-                                Text("Delete")
+                                Text("DELETE")
                             }
                         }
                     }
@@ -204,7 +204,7 @@ private fun deleteHousing(userId:String, listingId: String, timeStamp: String) {
     val myRef: DatabaseReference = database.getReference("housing").child(userId).child("${listingId}_${timeStamp}")
     myRef.removeValue()
         .addOnSuccessListener {
-            Navigator.navigate(Screen.HomeHousing)
+            Navigator.navigate(Screen.HomeProfile)
         }
         .addOnFailureListener {
 

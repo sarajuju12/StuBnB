@@ -25,6 +25,7 @@ import com.example.myapplication.R
 import com.example.myapplication.components.*
 import com.example.myapplication.data.LoginViewModel
 import com.example.myapplication.data.housing.UploadHousingEvent
+import com.example.myapplication.data.housing.UploadHousingState
 import com.example.myapplication.data.housing.UploadHousingViewModel
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
@@ -178,6 +179,7 @@ fun UploadHousing(loginViewModel: LoginViewModel = viewModel(), uploadHousingVie
                     Spacer(modifier = Modifier.height(20.dp))
                     Button(
                         onClick = {
+                            uploadHousingViewModel.uploadState.value = UploadHousingState()
                             Navigator.navigate(Screen.HomeProfile)
                         }
                     ) {
