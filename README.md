@@ -1,5 +1,7 @@
 Project proposal: https://git.uwaterloo.ca/j556xu/team-7/-/wikis/Project-Proposal
 
+User Documentation: https://git.uwaterloo.ca/j556xu/team-7/-/wikis/User-Documentation
+
 Design documentation: https://git.uwaterloo.ca/j556xu/team-7/-/wikis/Design-Documentation
 
 Meeting minutes: https://git.uwaterloo.ca/j556xu/team-7/-/wikis/Meeting-Minutes 
