@@ -6,7 +6,7 @@ Project proposal: https://git.uwaterloo.ca/j556xu/team-7/-/wikis/Project-Proposa
 
 User documentation: https://git.uwaterloo.ca/j556xu/team-7/-/wikis/User-Documentation
 
-Screenshots: see Design documentation wiki page -> Final prototype
+Screenshots: see Design documentation wiki page (link below) -> Final prototype
 
 Design documentation: https://git.uwaterloo.ca/j556xu/team-7/-/wikis/Design-Documentation
 
