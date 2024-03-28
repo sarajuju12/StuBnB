@@ -29,4 +29,4 @@ Sprint 3 release notes: https://git.uwaterloo.ca/j556xu/team-7/-/releases/3.0.0
 
 Screenshots:
 
-![image info](https://git.uwaterloo.ca/j556xu/team-7/-/blob/ba421d7f11652e20feba7442dc4fe60ffae04b4d/StuBnB/screenshots/Screenshot_2024-03-27_220318.png)
+![image info](screenshots/Screenshot_2024-03-27_220318.png)
