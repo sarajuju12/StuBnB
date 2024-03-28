@@ -43,15 +43,12 @@ fun InventorySearch() {
 fun InventoryList(inventories: List<Inventory>) {
 
     var selectedIndex by rememberSaveable { mutableStateOf(-1) }
-
-
+    var text by remember { mutableStateOf("") }
+    var active by remember { mutableStateOf(false) }
 
     if (selectedIndex >= 0) {
         Navigator.navigate(Screen.Inventory(inventories[selectedIndex], Inv)) // pass in the selected item
     }
-
-    var text by remember { mutableStateOf("") }
-    var active by remember { mutableStateOf(false) }
 
     Scaffold {
         LazyColumn {
