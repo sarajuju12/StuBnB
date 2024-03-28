@@ -99,7 +99,9 @@ fun Inventory(inventoryItem: Inventory, fromInv: Int) {
                 ) {
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "Send seller a message", modifier = Modifier.padding(start = 5.dp), fontFamily = poppins,
+                        text = "Send seller a message",
+                        modifier = Modifier.padding(start = 5.dp),
+                        fontFamily = poppins,
                         fontWeight = FontWeight.SemiBold
                     )
                     Row(
@@ -110,7 +112,8 @@ fun Inventory(inventoryItem: Inventory, fromInv: Int) {
                             onValueChange = { },
                             enabled = false,
                             label = { },
-                            singleLine = true
+                            singleLine = true,
+                            textStyle = TextStyle.Default.copy(fontFamily = poppins, fontWeight = FontWeight.Normal)
                         )
                         Button(
                             onClick = {

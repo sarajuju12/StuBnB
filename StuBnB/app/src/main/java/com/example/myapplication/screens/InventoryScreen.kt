@@ -173,7 +173,7 @@ fun InventoryItem(inventory: Inventory, onClick: () -> Unit, delete: Boolean = f
                                 colors = ButtonDefaults.buttonColors(Color.Red),
                                 modifier = Modifier.padding(horizontal = 8.dp)
                             ) {
-                                Text("Delete")
+                                Text("DELETE")
                             }
                         }
                     }

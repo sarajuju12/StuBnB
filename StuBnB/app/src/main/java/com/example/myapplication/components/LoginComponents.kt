@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.ui.theme.Purple40
 import com.example.myapplication.ui.theme.Purple80
+import com.example.myapplication.ui.theme.poppins
 
 @Composable
 fun TitleText(value: String) {
@@ -39,10 +40,12 @@ fun TitleText(value: String) {
         text = value,
         modifier = Modifier.fillMaxWidth().heightIn(min = 70.dp),
         style = TextStyle(
-            fontSize = 32.sp,
+            fontSize = 28.sp,
             fontWeight = FontWeight.ExtraBold
         ),
-        textAlign = TextAlign.Center
+        textAlign = TextAlign.Center,
+        fontFamily = poppins,
+        fontWeight = FontWeight.Bold
     )
 }
 
@@ -51,13 +54,14 @@ fun TitleText(value: String) {
 fun TextField(labelValue: String, painterResource: Painter, onTextSelected: (String) -> Unit, errorStatus: Boolean = false) {
     val textValue = remember { mutableStateOf("") }
     OutlinedTextField(
-        label = {Text(text = labelValue)},
+        label = {Text(text = labelValue, fontFamily = poppins, fontWeight = FontWeight.Normal)},
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = Purple40,
             focusedLabelColor = Purple40,
             cursorColor = Purple40
         ),
         value = textValue.value,
+        textStyle = TextStyle.Default.copy(fontFamily = poppins, fontWeight = FontWeight.Normal),
         onValueChange = {
             textValue.value = it
             onTextSelected(it)
@@ -80,13 +84,14 @@ fun PasswordTextField(labelValue: String, painterResource: Painter, onTextSelect
     val visible = remember { mutableStateOf(false) }
     val focus = LocalFocusManager.current
     OutlinedTextField(
-        label = {Text(text = labelValue)},
+        label = {Text(text = labelValue, fontFamily = poppins, fontWeight = FontWeight.Normal)},
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = Purple40,
             focusedLabelColor = Purple40,
             cursorColor = Purple40
         ),
         value = textValue.value,
+        textStyle = TextStyle.Default.copy(fontFamily = poppins, fontWeight = FontWeight.Normal),
         singleLine = true,
         maxLines = 1,
         keyboardActions = KeyboardActions {
@@ -152,6 +157,7 @@ fun LoginRedirect(login: Boolean = true, onTextSelected: (String) -> Unit) {
     val normalText = if (login) "Already have an account? " else "Don't have an account? "
     val redirectText = if (login) "Sign in" else "Sign up"
     val annotatedString = buildAnnotatedString {
+        pushStyle(SpanStyle(fontFamily = poppins, fontWeight = FontWeight.Normal))
         append(normalText)
         withStyle(style = SpanStyle(color = Purple80)) {
             pushStringAnnotation(tag = redirectText, annotation = redirectText)
@@ -184,10 +190,10 @@ fun AlertDialogLogin(
 ) {
     AlertDialog(
         title = {
-            Text(text = dialogTitle)
+            Text(text = dialogTitle, fontFamily = poppins, fontWeight = FontWeight.Normal)
         },
         text = {
-            Text(text = dialogText)
+            Text(text = dialogText, fontFamily = poppins, fontWeight = FontWeight.Normal)
         },
         onDismissRequest = {
             onDismissRequest()
@@ -200,7 +206,7 @@ fun AlertDialogLogin(
                     onDismissRequest()
                 }
             ) {
-                Text("OK")
+                Text("OK", fontFamily = poppins, fontWeight = FontWeight.Normal)
             }
         }
     )
@@ -217,10 +223,10 @@ fun TwoFactorAuthentication(
 ) {
     AlertDialog(
         title = {
-            Text(text = dialogTitle)
+            Text(text = dialogTitle, fontFamily = poppins, fontWeight = FontWeight.Normal)
         },
         text = {
-            Text(text = dialogText)
+            Text(text = dialogText, fontFamily = poppins, fontWeight = FontWeight.Normal)
         },
         onDismissRequest = {
             onDismissRequest()
@@ -231,7 +237,7 @@ fun TwoFactorAuthentication(
                     onConfirmation()
                 }
             ) {
-                Text(textConfirm)
+                Text(textConfirm, fontFamily = poppins, fontWeight = FontWeight.Normal)
             }
         },
         dismissButton = {
@@ -240,7 +246,7 @@ fun TwoFactorAuthentication(
                     onDismissRequest()
                 }
             ) {
-                Text(textDismiss)
+                Text(textDismiss, fontFamily = poppins, fontWeight = FontWeight.Normal)
             }
         }
     )

@@ -121,7 +121,9 @@ fun House(housingItem: Housing, fromHos: Int) {
                 ) {
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "Send host a message", modifier = Modifier.padding(start = 5.dp), fontFamily = poppins,
+                        text = "Send host a message",
+                        modifier = Modifier.padding(start = 5.dp),
+                        fontFamily = poppins,
                         fontWeight = FontWeight.SemiBold
                     )
                     Row(
@@ -132,7 +134,8 @@ fun House(housingItem: Housing, fromHos: Int) {
                             onValueChange = { },
                             enabled = false,
                             label = { },
-                            singleLine = true
+                            singleLine = true,
+                            textStyle = TextStyle.Default.copy(fontFamily = poppins, fontWeight = FontWeight.Normal)
                         )
                         Button(
                             onClick = {

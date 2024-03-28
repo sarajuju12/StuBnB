@@ -175,7 +175,7 @@ fun HousingItem(housing: Housing, onClick: () -> Unit, delete: Boolean = false) 
                                 colors = ButtonDefaults.buttonColors(Color.Red),
                                 modifier = Modifier.padding(horizontal = 8.dp)
                             ) {
-                                Text("Delete")
+                                Text("DELETE")
                             }
                         }
                     }

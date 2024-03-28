@@ -14,6 +14,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.R
 import com.example.myapplication.components.*
 import com.example.myapplication.data.CreateAccountEvent
+import com.example.myapplication.data.CreateAccountState
 import com.example.myapplication.data.CreateAccountViewModel
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
@@ -54,6 +55,7 @@ fun CreateAccount(createAccountViewModel: CreateAccountViewModel = viewModel()) 
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 LoginRedirect(login = true, onTextSelected = {
+                    createAccountViewModel.createAccountState.value = CreateAccountState()
                     Navigator.navigate(Screen.Login)
                 })
             }
