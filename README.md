@@ -6,8 +6,6 @@ Project proposal: https://git.uwaterloo.ca/j556xu/team-7/-/wikis/Project-Proposa
 
 User documentation: https://git.uwaterloo.ca/j556xu/team-7/-/wikis/User-Documentation
 
-Screenshots: see Design documentation wiki page (link below) -> Final prototype
-
 Design documentation: https://git.uwaterloo.ca/j556xu/team-7/-/wikis/Design-Documentation
 
 Reflections: https://git.uwaterloo.ca/j556xu/team-7/-/wikis/Reflections
@@ -29,3 +27,6 @@ Sprint 2 release notes: https://git.uwaterloo.ca/j556xu/team-7/-/releases/2.0.0
 
 Sprint 3 release notes: https://git.uwaterloo.ca/j556xu/team-7/-/releases/3.0.0
 
+Screenshots:
+
+![image info](https://git.uwaterloo.ca/j556xu/team-7/-/blob/ba421d7f11652e20feba7442dc4fe60ffae04b4d/StuBnB/screenshots/Screenshot_2024-03-27_220318.png)
