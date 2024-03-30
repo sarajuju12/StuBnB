@@ -62,7 +62,7 @@ class UploadWishListViewModel : ViewModel() {
         when (event){
             is UploadWishListEvent.updateWishlistInventory -> {
                 uploadState.value = uploadState.value.copy(
-                    inventory = event.inventory
+                    inventory = event.inventory  // event takes an inventory
                 )
 
                 updateWishlistInventory(LoginViewModel.getEncryptedEmail(), uploadState.value.inventory)

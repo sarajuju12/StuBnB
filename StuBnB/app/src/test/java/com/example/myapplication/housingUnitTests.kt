@@ -1,5 +1,10 @@
 package com.example.myapplication
 
+import com.example.myapplication.data.housing.HousingRepository
+import com.example.myapplication.models.Housing
+import org.junit.Assert.assertEquals
+import org.junit.Test
+
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
@@ -13,47 +18,48 @@ package com.example.myapplication
  * need more unit test
  *
  */
-class HousingUnitTest {
+class HousingTest {
 
-//    val startDate = Date(2019, 1, 28)
-//    val endDate = Date(2024, 2, 4)
-//    val house = Housing(
-//        "House",
-//        "Description for House",
-//        mutableListOf("link1a", "link1b"), // links
-//
-//        "cs346",
-//        14.0,
-//        startDate,
-//        endDate,
-//    )
-//
-//    @Test
-//    fun testHousingAndDate() {
-//        assertEquals(house.seller, "cs346")                         // testing field value
-//        assertEquals(house.startDate.toString(), "2019/1/28")
-//        assertEquals(house.endDate.toString(), "2024/2/4")          // testing the date toString() function override
-//
-//    }
-//
-//    // todo: update test
-//
-//
-//    val repo = HousingRepository();
-//    val housingList =  repo.getHousing();  // need a value to hold the result
-//    @Test
-//    fun testHousingRepo1() {
-//        assertEquals(housingList[0].name, "House")
-//        assertEquals(housingList[0].description, "Description for House")
-//        assertEquals(housingList[0].imageLinks, mutableListOf("link1a", "link1b"))
-//        assertEquals(housingList[0].startDate, startDate)
-//    }
-//
-//    @Test
-//    fun testHousingRepo2() {
-//        assertEquals(housingList[1].name, "Table")
-//        assertEquals(housingList[1].description, "Description for Table")
-//        assertEquals(housingList[1].imageLinks, mutableListOf("link2a", "link2b", "link2c"))
-//        assertEquals(housingList[1].startDate, startDate)
-//    }
+    @Test
+    fun testDefault() {
+        val housing = Housing()
+        assertEquals("", housing.name)
+        assertEquals(0.0, housing.price, 0.0)
+    }
+
+    @Test
+    fun `test parameterized constructor`() {
+        val imageLinks = listOf("link1", "link2")
+        val housing = Housing(
+            name = "TestName",
+            description = "TestDescription",
+            imageLinks = imageLinks,
+            userId = "TestUserId",
+            price = 100.0,
+            startDate = "2024-01-01",
+            endDate = "2024-01-31",
+            address = "TestAddress",
+            propertyType = "TestType",
+            genderRestriction = "None",
+            numOfGuests = 4,
+            numOfBedrooms = 2,
+            numOfBathrooms = 1,
+            timeStamp = "2024-03-30"
+        )
+
+        assertEquals("TestName", housing.name)
+        assertEquals("TestDescription", housing.description)
+        assertEquals(imageLinks, housing.imageLinks)
+        assertEquals("TestUserId", housing.userId)
+        assertEquals(100.0, housing.price, 0.0)
+    }
+
+    @Test
+    fun testEqual() {
+        val housing1 = Housing()
+        val housing2 = Housing()
+
+        assertEquals(housing1, housing2)
+    }
+
 }
