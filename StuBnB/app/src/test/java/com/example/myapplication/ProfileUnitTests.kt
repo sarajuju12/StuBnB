@@ -79,7 +79,7 @@ class ProfileUnitTests {
                 subject = "Subject 1",
                 category = "Category 1",
                 condition = "Condition 1",
-                timeStamp = "ts 1"
+                timeStamp = "1290383911"
             ),
             Inventory(
                 name = "Inventory 2",
@@ -90,7 +90,7 @@ class ProfileUnitTests {
                 subject = "Subject 2",
                 category = "Category 2",
                 condition = "Condition 2",
-                timeStamp = "ts 2"
+                timeStamp = "1290383911"
             )
         )
         val mockHousings = listOf(
@@ -108,7 +108,7 @@ class ProfileUnitTests {
                 numOfGuests = 5,
                 numOfBedrooms = 3,
                 numOfBathrooms = 2,
-                timeStamp = "ts 1"
+                timeStamp = "1290383911"
             ),
             Housing(
                 name = "Housing 2",
@@ -124,7 +124,7 @@ class ProfileUnitTests {
                 numOfGuests = 8,
                 numOfBedrooms = 4,
                 numOfBathrooms = 3,
-                timeStamp = "ts 2"
+                timeStamp = "1290383911"
             )
         )
         var selectedIndexInventory by mutableStateOf(-1)

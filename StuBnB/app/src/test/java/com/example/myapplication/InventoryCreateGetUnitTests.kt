@@ -2,8 +2,8 @@ package com.example.myapplication
 
 import com.example.myapplication.data.repositories.InventoryRepository
 import com.example.myapplication.models.Inventory
+import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.junit.Assert.*
 
 
 class InventoryCreateGetUnitTest {
@@ -16,7 +16,7 @@ class InventoryCreateGetUnitTest {
         "Subject 2",
         "Category 2",
         "Condition 2",
-        "timestamp"
+        "12113098198"
     )
 
     val invRepo = InventoryRepository();

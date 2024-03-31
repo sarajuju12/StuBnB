@@ -43,15 +43,12 @@ fun InventorySearch() {
 fun InventoryList(inventories: List<Inventory>) {
 
     var selectedIndex by rememberSaveable { mutableStateOf(-1) }
-
-
+    var text by remember { mutableStateOf("") }
+    var active by remember { mutableStateOf(false) }
 
     if (selectedIndex >= 0) {
         Navigator.navigate(Screen.Inventory(inventories[selectedIndex], Inv)) // pass in the selected item
     }
-
-    var text by remember { mutableStateOf("") }
-    var active by remember { mutableStateOf(false) }
 
     Scaffold {
         LazyColumn {
@@ -173,7 +170,7 @@ fun InventoryItem(inventory: Inventory, onClick: () -> Unit, delete: Boolean = f
                                 colors = ButtonDefaults.buttonColors(Color.Red),
                                 modifier = Modifier.padding(horizontal = 8.dp)
                             ) {
-                                Text("Delete")
+                                Text("DELETE")
                             }
                         }
                     }
@@ -202,7 +199,7 @@ private fun deleteInventory(userId:String, listingId: String, timeStamp: String)
     val myRef: DatabaseReference = database.getReference("inventory").child(userId).child("${listingId}_${timeStamp}")
     myRef.removeValue()
         .addOnSuccessListener {
-            Navigator.navigate(Screen.HomeInventory)
+            Navigator.navigate(Screen.HomeProfile)
         }
         .addOnFailureListener {
 

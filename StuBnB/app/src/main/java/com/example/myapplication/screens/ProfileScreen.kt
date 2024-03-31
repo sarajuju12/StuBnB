@@ -82,8 +82,8 @@ fun DisplayProfileScreen(homeViewModel: HomeViewModel = viewModel(), loginViewMo
                                 loginViewModel.loginState.value = LoginState()
                                 homeViewModel.logout()
                               },
-                            enabled = true, // Modify this as per your logic
-                            colors = ButtonDefaults.buttonColors(Purple40), // Modify the color as needed
+                            enabled = true,
+                            colors = ButtonDefaults.buttonColors(Purple40),
                             modifier = Modifier.padding(horizontal = 8.dp)
                         ) {
                             Text("LOG OUT")
@@ -181,7 +181,7 @@ fun DisplayUserName(userId: String) {
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            "${userNameState.value}",
+            userNameState.value,
             color = Color.Black,
             fontSize = 30.sp,
             fontFamily = poppins,
