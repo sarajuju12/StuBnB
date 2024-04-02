@@ -83,7 +83,7 @@ fun OpenChat(secondPersonEmail: String, latestMessage: String, loginViewModel: L
     )
 
     var outputName = if(userNameState.value.length > 24) {userNameState.value.substring(0, 23)} else {userNameState.value};
-    var outputLatestMessage = if(latestMessage.length > 43) {latestMessage.substring(0, 42) + "..."} else {latestMessage};
+    var outputLatestMessage = if(latestMessage.length > 35) {latestMessage.substring(0, 35) + "..."} else {latestMessage};
 
     Row(
         modifier = Modifier
