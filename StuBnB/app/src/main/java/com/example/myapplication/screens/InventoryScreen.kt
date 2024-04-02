@@ -50,23 +50,9 @@ fun InventoryList(inventories: List<Inventory>) {
         Navigator.navigate(Screen.Inventory(inventories[selectedIndex], Inv)) // pass in the selected item
     }
 
-    Scaffold {
-        LazyColumn {
-            items(inventories.size) { index ->
-                val inventory = inventories[index]
-                if (text == "" || text.uppercase() in inventory.name.uppercase() || text.uppercase() in inventory.category.uppercase()
-                    || text.uppercase() in inventory.condition.uppercase() || text.uppercase() in inventory.description.uppercase()
-                    || text.uppercase() in inventory.subject.uppercase()) {
-                    val onItemClick = {
-                        selectedIndex = index
-                    }
-                    InventoryItem(inventory = inventory, onClick = onItemClick)
-                }
-            }
-            item { Spacer(modifier = Modifier.height(100.dp)) }
-        }
+    Column() {
         SearchBar(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(bottom = 6.dp),
             query = text,
             onQueryChange = {
                 text = it
@@ -102,7 +88,24 @@ fun InventoryList(inventories: List<Inventory>) {
         ) {
 
         }
+        Scaffold {
+            LazyColumn {
+                items(inventories.size) { index ->
+                    val inventory = inventories[index]
+                    if (text == "" || text.uppercase() in inventory.name.uppercase() || text.uppercase() in inventory.category.uppercase()
+                        || text.uppercase() in inventory.condition.uppercase() || text.uppercase() in inventory.description.uppercase()
+                        || text.uppercase() in inventory.subject.uppercase()) {
+                        val onItemClick = {
+                            selectedIndex = index
+                        }
+                        InventoryItem(inventory = inventory, onClick = onItemClick)
+                    }
+                }
+                item { Spacer(modifier = Modifier.height(100.dp)) }
+            }
+        }
     }
+
 }
 @Composable
 fun InventoryItem(inventory: Inventory, onClick: () -> Unit, delete: Boolean = false) {
@@ -138,7 +141,9 @@ fun InventoryItem(inventory: Inventory, onClick: () -> Unit, delete: Boolean = f
                 )
             }
             Box (
-                modifier = Modifier.fillMaxSize().padding(15.dp),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(15.dp),
                 contentAlignment = Alignment.BottomStart
             ) {
                 Row (
