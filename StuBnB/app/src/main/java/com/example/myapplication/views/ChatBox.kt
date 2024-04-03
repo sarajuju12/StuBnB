@@ -3,10 +3,13 @@ package com.example.myapplication.views
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
@@ -20,14 +23,24 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImagePainter.State.Empty.painter
+import coil.compose.rememberImagePainter
+import coil.transform.CircleCropTransformation
+import com.example.myapplication.R
 import com.example.myapplication.data.repositories.MessagingRepository
 import com.example.myapplication.models.ChatMessage
 import com.example.myapplication.routers.Navigator
 import com.example.myapplication.routers.Screen
 import com.example.myapplication.screens.getNameOfUser
+import com.example.myapplication.screens.getProfilePic
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -76,15 +89,58 @@ fun ChatBoxWrapper(primaryUserEmail: String, secondaryUserEmail: String, primary
     // To keep track of where we are in the lazy column. Auto-scrolling down on sending a new message.
     val listState = rememberLazyListState()
 
+    // Profile Picture
+    val userPicState = remember { mutableStateOf("") }
+
+    getProfilePic({ profilePicUrl ->
+        if (profilePicUrl != null) {
+            userPicState.value = profilePicUrl
+        }
+    }, secondaryUserEmail)
+
+    val painter = rememberImagePainter(
+        data = userPicState.value, // URL of the user's profile picture
+        builder = {
+            error(R.drawable.profile) // Default profile picture drawable
+            transformations(CircleCropTransformation()) // Apply circular transformation
+        }
+    )
+
     Column(modifier = Modifier.fillMaxSize()) {
         TopAppBar(
-            title = { Text(text = secondaryUserName) },
-            navigationIcon = {
-                IconButton(onClick = { Navigator.navigate(Screen.HomeInbox) }) {
-                    Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+            title = {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start,
+                    modifier = Modifier.fillMaxWidth()
+                ){
+                    IconButton(
+                        onClick = { Navigator.navigate(Screen.HomeInbox) },
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                    ) {
+                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                    }
+                    Row(verticalAlignment = Alignment.CenterVertically){
+                        Spacer(modifier = Modifier.width(0.dp))
+                        Image(
+                            painter = painter,
+                            contentDescription = "Profile Picture",
+                            modifier = Modifier
+                                .size(41.dp)
+                                .clip(CircleShape)
+                        )
+
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = secondaryUserName,
+                            style = TextStyle(fontWeight = FontWeight.W700, fontSize = 19.sp),
+                            modifier = Modifier.weight(1f).padding(end = 12.dp)
+                        )
+                    }
                 }
             }
         )
+
         // Display chat messages
         LazyColumn(
             state = listState,
@@ -121,8 +177,10 @@ fun ChatBoxWrapper(primaryUserEmail: String, secondaryUserEmail: String, primary
 
             Button(
                 onClick = {
-                    messageRepository.newMessageToDB(primaryUserEmail, secondaryUserEmail, newMessage.text)
-                    newMessage = TextFieldValue()
+                    if(newMessage.text.length > 0){
+                        messageRepository.newMessageToDB(primaryUserEmail, secondaryUserEmail, newMessage.text)
+                        newMessage = TextFieldValue()
+                    }
                 }
             ) {
                 Text("Send")
@@ -141,13 +199,21 @@ fun ChatMessageItem(chatMessage: ChatMessage) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
-            .clickable { /* Handle click on message if needed */ },
-        color = Color.LightGray,
+            .padding(8.dp),
+        color = Color(0xFFe6e1f9),
+        shape = RoundedCornerShape(6.dp)
     ) {
         Column(modifier = Modifier.padding(8.dp)) {
-            Text(text = senderNameState.value)
-            Text(text = chatMessage.message)
+            Text(
+                text = senderNameState.value,
+                color = Color.DarkGray,
+                style = TextStyle(fontWeight = FontWeight.W700)
+            )
+            Text(
+                text = chatMessage.message,
+                color = Color.Black,
+                style = TextStyle(fontWeight = FontWeight.W400)
+            )
         }
     }
 }

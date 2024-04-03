@@ -45,24 +45,9 @@ fun HousingList(housings: List<Housing>) {
         Navigator.navigate(Screen.House(housings[selectedIndex], Hos)) // navigator is an object
     }
 
-    Scaffold {
-        LazyColumn {
-            items(housings.size) { index ->
-                val housing = housings[index]
-                if (text == "" || text.uppercase() in housing.name.uppercase() || text.uppercase() in housing.address.uppercase()
-                    || text.uppercase() in housing.description.uppercase() || text in housing.startDate
-                    || text in housing.endDate || text.uppercase() in housing.propertyType.uppercase()
-                    || text.uppercase() in housing.genderRestriction.uppercase()) {
-                    val onItemClick = {
-                        selectedIndex = index
-                    }
-                    HousingItem(housing = housing, onClick = onItemClick)
-                }
-            }
-            item { Spacer(modifier = Modifier.height(100.dp)) }
-        }
+    Column(){
         SearchBar(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(bottom = 6.dp),
             query = text,
             onQueryChange = {
                 text = it
@@ -96,10 +81,27 @@ fun HousingList(housings: List<Housing>) {
                 }
             }
         ) {
-
+            //Spacer(modifier = Modifier.height(10.dp))
         }
-
+        Scaffold {
+            LazyColumn {
+                items(housings.size) { index ->
+                    val housing = housings[index]
+                    if (text == "" || text.uppercase() in housing.name.uppercase() || text.uppercase() in housing.address.uppercase()
+                        || text.uppercase() in housing.description.uppercase() || text in housing.startDate
+                        || text in housing.endDate || text.uppercase() in housing.propertyType.uppercase()
+                        || text.uppercase() in housing.genderRestriction.uppercase()) {
+                        val onItemClick = {
+                            selectedIndex = index
+                        }
+                        HousingItem(housing = housing, onClick = onItemClick)
+                    }
+                }
+                item { Spacer(modifier = Modifier.height(100.dp)) }
+            }
+        }
     }
+
 }
 
 @Composable

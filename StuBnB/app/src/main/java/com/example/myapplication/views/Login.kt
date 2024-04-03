@@ -31,6 +31,7 @@ fun Login(loginViewModel: LoginViewModel = viewModel()) {
                 .padding(30.dp)
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
+                Spacer(modifier = Modifier.height(24.dp))
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
                     Image(
                         painter = painterResource(id = R.drawable.logo),
