@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.profile
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

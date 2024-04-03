@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.uploading
 
 import com.example.myapplication.data.housing.UploadHousingEvent
 import com.example.myapplication.data.housing.UploadHousingViewModel

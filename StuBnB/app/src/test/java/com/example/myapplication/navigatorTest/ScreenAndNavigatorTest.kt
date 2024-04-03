@@ -1,3 +1,5 @@
+package com.example.myapplication.navigatorTest
+
 import com.example.myapplication.models.Housing
 import com.example.myapplication.models.Inventory
 import com.example.myapplication.routers.Navigator

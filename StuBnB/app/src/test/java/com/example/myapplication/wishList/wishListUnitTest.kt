@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.wishList
 
 import com.example.myapplication.models.*
 import org.junit.Test

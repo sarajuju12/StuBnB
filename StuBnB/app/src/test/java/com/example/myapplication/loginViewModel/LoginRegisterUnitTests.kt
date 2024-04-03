@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.loginViewModel
 
 import com.example.myapplication.data.CreateAccountEvent
 import com.example.myapplication.data.CreateAccountViewModel

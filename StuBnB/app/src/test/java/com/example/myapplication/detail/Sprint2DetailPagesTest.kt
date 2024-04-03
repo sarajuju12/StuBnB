@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.detail
 
 import com.example.myapplication.models.Housing
 import com.example.myapplication.models.Inventory
