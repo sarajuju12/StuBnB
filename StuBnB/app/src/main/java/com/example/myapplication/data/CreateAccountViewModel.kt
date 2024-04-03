@@ -61,7 +61,7 @@ class CreateAccountViewModel: ViewModel() {
             }
     }
 
-    fun writeNewUser(userId: String, name: String) {
+    private fun writeNewUser(userId: String, name: String) {
         val user = User(userId, name, "")
         val encryptedEmail = user.email.replace('.', ',')
         val database = FirebaseDatabase.getInstance()

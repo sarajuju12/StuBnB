@@ -32,7 +32,6 @@ import com.example.myapplication.routers.Screen
 import com.example.myapplication.ui.theme.Purple40
 import com.example.myapplication.ui.theme.poppins
 
-
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Inventory(inventoryItem: Inventory, fromInv: Int) {

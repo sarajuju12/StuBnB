@@ -89,7 +89,7 @@ fun DisplayBottomBar(starter: Int){
     // *** initially at state 0, the housing tab
     var selectedIndex by rememberSaveable { mutableStateOf(starter) }
 
-    @OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
+    @OptIn(ExperimentalMaterial3Api::class)
     Scaffold(
         bottomBar = {
             NavigationBar {
@@ -240,7 +240,6 @@ fun InventoryScreen() {
 
     MyApplicationTheme {
         InventoryList(listOfInventory.value)
-        //InventorySearch()
     }
 }
 

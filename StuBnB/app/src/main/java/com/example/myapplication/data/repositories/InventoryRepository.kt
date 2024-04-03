@@ -1,6 +1,5 @@
 package com.example.myapplication.data.repositories
 
-
 import android.util.Log
 import com.example.myapplication.models.Inventory
 import com.google.firebase.database.*

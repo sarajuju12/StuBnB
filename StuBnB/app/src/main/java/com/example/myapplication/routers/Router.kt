@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.example.myapplication.screens.getNameOfUser
 import com.example.myapplication.views.*
-import com.example.myapplication.views.detailPages.*
-
+import com.example.myapplication.views.detailPages.House
+import com.example.myapplication.views.detailPages.Inventory
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -29,8 +29,6 @@ fun Router() {
                 }
                 is Screen.Login -> {
                     Login()
-                    //Home()
-                    //Profile()
                 }
 
                 is Screen.HomeHousing -> {

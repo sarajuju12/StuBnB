@@ -55,8 +55,6 @@ fun Inbox(loginViewModel: LoginViewModel = viewModel()) {
             OpenChat(secondaryUserEmail, openChatsState[it].message)
         }
     }
-
-
 }
 
 @Composable

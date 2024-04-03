@@ -1,7 +1,8 @@
+package com.example.myapplication.data.wishList
+
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.data.LoginViewModel
-import com.example.myapplication.data.wishList.UploadWishListState
 import com.example.myapplication.models.Housing
 import com.example.myapplication.models.Inventory
 import com.google.firebase.database.DataSnapshot
@@ -56,7 +57,7 @@ fun updateWishlistHousing(email: String, house: Housing) {
 
 class UploadWishListViewModel : ViewModel() {
 
-    var uploadState = mutableStateOf(UploadWishListState()) // set to isHousing by default
+    private var uploadState = mutableStateOf(UploadWishListState()) // set to isHousing by default
 
     fun onEvent(event: UploadWishListEvent){
         when (event){
@@ -77,9 +78,6 @@ class UploadWishListViewModel : ViewModel() {
                 updateWishlistHousing(LoginViewModel.getEncryptedEmail(), uploadState.value.house)
             }
 
-            else -> {
-
-            }
         }
 
     }

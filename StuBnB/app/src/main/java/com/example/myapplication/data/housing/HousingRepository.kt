@@ -4,7 +4,6 @@ import android.util.Log
 import com.example.myapplication.models.Housing
 import com.google.firebase.database.*
 
-
 class HousingRepository : IHousingRepository {
 
     override fun getHousing(callback: HousingCallback){

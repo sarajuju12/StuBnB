@@ -1,4 +1,4 @@
-package com.example.myapplication.data.repositories.messaging
+package com.example.myapplication.data.repositories
 
 import com.example.myapplication.models.ChatMessage
 
