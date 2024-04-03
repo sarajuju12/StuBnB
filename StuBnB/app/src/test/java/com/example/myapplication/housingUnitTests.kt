@@ -28,7 +28,7 @@ class HousingTest {
     }
 
     @Test
-    fun `test parameterized constructor`() {
+    fun testConstructor() {
         val imageLinks = listOf("link1", "link2")
         val housing = Housing(
             name = "TestName",
