@@ -2,7 +2,7 @@ Product title: StuBnB
 
 Product description: StuBnB is a mobile Android app whose main users are university students in Canada. With StuBnB, students can upload housing listings if they are looking to rent out their housing location, they can upload inventory listings if they are looking to sell some of their possessions, and they can browse other students' listings if they are in need of housing or inventory. Additional features include a wishlist (user can bookmark a listing they are interested in), a search bar, messaging (users can message host/seller of a listing), and a profile tab.
 
-Project proposal: https://git.uwaterloo.ca/j556xu/team-7/-/wikis/Project-Proposal
+Project proposal (includes defined user, personas, problem identification, problem solution): https://git.uwaterloo.ca/j556xu/team-7/-/wikis/Project-Proposal
 
 User documentation: https://git.uwaterloo.ca/j556xu/team-7/-/wikis/User-Documentation
 
