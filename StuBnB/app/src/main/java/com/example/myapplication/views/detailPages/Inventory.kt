@@ -1,5 +1,7 @@
 package com.example.myapplication.views.detailPages
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,9 +22,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberImagePainter
 import com.example.myapplication.components.BackButton
 import com.example.myapplication.components.DisplayHeartButton
+import com.example.myapplication.data.LoginViewModel
+import com.example.myapplication.data.repositories.MessagingRepository
 import com.example.myapplication.models.Housing
 import com.example.myapplication.models.Inventory
 import com.example.myapplication.routers.Inv
@@ -32,11 +37,15 @@ import com.example.myapplication.routers.Screen
 import com.example.myapplication.ui.theme.Purple40
 import com.example.myapplication.ui.theme.poppins
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Inventory(inventoryItem: Inventory, fromInv: Int) {
+fun Inventory(inventoryItem: Inventory, fromInv: Int, loginViewModel : LoginViewModel = viewModel()) {
     val pagerState = remember { PagerState() }
     val pageCount = inventoryItem.imageLinks.size
+
+    val msgRepo = MessagingRepository()
+
     Column {
         HorizontalPager(
             state = pagerState,
@@ -116,7 +125,8 @@ fun Inventory(inventoryItem: Inventory, fromInv: Int) {
                         )
                         Button(
                             onClick = {
-                                // send host a message here
+                                msgRepo.newMessageToDB(loginViewModel.getEncryptedEmail(), inventoryItem.userId, "Hi, is your ${inventoryItem.name} still avaliable?")
+                                Navigator.navigate(Screen.ChatBox(loginViewModel.getEncryptedEmail(), inventoryItem.userId))
                             },
                             enabled = true,
                             colors = ButtonDefaults.buttonColors(Purple40),
