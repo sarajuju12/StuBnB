@@ -29,3 +29,4 @@ Sprint 2 release notes: https://git.uwaterloo.ca/j556xu/team-7/-/releases/2.0.0
 
 Sprint 3 release notes: https://git.uwaterloo.ca/j556xu/team-7/-/releases/3.0.0
 
+Sprint 4 release notes: https://git.uwaterloo.ca/j556xu/team-7/-/releases/4.0.0
