@@ -7,7 +7,7 @@ Project proposal (includes defined user, personas, problem identification, probl
 User documentation: https://git.uwaterloo.ca/j556xu/team-7/-/wikis/User-Documentation
 
 Screenshots: see Design documentation wiki page (link below) -> Final prototype
-![alternate text](Screenshot_2024-03-27_220318.png)
+![alternate text](Screenshot_2024-03-27_220318.png) ![alternate text](Screenshot_2024-03-27_221036.png)
 
 Design documentation: https://git.uwaterloo.ca/j556xu/team-7/-/wikis/Design-Documentation
 
